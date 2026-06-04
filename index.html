@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learning App V10</title>
+<title>Learning App V11</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1f4e79">
 <style>
@@ -22,86 +22,116 @@ textarea,select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:1
 </style>
 </head>
 <body>
-<header><h1>Learning App V10</h1><p>English Vocabulary + Grammar + Live Speaking + Java + Spring Boot + Selenium</p></header>
+<header><h1>Learning App V11</h1><p>Live Speaking + Interview Questions & Answers + English + Java + Spring Boot + Selenium</p></header>
 <nav>
 <button class="active" onclick="show('home',this)">Home</button>
-<button onclick="show('vocab',this)">English Vocabulary</button>
-<button onclick="show('grammar',this)">English Grammar</button>
 <button onclick="show('speaking',this)">🎤 Live Speaking</button>
-<button onclick="show('java',this)">Java Tutorial</button>
+<button onclick="show('vocab',this)">Vocabulary</button>
+<button onclick="show('grammar',this)">Grammar</button>
+<button onclick="show('java',this)">Java</button>
 <button onclick="show('spring',this)">Spring Boot</button>
 <button onclick="show('selenium',this)">Selenium</button>
 <button onclick="show('notes',this)">Notes</button>
 </nav>
 <main>
 <section id="home" class="section active">
-<div class="card"><h2>Daily 8 PM Learning Plan</h2><p><b>10 min:</b> English vocabulary and grammar</p><p><b>10 min:</b> Live speaking practice</p><p><b>10 min:</b> Java / Spring Boot / Selenium</p><button class="action" onclick="markDone()">Mark Today Complete</button><p>Streak: <span class="score" id="streak">0</span> days</p></div>
-</section>
-
-<section id="vocab" class="section">
-<div class="card"><h2>English Vocabulary</h2><select id="vocabTopic" onchange="showVocab()"><option value="work">Workplace</option><option value="qa">QA Testing</option><option value="api">API</option><option value="meeting">Meeting</option></select><div id="vocabOut" class="result"></div><button class="action secondary" onclick="speak('vocabOut')">Listen</button></div>
-</section>
-
-<section id="grammar" class="section">
-<div class="card"><h2>English Grammar</h2><select id="grammarTopic" onchange="showGrammarLesson()"><option value="tenses">Tenses</option><option value="prep">Prepositions</option><option value="mistakes">Common Mistakes</option><option value="email">Email Grammar</option></select><div id="grammarLesson" class="result"></div></div>
-<div class="card"><h3>Grammar Checker</h3><textarea id="grammarInput" rows="4" placeholder="Example: I have completed testing yesterday."></textarea><button class="action" onclick="checkGrammar()">Check Grammar</button><button class="action secondary" onclick="loadGrammar()">Load Example</button><div id="grammarOut" class="result"></div></div>
+<div class="card"><h2>Daily 8 PM Learning Plan</h2><p><b>10 min:</b> Live speaking interview</p><p><b>10 min:</b> English grammar/vocabulary</p><p><b>10 min:</b> Java / Spring Boot / Selenium</p><button class="action" onclick="markDone()">Mark Today Complete</button><p>Streak: <span class="score" id="streak">0</span> days</p></div>
 </section>
 
 <section id="speaking" class="section">
-<div class="card"><h2>🎤 Live Speaking Practice</h2><p>Select scenario and practice like a live agent.</p><select id="speakMode" onchange="newAgentPrompt()"><option value="standup">Daily Standup</option><option value="qa">QA Testing Discussion</option><option value="java">Java Technical Speaking</option><option value="spring">Spring Boot Speaking</option><option value="selenium">Selenium Speaking</option><option value="interview">Interview Introduction</option></select><div class="result" id="agentPrompt"></div><button class="action" onclick="newAgentPrompt()">New Agent Prompt</button><button class="action secondary" onclick="speak('agentPrompt')">Listen to Agent</button></div>
-<div class="card"><h3>Speak Your Answer</h3><button class="action" onclick="startVoice()">Start Speaking</button><button class="action danger" onclick="stopVoice()">Stop</button><textarea id="spokenText" rows="6" placeholder="Your spoken answer will appear here..."></textarea><button class="action" onclick="analyzeSpeaking()">Analyze Speaking</button><button class="action secondary" onclick="speakTextArea('spokenText')">Listen to My Answer</button><div id="speakingFeedback" class="result">Speaking feedback will appear here.</div></div>
-<div class="grid"><div class="card"><h3>Pronunciation Words</h3><div id="pronunciationWords" class="result"></div><button class="action" onclick="newPronunciation()">New Words</button><button class="action secondary" onclick="speak('pronunciationWords')">Listen</button></div><div class="card"><h3>Speaking Progress</h3><p>Speaking practice count: <span class="score" id="speakCount">0</span></p></div></div>
+<div class="card">
+<h2>🎤 Live Speaking Interview Practice</h2>
+<p>Select interview mode. Click <b>New Interview Question</b>, answer by speaking, then compare with sample answer.</p>
+<select id="interviewMode" onchange="newLiveInterview()">
+<option value="hr">HR / English Interview</option>
+<option value="qa">QA Testing Interview</option>
+<option value="java">Java Interview</option>
+<option value="spring">Spring Boot Interview</option>
+<option value="selenium">Selenium Interview</option>
+</select>
+<div class="result" id="liveQuestion"></div>
+<button class="action" onclick="newLiveInterview()">New Interview Question</button>
+<button class="action secondary" onclick="showLiveAnswer()">Show Sample Answer</button>
+<button class="action secondary" onclick="speak('liveQuestion')">Listen Question</button>
+<div class="result" id="liveAnswer">Sample answer will appear here.</div>
+</div>
+
+<div class="card">
+<h3>Speak Your Interview Answer</h3>
+<button class="action" onclick="startVoice()">Start Speaking</button>
+<button class="action danger" onclick="stopVoice()">Stop</button>
+<textarea id="spokenText" rows="6" placeholder="Your spoken answer will appear here..."></textarea>
+<button class="action" onclick="analyzeSpeaking()">Analyze Speaking</button>
+<button class="action secondary" onclick="speakTextArea('spokenText')">Listen to My Answer</button>
+<div id="speakingFeedback" class="result">Speaking feedback will appear here.</div>
+</div>
+
+<div class="grid">
+<div class="card"><h3>Pronunciation Words</h3><div id="pronunciationWords" class="result"></div><button class="action" onclick="newPronunciation()">New Words</button><button class="action secondary" onclick="speak('pronunciationWords')">Listen</button></div>
+<div class="card"><h3>Speaking Progress</h3><p>Speaking practice count: <span class="score" id="speakCount">0</span></p></div>
+</div>
 </section>
 
-<section id="java" class="section">
-<div class="card"><h2>Java Tutorial</h2><select id="javaTopic" onchange="showJava()"><option value="basics">Java Basics</option><option value="oop">OOP</option><option value="collections">Collections</option><option value="streams">Streams</option><option value="advanced">Advanced Java</option></select><div id="javaOut" class="result"></div></div>
-</section>
-
-<section id="spring" class="section">
-<div class="card"><h2>Spring Boot Tutorials</h2><select id="springTopic" onchange="showSpring()"><option value="intro">Introduction</option><option value="rest">REST API</option><option value="jpa">JPA/Hibernate</option><option value="security">Security/JWT</option><option value="micro">Microservices</option></select><div id="springOut" class="result"></div></div>
-</section>
-
-<section id="selenium" class="section">
-<div class="card"><h2>Selenium Tutorials</h2><select id="seleniumTopic" onchange="showSelenium()"><option value="intro">Introduction</option><option value="webdriver">WebDriver</option><option value="locators">Locators</option><option value="waits">Waits</option><option value="pom">Page Object Model</option><option value="framework">Framework</option></select><div id="seleniumOut" class="result"></div></div>
-</section>
-
-<section id="notes" class="section">
-<div class="card"><h2>My Notes</h2><textarea id="notes" rows="9" placeholder="Write vocabulary, grammar, speaking feedback, Java, Spring Boot, Selenium notes..."></textarea><button class="action" onclick="saveNotes()">Save Notes</button><p id="saveMsg"></p></div>
-</section>
+<section id="vocab" class="section"><div class="card"><h2>Vocabulary</h2><div id="vocabOut" class="result">Workplace: update, clarify, priority, deadline, blocker, collaborate, resolve, confirm, pending, completed.\nQA: defect, regression, validation, test case, expected result, actual result, reproducible.</div><button class="action secondary" onclick="speak('vocabOut')">Listen</button></div></section>
+<section id="grammar" class="section"><div class="card"><h2>Grammar Checker</h2><textarea id="grammarInput" rows="4" placeholder="Example: I have completed testing yesterday."></textarea><button class="action" onclick="loadGrammar()">Load Example</button><button class="action" onclick="checkGrammar()">Check Grammar</button><div id="grammarOut" class="result"></div></div></section>
+<section id="java" class="section"><div class="card"><h2>Java Tutorial</h2><div class="result">Java topics: OOP, Collections, Exceptions, Streams, Lambda, Generics, Multithreading, ExecutorService, CompletableFuture, JVM memory, Garbage Collection.</div></div></section>
+<section id="spring" class="section"><div class="card"><h2>Spring Boot Tutorial</h2><div class="result">Spring Boot topics: REST API, Controller, Service, Repository, JPA, Hibernate, Validation, Exception Handling, Security, JWT, Microservices.</div></div></section>
+<section id="selenium" class="section"><div class="card"><h2>Selenium Tutorial</h2><div class="result">Selenium topics: WebDriver, Locators, Waits, Actions, Dropdowns, Page Object Model, TestNG, Automation Framework.</div></div></section>
+<section id="notes" class="section"><div class="card"><h2>My Notes</h2><textarea id="notes" rows="9" placeholder="Write speaking feedback, interview answers, Java/Spring/Selenium notes..."></textarea><button class="action" onclick="saveNotes()">Save Notes</button><p id="saveMsg"></p></div></section>
 </main>
 
 <script>
 if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js")}
-const vocab={work:"Workplace words:\nUpdate, clarify, priority, deadline, blocker, collaborate, resolve, confirm, pending, completed.",qa:"QA words:\nDefect, regression, validation, test case, test data, expected result, actual result, reproducible, environment, severity.",api:"API words:\nEndpoint, request, response, payload, header, status code, authentication, authorization, token, timeout.",meeting:"Meeting words:\nAgenda, action item, follow-up, decision, summary, attendee, availability, reschedule."};
-const grammar={tenses:"Tenses:\nPresent: I work in QA.\nPresent continuous: I am working on API validation.\nPast: I completed testing yesterday.\nPresent perfect: I have completed validation.",prep:"Prepositions:\nI am working on this issue.\nI attached the results to the story.\nI am waiting for deployment.",mistakes:"Common mistakes:\nWrong: I have completed testing yesterday. Correct: I completed testing yesterday.\nWrong: I did not seen. Correct: I did not see.",email:"Email grammar:\nUse greeting, short context, clear request/update, and closing. Example: Hi Team, I completed QA validation and attached the results. Thanks."};
-const prompts={standup:["What did you work on yesterday?","What are you working on today?","Do you have any blockers?"],qa:["Explain the defect you found.","How do you validate an API response?","Explain expected and actual result."],java:["Explain HashMap internal working.","Explain Stream API.","Difference between ArrayList and LinkedList?"],spring:["Explain Dependency Injection.","What is @RestController?","What is JWT authentication?"],selenium:["Explain Page Object Model.","What is explicit wait?","How do you handle dropdowns?"],interview:["Introduce yourself as a QA Automation Engineer.","Explain your Java and Selenium experience.","Tell me about a challenging defect."]};
+const interviews={
+hr:[
+{q:"Tell me about yourself.",a:"My name is Suresh. I work in QA and I have experience in testing, API validation, defect reporting, and automation learning. I am improving my English communication and technical skills every day."},
+{q:"What are your strengths?",a:"My strengths are attention to detail, ownership, continuous learning, and clear communication. I carefully validate requirements and report issues with proper evidence."},
+{q:"Why should we hire you?",a:"You should hire me because I have QA experience, I understand testing processes, and I am actively improving automation, Java, Selenium, and Spring Boot skills."}
+],
+qa:[
+{q:"What is regression testing?",a:"Regression testing verifies that new code changes did not break existing functionality. After a fix or new feature, I retest related areas to confirm the application still works correctly."},
+{q:"What details do you include in a defect?",a:"I include title, environment, steps to reproduce, expected result, actual result, screenshots, logs, test data, severity, and priority."},
+{q:"What is API testing?",a:"API testing validates request payload, response payload, status code, headers, authentication, authorization, and business rules without using the UI."}
+],
+java:[
+{q:"Explain OOP concepts.",a:"The four OOP concepts are encapsulation, inheritance, polymorphism, and abstraction. They help write reusable, maintainable, and organized code."},
+{q:"Difference between ArrayList and LinkedList?",a:"ArrayList uses a dynamic array and is faster for index-based access. LinkedList uses nodes and is better for frequent insertions and deletions."},
+{q:"What is HashMap internal working?",a:"HashMap stores key-value pairs. It uses hashCode to find the bucket. If collision happens, equals is used to identify the correct key. Java 8 can use tree structure for long collision chains."},
+{q:"What is Stream API?",a:"Stream API processes collections in a functional style. Common methods are filter, map, sorted, collect, and forEach. Streams are lazy until a terminal operation is called."}
+],
+spring:[
+{q:"What is Spring Boot?",a:"Spring Boot simplifies Spring application development using auto-configuration, starter dependencies, embedded servers, and production-ready features."},
+{q:"What is Dependency Injection?",a:"Dependency Injection means Spring provides required objects automatically instead of creating them manually. It improves loose coupling and testing."},
+{q:"What is @RestController?",a:"@RestController is used to create REST APIs. It returns response data directly, usually as JSON."},
+{q:"What is JWT?",a:"JWT is JSON Web Token. It is used for stateless authentication. After login, the client sends the token in the Authorization header for protected APIs."}
+],
+selenium:[
+{q:"What is Selenium WebDriver?",a:"Selenium WebDriver automates browser actions for testing web applications. It can click, type, read text, and validate UI behavior."},
+{q:"What is explicit wait?",a:"Explicit wait waits for a specific condition, such as element visibility or clickability, before continuing test execution."},
+{q:"What is Page Object Model?",a:"Page Object Model is a design pattern where each page has a separate class containing locators and actions. It improves reusability and maintenance."},
+{q:"Difference between close and quit?",a:"close closes the current browser window. quit closes all browser windows and ends the WebDriver session."}
+]
+};
 const words=["validation, requirement, automation, deployment, environment, regression, authentication, repository","controller, service, repository, entity, dependency, injection, configuration, microservice","selenium, webdriver, locator, explicit wait, assertion, framework, execution, browser","collections, hashmap, arraylist, exception, stream, lambda, optional, concurrency"];
-const java={basics:"Java is object-oriented and platform independent. Class is blueprint, object is instance, method is behavior. JVM runs bytecode.",oop:"OOP: Encapsulation, Inheritance, Polymorphism, Abstraction.",collections:"Collections: List allows duplicates, Set removes duplicates, Map stores key-value pairs. HashMap uses hashing.",streams:"Streams process collections. Common methods: filter, map, collect, forEach, reduce.",advanced:"Advanced Java: Generics, multithreading, ExecutorService, CompletableFuture, JVM memory, Garbage Collection, SOLID."};
-const spring={intro:"Spring Boot simplifies Spring development with auto-configuration, starters, and embedded servers.",rest:"REST API: GET retrieves, POST creates, PUT updates, DELETE removes. Use @RestController and mappings.",jpa:"JPA maps Java objects to database tables. Use @Entity, @Id, @GeneratedValue, JpaRepository.",security:"Spring Security protects APIs. JWT is used for stateless authentication.",micro:"Microservices: API Gateway, Service Discovery, Config Server, OpenFeign, Circuit Breaker, Logging, Tracing."};
-const selenium={intro:"Selenium automates web applications for UI testing.",webdriver:"WebDriver controls browser actions: get, findElement, click, sendKeys, close, quit.",locators:"Locators: id, name, xpath, cssSelector, linkText. Prefer stable id/css.",waits:"Waits: implicit, explicit, fluent. Explicit wait is best for specific conditions.",pom:"Page Object Model stores elements and actions in page classes.",framework:"Framework: page classes, test classes, utilities, config, reports, screenshots, logs."};
-let recognition;
+let current=interviews.hr[0], recognition;
 function show(id,b){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}
 function pick(a){return a[Math.floor(Math.random()*a.length)]}
 function speak(id){let u=new SpeechSynthesisUtterance(document.getElementById(id).innerText);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u)}
 function speakTextArea(id){let u=new SpeechSynthesisUtterance(document.getElementById(id).value);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u)}
-function showVocab(){document.getElementById('vocabOut').innerText=vocab[document.getElementById('vocabTopic').value]}
-function showGrammarLesson(){document.getElementById('grammarLesson').innerText=grammar[document.getElementById('grammarTopic').value]}
-function loadGrammar(){document.getElementById('grammarInput').value='I have completed testing yesterday.';checkGrammar()}
+function newLiveInterview(){let m=document.getElementById('interviewMode').value;current=pick(interviews[m]);document.getElementById('liveQuestion').innerText='Interviewer: '+current.q;document.getElementById('liveAnswer').innerText='Sample answer will appear here.'}
+function showLiveAnswer(){document.getElementById('liveAnswer').innerText='Sample Answer:\n'+current.a}
 function correctText(t){return t.replace(/I have completed testing yesterday/gi,'I completed testing yesterday').replace(/I am working in this issue/gi,'I am working on this issue').replace(/I did not seen/gi,'I did not see').replace(/I have one doubt/gi,'I have one question')}
-function checkGrammar(){let t=document.getElementById('grammarInput').value;if(!t){document.getElementById('grammarOut').innerText='Please type a sentence.';return}document.getElementById('grammarOut').innerText='Suggested sentence:\n'+correctText(t)+'\n\nTip: Use clear professional English.'}
-function newAgentPrompt(){let m=document.getElementById('speakMode').value;document.getElementById('agentPrompt').innerText='Agent: '+pick(prompts[m])}
 function startVoice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){document.getElementById('speakingFeedback').innerText='Voice recognition not supported. Use Chrome on Android.';return}recognition=new SR();recognition.lang='en-US';recognition.continuous=true;recognition.interimResults=true;recognition.onresult=e=>{let t='';for(let i=0;i<e.results.length;i++){t+=e.results[i][0].transcript+' '}document.getElementById('spokenText').value=t.trim()};recognition.start();document.getElementById('speakingFeedback').innerText='Listening... Speak clearly.'}
 function stopVoice(){if(recognition)recognition.stop();document.getElementById('speakingFeedback').innerText='Stopped. Click Analyze Speaking.'}
-function analyzeSpeaking(){let t=document.getElementById('spokenText').value.trim();if(!t){document.getElementById('speakingFeedback').innerText='Please speak first.';return}let w=t.split(/\s+/).length;let c=correctText(t);let score=70+(w>=20?10:0)+(w>=40?10:0)-(t!==c?5:0);document.getElementById('speakingFeedback').innerText='Words spoken: '+w+'\nSpeaking score: '+score+'/100\n\nYour answer:\n'+t+'\n\nSuggested correction:\n'+c+'\n\nTip: Speak slowly and use complete sentences.';markSpeaking()}
+function analyzeSpeaking(){let t=document.getElementById('spokenText').value.trim();if(!t){document.getElementById('speakingFeedback').innerText='Please speak first.';return}let w=t.split(/\s+/).length;let c=correctText(t);let score=70+(w>=20?10:0)+(w>=40?10:0)-(t!==c?5:0);document.getElementById('speakingFeedback').innerText='Words spoken: '+w+'\nSpeaking score: '+score+'/100\n\nYour answer:\n'+t+'\n\nSuggested correction:\n'+c+'\n\nCompare with sample answer and try again.';markSpeaking()}
 function newPronunciation(){document.getElementById('pronunciationWords').innerText=pick(words)}
-function markSpeaking(){let c=Number(localStorage.getItem('speakCountV10')||'0')+1;localStorage.setItem('speakCountV10',c);update()}
-function showJava(){document.getElementById('javaOut').innerText=java[document.getElementById('javaTopic').value]}
-function showSpring(){document.getElementById('springOut').innerText=spring[document.getElementById('springTopic').value]}
-function showSelenium(){document.getElementById('seleniumOut').innerText=selenium[document.getElementById('seleniumTopic').value]}
-function markDone(){let d=new Date().toDateString(),last=localStorage.getItem('dayV10'),st=Number(localStorage.getItem('streakV10')||'0');if(d!==last){st++;localStorage.setItem('dayV10',d);localStorage.setItem('streakV10',st)}update()}
-function saveNotes(){localStorage.setItem('notesV10',document.getElementById('notes').value);document.getElementById('saveMsg').innerText='Saved.'}
-function update(){document.getElementById('streak').innerText=localStorage.getItem('streakV10')||'0';document.getElementById('speakCount').innerText=localStorage.getItem('speakCountV10')||'0';document.getElementById('notes').value=localStorage.getItem('notesV10')||''}
-window.onload=()=>{showVocab();showGrammarLesson();newAgentPrompt();newPronunciation();showJava();showSpring();showSelenium();update()}
+function markSpeaking(){let c=Number(localStorage.getItem('speakCountV11')||'0')+1;localStorage.setItem('speakCountV11',c);update()}
+function loadGrammar(){document.getElementById('grammarInput').value='I have completed testing yesterday.';checkGrammar()}
+function checkGrammar(){let t=document.getElementById('grammarInput').value;if(!t){document.getElementById('grammarOut').innerText='Please type a sentence.';return}document.getElementById('grammarOut').innerText='Suggested sentence:\n'+correctText(t)}
+function markDone(){let d=new Date().toDateString(),last=localStorage.getItem('dayV11'),st=Number(localStorage.getItem('streakV11')||'0');if(d!==last){st++;localStorage.setItem('dayV11',d);localStorage.setItem('streakV11',st)}update()}
+function saveNotes(){localStorage.setItem('notesV11',document.getElementById('notes').value);document.getElementById('saveMsg').innerText='Saved.'}
+function update(){document.getElementById('streak').innerText=localStorage.getItem('streakV11')||'0';document.getElementById('speakCount').innerText=localStorage.getItem('speakCountV11')||'0';document.getElementById('notes').value=localStorage.getItem('notesV11')||''}
+window.onload=()=>{newLiveInterview();newPronunciation();update()}
 </script>
 </body>
 </html>
