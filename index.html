@@ -3,319 +3,714 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learning App V5</title>
+<title>Learning App V8 - Java Spring Boot</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1f4e79">
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#eef4fb;color:#1f2937}
-header{background:#1f4e79;color:white;padding:18px;text-align:center}
-header h1{margin:0;font-size:24px}
-header p{margin:6px 0 0;font-size:14px}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef4fb;color:#1f2937}
+header{background:#1f4e79;color:white;padding:18px;text-align:center}header h1{margin:0;font-size:24px}
 nav{display:flex;overflow-x:auto;gap:8px;background:white;padding:10px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px #0002}
 nav button{white-space:nowrap;background:#e8f1fa;color:#1f4e79;border:1px solid #c8d9ea;border-radius:20px;padding:9px 13px;font-weight:bold}
-nav button.active{background:#1f4e79;color:white}
-main{padding:14px;max-width:1050px;margin:auto}
-.section{display:none}.section.active{display:block}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+nav button.active{background:#1f4e79;color:white}main{padding:14px;max-width:1100px;margin:auto}.section{display:none}.section.active{display:block}
 .card{background:white;padding:16px;border-radius:16px;box-shadow:0 4px 14px #0001;margin-bottom:14px}
-h2,h3{color:#1f4e79}
-button.action{background:#1f4e79;color:white;border:0;border-radius:10px;padding:11px 14px;margin:5px 5px 5px 0;font-size:15px}
-button.secondary{background:#425466}
-textarea,select,input{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;margin-top:7px}
+h2,h3{color:#1f4e79}button.action{background:#1f4e79;color:white;border:0;border-radius:10px;padding:11px 14px;margin:5px 5px 5px 0;font-size:15px}
+button.secondary{background:#425466}textarea,select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;margin-top:7px}
 .result{background:#f8fbff;border-left:5px solid #1f4e79;padding:12px;border-radius:10px;margin-top:10px;white-space:pre-wrap;line-height:1.5}
-.small{color:#64748b;font-size:14px}
-.score{font-size:34px;color:#1f4e79;font-weight:bold}
-pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:10px;overflow:auto;font-size:13px}
-.badge{display:inline-block;background:#e8f1fa;color:#1f4e79;padding:5px 9px;border-radius:16px;font-weight:bold;font-size:12px}
+.score{font-size:34px;color:#1f4e79;font-weight:bold}pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:10px;overflow:auto;font-size:13px}
+.badge{display:inline-block;background:#e8f1fa;color:#1f4e79;padding:5px 9px;border-radius:16px;font-size:12px;font-weight:bold}
 </style>
 </head>
 <body>
-<header>
-<h1>Learning App V5</h1>
-<p>English + Java + Selenium + Spring Boot + Resume + Email Practice</p>
-</header>
-
+<header><h1>Learning App V8</h1><p>Core Java + Advanced Java + Spring Boot Tutorial + REST API + JPA + Security + Microservices</p></header>
 <nav>
 <button class="active" onclick="show('home',this)">Home</button>
-<button onclick="show('english',this)">English</button>
-<button onclick="show('java',this)">Java</button>
-<button onclick="show('selenium',this)">Selenium</button>
-<button onclick="show('spring',this)">Spring Boot</button>
-<button onclick="show('resume',this)">Resume</button>
-<button onclick="show('email',this)">Email</button>
-<button onclick="show('reminder',this)">8 PM Reminder</button>
-<button onclick="show('progress',this)">Progress</button>
+<button onclick="show('springTutorial',this)">Spring Boot</button>
+<button onclick="show('restApi',this)">REST API</button>
+<button onclick="show('jpa',this)">JPA/Hibernate</button>
+<button onclick="show('security',this)">Security/JWT</button>
+<button onclick="show('microservices',this)">Microservices</button>
+<button onclick="show('springCode',this)">Spring Code</button>
+<button onclick="show('springInterview',this)">Interview</button>
+<button onclick="show('notes',this)">Notes</button>
 </nav>
 
 <main>
 <section id="home" class="section active">
 <div class="card">
-<span class="badge">Daily Plan</span>
-<h2>30-Minute Learning Plan</h2>
-<p><b>8:00 PM - 8:10 PM:</b> English speaking and workplace grammar</p>
-<p><b>8:10 PM - 8:20 PM:</b> Java coding challenge</p>
-<p><b>8:20 PM - 8:30 PM:</b> Selenium or Spring Boot interview question</p>
+<span class="badge">Daily 8 PM Plan</span>
+<h2>Java + Spring Boot Learning Plan</h2>
+<p><b>10 min:</b> Spring Boot tutorial</p>
+<p><b>10 min:</b> REST API/JPA/Security topic</p>
+<p><b>10 min:</b> Coding or interview practice</p>
 <button class="action" onclick="markDone()">Mark Today Complete</button>
-<p>Current streak: <span class="score" id="streak">0</span> days</p>
-</div>
-<div class="grid">
-<div class="card"><h3>Today’s Mixed Question</h3><p id="todayQ"></p><button class="action" onclick="newToday()">New Question</button><button class="action secondary" onclick="speak('todayQ')">Listen</button></div>
-<div class="card"><h3>Today’s Goal</h3><p id="goalText">Speak clearly, write one correct email sentence, and solve one Java problem.</p><button class="action secondary" onclick="speak('goalText')">Listen</button></div>
+<p>Streak: <span class="score" id="streak">0</span> days</p>
 </div>
 </section>
 
-<section id="english" class="section">
+<section id="springTutorial" class="section">
 <div class="card">
-<h2>English Speaking Practice</h2>
-<p id="englishPrompt"></p>
-<button class="action" onclick="newEnglish()">New Prompt</button>
-<button class="action secondary" onclick="speak('englishPrompt')">Listen</button>
-</div>
-<div class="card">
-<h2>Grammar Checker</h2>
-<textarea id="grammar" rows="4" placeholder="Example: I have completed testing yesterday."></textarea>
-<button class="action" onclick="checkGrammar()">Check Grammar</button>
-<button class="action secondary" onclick="loadGrammar()">Load Example</button>
-<div id="grammarOut" class="result">Correction appears here.</div>
-</div>
-</section>
-
-<section id="java" class="section">
-<div class="card">
-<h2>Java Coding Challenges</h2>
-<select id="javaLevel" onchange="newJavaChallenge()">
-<option value="basic">Basic</option>
-<option value="collections">Collections</option>
-<option value="streams">Streams</option>
+<h2>Spring Boot Tutorial</h2>
+<select id="springTopic" onchange="showSpringTopic()">
+<option value="intro">1. What is Spring Boot?</option>
+<option value="architecture">2. Spring Boot Architecture</option>
+<option value="initializr">3. Spring Initializr</option>
+<option value="structure">4. Project Structure</option>
+<option value="properties">5. application.properties</option>
+<option value="ioc">6. IoC and Dependency Injection</option>
+<option value="beans">7. Beans and Bean Scopes</option>
+<option value="annotations">8. Important Annotations</option>
+<option value="layers">9. Controller-Service-Repository Layers</option>
+<option value="validation">10. Validation Basics</option>
 </select>
-<p id="javaChallenge"></p>
-<button class="action" onclick="newJavaChallenge()">New Challenge</button>
-<button class="action secondary" onclick="showJavaSolution()">Show Solution</button>
-<pre id="javaSolution"></pre>
+<div id="springTopicOut" class="result"></div>
+<button class="action" onclick="copy('springTopicOut')">Copy Notes</button>
+<button class="action secondary" onclick="speak('springTopicOut')">Listen</button>
 </div>
 </section>
 
-<section id="selenium" class="section">
+<section id="restApi" class="section">
 <div class="card">
-<h2>Selenium Interview Questions</h2>
-<p id="seleniumQ"></p>
-<button class="action" onclick="newSelenium()">New Question</button>
-<button class="action secondary" onclick="showSelenium()">Show Answer</button>
-<button class="action secondary" onclick="speak('seleniumQ')">Listen</button>
-<div id="seleniumA" class="result"></div>
-</div>
-</section>
-
-<section id="spring" class="section">
-<div class="card">
-<h2>Spring Boot Interview Questions</h2>
-<p id="springQ"></p>
-<button class="action" onclick="newSpring()">New Question</button>
-<button class="action secondary" onclick="showSpring()">Show Answer</button>
-<button class="action secondary" onclick="speak('springQ')">Listen</button>
-<div id="springA" class="result"></div>
-</div>
-</section>
-
-<section id="resume" class="section">
-<div class="card">
-<h2>Resume Bullet Practice</h2>
-<select id="resumeType" onchange="showResume()">
-<option value="qa">QA Automation</option>
-<option value="selenium">Selenium Automation</option>
-<option value="api">API Testing</option>
-<option value="java">Java / Spring Boot</option>
+<h2>Spring Boot REST API Tutorial</h2>
+<select id="restTopic" onchange="showRestTopic()">
+<option value="controller">REST Controller</option>
+<option value="get">GET API</option>
+<option value="post">POST API</option>
+<option value="put">PUT API</option>
+<option value="delete">DELETE API</option>
+<option value="path">Path Variable</option>
+<option value="requestparam">Request Param</option>
+<option value="requestbody">Request Body</option>
+<option value="response">ResponseEntity</option>
+<option value="exception">Global Exception Handling</option>
 </select>
-<div id="resumeOut" class="result"></div>
-<button class="action" onclick="copy('resumeOut')">Copy Resume Bullets</button>
+<div id="restOut" class="result"></div>
+<button class="action" onclick="copy('restOut')">Copy Notes</button>
 </div>
 </section>
 
-<section id="email" class="section">
+<section id="jpa" class="section">
 <div class="card">
-<h2>Work Email Practice</h2>
-<select id="emailType" onchange="showEmail()">
-<option value="status">Daily status update</option>
-<option value="defect">Defect update</option>
-<option value="clarify">Clarification request</option>
-<option value="sprint">Sprint assignment request</option>
-<option value="ooo">Out of office</option>
+<h2>JPA / Hibernate Tutorial</h2>
+<select id="jpaTopic" onchange="showJpaTopic()">
+<option value="intro">JPA Introduction</option>
+<option value="entity">Entity Mapping</option>
+<option value="repo">JpaRepository</option>
+<option value="query">Custom Queries</option>
+<option value="relations">Entity Relationships</option>
+<option value="transaction">Transactions</option>
+<option value="pagination">Pagination and Sorting</option>
 </select>
-<div id="emailOut" class="result"></div>
-<button class="action" onclick="copy('emailOut')">Copy Email</button>
-<button class="action secondary" onclick="speak('emailOut')">Listen</button>
+<div id="jpaOut" class="result"></div>
+<button class="action" onclick="copy('jpaOut')">Copy Notes</button>
 </div>
 </section>
 
-<section id="reminder" class="section">
+<section id="security" class="section">
 <div class="card">
-<h2>Daily 8 PM Reminder</h2>
-<p>This app cannot send phone notifications from GitHub Pages by itself, but you can set a phone alarm.</p>
-<div class="result">Reminder title: Learning App Practice
-
-Time: 8:00 PM daily
-
-Message: Practice English, Java coding, Selenium, and Spring Boot for 30 minutes.</div>
-<button class="action" onclick="copyReminder()">Copy Reminder Text</button>
+<h2>Spring Security and JWT</h2>
+<select id="securityTopic" onchange="showSecurityTopic()">
+<option value="intro">Security Basics</option>
+<option value="auth">Authentication vs Authorization</option>
+<option value="jwt">JWT Basics</option>
+<option value="filter">Security Filter Chain</option>
+<option value="roles">Role-Based Access</option>
+<option value="password">Password Encoding</option>
+</select>
+<div id="securityOut" class="result"></div>
+<button class="action" onclick="copy('securityOut')">Copy Notes</button>
 </div>
 </section>
 
-<section id="progress" class="section">
+<section id="microservices" class="section">
 <div class="card">
-<h2>My Notes</h2>
-<textarea id="notes" rows="8" placeholder="Write English mistakes, Java answers, Selenium notes, Spring Boot notes, resume bullets..."></textarea>
+<h2>Spring Boot Microservices</h2>
+<select id="microTopic" onchange="showMicroTopic()">
+<option value="intro">Microservices Introduction</option>
+<option value="gateway">API Gateway</option>
+<option value="discovery">Service Discovery</option>
+<option value="config">Config Server</option>
+<option value="feign">OpenFeign Client</option>
+<option value="circuit">Circuit Breaker</option>
+<option value="logging">Centralized Logging</option>
+<option value="tracing">Distributed Tracing</option>
+</select>
+<div id="microOut" class="result"></div>
+<button class="action" onclick="copy('microOut')">Copy Notes</button>
+</div>
+</section>
+
+<section id="springCode" class="section">
+<div class="card">
+<h2>Spring Boot Code Examples</h2>
+<select id="codeTopic" onchange="showCodeTopic()">
+<option value="controller">Controller Example</option>
+<option value="service">Service Example</option>
+<option value="entity">Entity Example</option>
+<option value="repo">Repository Example</option>
+<option value="exception">Exception Handler Example</option>
+<option value="dto">DTO Example</option>
+</select>
+<pre id="codeOut"></pre>
+<button class="action" onclick="copy('codeOut')">Copy Code</button>
+</div>
+</section>
+
+<section id="springInterview" class="section">
+<div class="card">
+<h2>Spring Boot Interview Practice</h2>
+<p id="intQ"></p>
+<button class="action" onclick="newInterview()">New Question</button>
+<button class="action secondary" onclick="showInterview()">Show Answer</button>
+<button class="action secondary" onclick="speak('intQ')">Listen</button>
+<div id="intA" class="result"></div>
+</div>
+</section>
+
+<section id="notes" class="section">
+<div class="card">
+<h2>My Spring Boot Notes</h2>
+<textarea id="myNotes" rows="9" placeholder="Write Spring Boot notes, REST API examples, interview answers..."></textarea>
 <button class="action" onclick="saveNotes()">Save Notes</button>
-<p id="saveMsg" class="small"></p>
+<p id="saveMsg"></p>
 </div>
 </section>
 </main>
 
 <script>
 if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js")}
+const springTopics={
+intro:`What is Spring Boot?
 
-const english=[
-"Introduce yourself as a QA Automation Engineer.",
-"Explain your daily stand-up update in professional English.",
-"Describe a defect you found and how you reported it.",
-"Explain Java Collections in simple English.",
-"Practice: I completed API validation and shared the results."
-];
+Spring Boot is a Java framework used to build applications quickly.
+It is built on top of the Spring Framework.
 
-const javaChallenges={
-basic:[
-{q:"Reverse a string without using built-in reverse().",s:`public class ReverseString {
- public static void main(String[] args) {
-  String input = "Suresh";
-  String output = "";
-  for (int i = input.length() - 1; i >= 0; i--) {
-   output += input.charAt(i);
-  }
-  System.out.println(output);
- }
-}`},
-{q:"Check if a number is prime.",s:`public class PrimeCheck {
- public static void main(String[] args) {
-  int num = 17;
-  boolean prime = true;
-  for (int i = 2; i <= num / 2; i++) {
-   if (num % i == 0) {
-    prime = false;
-    break;
-   }
-  }
-  System.out.println(prime ? "Prime" : "Not Prime");
- }
-}`}
-],
-collections:[
-{q:"Find duplicate numbers in an array using Set.",s:`import java.util.*;
-public class Duplicates {
- public static void main(String[] args) {
-  int[] nums = {1,2,3,2,4,1};
-  Set<Integer> seen = new HashSet<>();
-  for (int n : nums) {
-   if (!seen.add(n)) {
-    System.out.println("Duplicate: " + n);
-   }
-  }
- }
-}`},
-{q:"Count words in a sentence using HashMap.",s:`import java.util.*;
-public class WordCount {
- public static void main(String[] args) {
-  String sentence = "java is easy java is powerful";
-  Map<String,Integer> map = new HashMap<>();
-  for(String word: sentence.split(" ")) {
-   map.put(word, map.getOrDefault(word,0)+1);
-  }
-  System.out.println(map);
- }
-}`}
-],
-streams:[
-{q:"Filter names starting with S using Stream API.",s:`import java.util.*;
-import java.util.stream.*;
-public class StreamFilter {
- public static void main(String[] args) {
-  List<String> names = Arrays.asList("Suresh","Ravi","Sai","Anil");
-  List<String> result = names.stream()
-   .filter(name -> name.startsWith("S"))
-   .collect(Collectors.toList());
-  System.out.println(result);
- }
-}`},
-{q:"Find even numbers using Stream API.",s:`import java.util.*;
-import java.util.stream.*;
-public class EvenNumbers {
- public static void main(String[] args) {
-  List<Integer> nums = Arrays.asList(1,2,3,4,5,6);
-  nums.stream()
-   .filter(n -> n % 2 == 0)
-   .forEach(System.out::println);
- }
-}`}
-]
+Main benefits:
+- Auto-configuration
+- Embedded server like Tomcat
+- Starter dependencies
+- Production-ready features
+- Less boilerplate configuration
+
+Interview line:
+Spring Boot simplifies Spring application development by reducing manual configuration.`,
+architecture:`Spring Boot Architecture
+
+Common layers:
+1. Controller layer - handles HTTP requests.
+2. Service layer - contains business logic.
+3. Repository layer - communicates with database.
+4. Entity/Model layer - represents data.
+5. DTO layer - transfers data between layers.
+
+Flow:
+Client -> Controller -> Service -> Repository -> Database`,
+initializr:`Spring Initializr
+
+Spring Initializr helps create a Spring Boot project.
+
+Common selections:
+- Project: Maven
+- Language: Java
+- Spring Boot version
+- Packaging: Jar
+- Java version
+- Dependencies: Spring Web, Spring Data JPA, MySQL Driver, Validation, Lombok
+
+Website normally generates a starter project zip.`,
+structure:`Spring Boot Project Structure
+
+Common folders:
+src/main/java - Java source code
+src/main/resources - configuration files
+src/test/java - test classes
+
+Important file:
+application.properties or application.yml
+
+Main class contains @SpringBootApplication.`,
+properties:`application.properties
+
+Used to configure application settings.
+
+Examples:
+server.port=8081
+spring.datasource.url=jdbc:mysql://localhost:3306/testdb
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+
+Interview line:
+application.properties externalizes configuration.`,
+ioc:`IoC and Dependency Injection
+
+IoC means Inversion of Control.
+Spring creates and manages objects for us.
+
+Dependency Injection means required objects are injected automatically.
+
+Example:
+@Autowired
+private UserService userService;
+
+Benefits:
+- Loose coupling
+- Easier testing
+- Cleaner code`,
+beans:`Beans and Bean Scopes
+
+A Spring Bean is an object managed by Spring container.
+
+Common scopes:
+- singleton: one object per container
+- prototype: new object every time
+- request: one object per HTTP request
+- session: one object per HTTP session
+
+Default scope is singleton.`,
+annotations:`Important Spring Boot Annotations
+
+@SpringBootApplication - main application class
+@RestController - REST API controller
+@GetMapping - GET endpoint
+@PostMapping - POST endpoint
+@Service - business logic
+@Repository - data access layer
+@Autowired - dependency injection
+@Entity - database table mapping`,
+layers:`Controller-Service-Repository Layers
+
+Controller:
+Receives HTTP request.
+
+Service:
+Handles business logic.
+
+Repository:
+Interacts with database.
+
+Why use layers?
+- Clean code
+- Easy testing
+- Separation of responsibilities
+- Better maintenance`,
+validation:`Validation Basics
+
+Validation checks request data.
+
+Common annotations:
+@NotNull
+@NotBlank
+@Size
+@Email
+@Min
+@Max
+
+Use @Valid in controller method to trigger validation.
+
+Example:
+public ResponseEntity<?> create(@Valid @RequestBody UserDto userDto)`
 };
 
-const selenium=[
-{q:"What is Selenium WebDriver?",a:"Selenium WebDriver is used to automate browser actions for testing web applications."},
-{q:"Difference between findElement and findElements?",a:"findElement returns the first matching element and throws an exception if not found. findElements returns a list and returns an empty list if not found."},
-{q:"What is explicit wait?",a:"Explicit wait waits for a specific condition, such as element visibility or clickability."},
-{q:"What are locators in Selenium?",a:"Locators identify web elements. Examples: id, name, xpath, cssSelector, linkText, and className."},
-{q:"What is Page Object Model?",a:"Page Object Model is a design pattern where each page is represented as a class. It improves maintainability and reusability."},
-{q:"Difference between close() and quit()?",a:"close() closes the current browser window. quit() closes all browser windows and ends the WebDriver session."},
-{q:"How do you handle dropdowns?",a:"Use the Select class for standard HTML select dropdowns and choose by visible text, value, or index."}
-];
+const restTopics={
+controller:`REST Controller
 
-const spring=[
-{q:"What is Spring Boot?",a:"Spring Boot helps build Java applications quickly with auto-configuration, starter dependencies, and embedded servers."},
-{q:"What is @RestController?",a:"@RestController is used to build REST APIs and returns response data directly, usually JSON."},
-{q:"Difference between @Controller and @RestController?",a:"@Controller is used for MVC views. @RestController returns response body directly."},
-{q:"What is dependency injection?",a:"Dependency injection means Spring provides required objects automatically instead of creating them manually."},
-{q:"What is application.properties?",a:"application.properties stores configuration like server port, database URL, username, and password."},
-{q:"What is @Service?",a:"@Service marks a class as a service layer component that contains business logic."},
-{q:"What is @Repository?",a:"@Repository marks a class as a data access component and helps translate database exceptions."}
-];
+@RestController is used to create REST APIs.
 
-const resume={
-qa:"• Performed functional, regression, integration, and end-to-end testing for web applications.\\n• Created detailed defect reports with steps to reproduce, expected result, actual result, screenshots, and logs.\\n• Collaborated with developers and business teams to clarify requirements and validate fixes.",
-selenium:"• Automated regression test cases using Selenium WebDriver and Java.\\n• Implemented Page Object Model to improve test automation maintainability.\\n• Used explicit waits, locators, and reusable methods to improve automation stability.",
-api:"• Validated REST API request and response payloads using Swagger and Postman.\\n• Verified status codes, headers, authentication, and business validations.\\n• Analyzed Splunk logs to troubleshoot API exceptions and backend failures.",
-java:"• Developed Java-based test automation utilities using OOP, Collections, and exception handling.\\n• Used Java Streams and Lambda expressions for clean data processing.\\n• Practiced Spring Boot REST API concepts using annotations like @RestController and @GetMapping."
+It combines:
+@Controller + @ResponseBody
+
+Example:
+@RestController
+@RequestMapping("/api/users")
+public class UserController { }`,
+get:`GET API
+
+GET is used to retrieve data.
+
+Example:
+@GetMapping("/{id}")
+public User getUser(@PathVariable Long id) {
+  return userService.getUser(id);
+}`,
+post:`POST API
+
+POST is used to create new data.
+
+Example:
+@PostMapping
+public User createUser(@RequestBody User user) {
+  return userService.createUser(user);
+}`,
+put:`PUT API
+
+PUT is used to update complete data.
+
+Example:
+@PutMapping("/{id}")
+public User updateUser(@PathVariable Long id, @RequestBody User user) {
+  return userService.updateUser(id, user);
+}`,
+delete:`DELETE API
+
+DELETE is used to remove data.
+
+Example:
+@DeleteMapping("/{id}")
+public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+  userService.deleteUser(id);
+  return ResponseEntity.noContent().build();
+}`,
+path:`Path Variable
+
+@PathVariable reads value from URL path.
+
+Example:
+/users/101
+
+@GetMapping("/users/{id}")
+public User get(@PathVariable Long id)`,
+requestparam:`Request Param
+
+@RequestParam reads query parameter.
+
+Example:
+/users?status=active
+
+@GetMapping("/users")
+public List<User> getUsers(@RequestParam String status)`,
+requestbody:`Request Body
+
+@RequestBody converts JSON request into Java object.
+
+Example:
+@PostMapping("/users")
+public User create(@RequestBody User user)`,
+response:`ResponseEntity
+
+ResponseEntity helps control:
+- status code
+- headers
+- body
+
+Example:
+return ResponseEntity.status(HttpStatus.CREATED).body(user);`,
+exception:`Global Exception Handling
+
+@ControllerAdvice handles exceptions globally.
+
+Example:
+@ControllerAdvice
+public class GlobalExceptionHandler {
+  @ExceptionHandler(UserNotFoundException.class)
+  public ResponseEntity<String> handle(UserNotFoundException ex) {
+    return ResponseEntity.status(404).body(ex.getMessage());
+  }
+}`
 };
 
-const emails={
-status:"Hi Team,\\n\\nToday I completed QA validation for the assigned story. I reviewed the API response and documented the test results. I will continue with end-to-end validation and share updates if I find any issues.\\n\\nThanks.",
-defect:"Hi Team,\\n\\nI found a regression defect during QA validation. The issue is reproducible, and I added the steps to reproduce, expected result, actual result, screenshots, and logs in the ticket.\\n\\nThanks.",
-clarify:"Hi Team,\\n\\nCould you please clarify the expected behavior for this scenario? I want to confirm the requirement before completing validation.\\n\\nThanks.",
-sprint:"Hi Team,\\n\\nCould you please assign these defects to the next sprint? These issues were identified during QA validation and need development review.\\n\\nThanks.",
-ooo:"Hi Team,\\n\\nI will be out of office today due to personal work. I will check messages later and respond if anything is urgent.\\n\\nThanks."
+const jpaTopics={
+intro:`JPA Introduction
+
+JPA stands for Java Persistence API.
+It helps map Java objects to database tables.
+
+Hibernate is a popular JPA implementation.
+
+Benefits:
+- Less SQL code
+- Object relational mapping
+- Repository support
+- Transaction management`,
+entity:`Entity Mapping
+
+@Entity marks a class as a database table.
+
+Example:
+@Entity
+public class User {
+  @Id
+  @GeneratedValue
+  private Long id;
+  private String name;
+}`,
+repo:`JpaRepository
+
+JpaRepository provides ready-made methods:
+save()
+findById()
+findAll()
+deleteById()
+count()
+
+Example:
+public interface UserRepository extends JpaRepository<User, Long> { }`,
+query:`Custom Queries
+
+Spring Data JPA supports method queries.
+
+Example:
+List<User> findByStatus(String status);
+
+JPQL:
+@Query("select u from User u where u.email = :email")`,
+relations:`Entity Relationships
+
+Common relationships:
+@OneToOne
+@OneToMany
+@ManyToOne
+@ManyToMany
+
+Example:
+One customer can have many orders.`,
+transaction:`Transactions
+
+@Transactional ensures all database operations complete successfully or rollback.
+
+Use it in service layer for business operations.`,
+pagination:`Pagination and Sorting
+
+Pagination loads data page by page.
+
+Example:
+Pageable pageable = PageRequest.of(0, 10, Sort.by("name"));
+Page<User> users = userRepository.findAll(pageable);`
 };
 
-let jc=javaChallenges.basic[0], sq=selenium[0], sp=spring[0];
+const securityTopics={
+intro:`Spring Security Basics
+
+Spring Security protects applications.
+
+It provides:
+- Authentication
+- Authorization
+- Password encoding
+- Security filters
+- Role-based access`,
+auth:`Authentication vs Authorization
+
+Authentication:
+Who are you?
+
+Authorization:
+What are you allowed to access?
+
+Example:
+Login confirms identity.
+Role ADMIN allows access to admin API.`,
+jwt:`JWT Basics
+
+JWT means JSON Web Token.
+
+Flow:
+1. User logs in.
+2. Server validates credentials.
+3. Server returns JWT token.
+4. Client sends token in Authorization header.
+5. Server validates token for protected APIs.`,
+filter:`Security Filter Chain
+
+Spring Security uses filter chain to process requests.
+
+It checks:
+- Authentication
+- Authorization
+- CSRF
+- CORS
+- Session management`,
+roles:`Role-Based Access
+
+Roles control API access.
+
+Example:
+ADMIN can create/delete users.
+USER can view profile.
+
+Annotation:
+@PreAuthorize("hasRole('ADMIN')")`,
+password:`Password Encoding
+
+Passwords should not be stored as plain text.
+
+Use BCryptPasswordEncoder.
+
+Example:
+passwordEncoder.encode(rawPassword)
+
+Interview point:
+BCrypt uses hashing and salt.`
+};
+
+const microTopics={
+intro:`Microservices Introduction
+
+Microservices split large applications into small independent services.
+
+Benefits:
+- Independent deployment
+- Scalability
+- Technology flexibility
+
+Challenges:
+- Monitoring
+- Logging
+- Network failures
+- Data consistency`,
+gateway:`API Gateway
+
+API Gateway is the single entry point for clients.
+
+Responsibilities:
+- Routing
+- Authentication
+- Rate limiting
+- Logging
+- Request forwarding`,
+discovery:`Service Discovery
+
+Service discovery helps services find each other dynamically.
+
+Common tool:
+Eureka Server
+
+Services register themselves with discovery server.`,
+config:`Config Server
+
+Config Server centralizes configuration.
+
+Benefits:
+- Common config management
+- Environment-specific properties
+- Easier updates`,
+feign:`OpenFeign Client
+
+OpenFeign is used for service-to-service communication.
+
+It allows calling REST APIs using Java interfaces.`,
+circuit:`Circuit Breaker
+
+Circuit breaker prevents repeated calls to failing services.
+
+Common library:
+Resilience4j
+
+States:
+Closed, Open, Half-Open`,
+logging:`Centralized Logging
+
+Centralized logging collects logs from all services.
+
+Common stack:
+ELK - Elasticsearch, Logstash, Kibana
+
+Useful for debugging production issues.`,
+tracing:`Distributed Tracing
+
+Distributed tracing tracks one request across multiple services.
+
+Useful tools:
+Zipkin, Jaeger, OpenTelemetry`
+};
+
+const codeExamples={
+controller:`@RestController
+@RequestMapping("/api/users")
+public class UserController {
+
+  private final UserService userService;
+
+  public UserController(UserService userService) {
+    this.userService = userService;
+  }
+
+  @GetMapping("/{id}")
+  public User getUser(@PathVariable Long id) {
+    return userService.getUser(id);
+  }
+}`,
+service:`@Service
+public class UserService {
+
+  private final UserRepository userRepository;
+
+  public UserService(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
+
+  public User getUser(Long id) {
+    return userRepository.findById(id)
+      .orElseThrow(() -> new RuntimeException("User not found"));
+  }
+}`,
+entity:`@Entity
+public class User {
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+
+  private String name;
+  private String email;
+
+  // getters and setters
+}`,
+repo:`public interface UserRepository extends JpaRepository<User, Long> {
+
+  List<User> findByStatus(String status);
+
+  Optional<User> findByEmail(String email);
+}`,
+exception:`@ControllerAdvice
+public class GlobalExceptionHandler {
+
+  @ExceptionHandler(RuntimeException.class)
+  public ResponseEntity<String> handle(RuntimeException ex) {
+    return ResponseEntity
+      .status(HttpStatus.BAD_REQUEST)
+      .body(ex.getMessage());
+  }
+}`,
+dto:`public class UserDto {
+
+  @NotBlank
+  private String name;
+
+  @Email
+  private String email;
+
+  // getters and setters
+}`
+};
+
+const interviews=[
+{q:"What is the difference between Spring and Spring Boot?",a:"Spring is a framework that provides dependency injection and many modules. Spring Boot is built on Spring and simplifies setup using auto-configuration, starters, and embedded servers."},
+{q:"What is @SpringBootApplication?",a:"@SpringBootApplication combines @Configuration, @EnableAutoConfiguration, and @ComponentScan. It is used on the main class."},
+{q:"What is Dependency Injection?",a:"Dependency Injection means Spring provides required objects automatically instead of creating them manually. It improves loose coupling and testing."},
+{q:"What is @RestController?",a:"@RestController is used to create REST APIs. It returns data directly as JSON or text instead of returning a view."},
+{q:"What is JpaRepository?",a:"JpaRepository provides built-in database methods such as save, findById, findAll, and deleteById."},
+{q:"What is @Transactional?",a:"@Transactional ensures database operations are completed as one unit. If an error occurs, changes can be rolled back."},
+{q:"What is JWT?",a:"JWT is a token used for stateless authentication. The client sends the token in the Authorization header for protected APIs."},
+{q:"What is API Gateway?",a:"API Gateway is the entry point for microservices. It handles routing, authentication, rate limiting, and request forwarding."}
+];
+
+let currentInterview=interviews[0];
 
 function show(id,b){document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active")}
+function showSpringTopic(){document.getElementById("springTopicOut").innerText=springTopics[document.getElementById("springTopic").value]}
+function showRestTopic(){document.getElementById("restOut").innerText=restTopics[document.getElementById("restTopic").value]}
+function showJpaTopic(){document.getElementById("jpaOut").innerText=jpaTopics[document.getElementById("jpaTopic").value]}
+function showSecurityTopic(){document.getElementById("securityOut").innerText=securityTopics[document.getElementById("securityTopic").value]}
+function showMicroTopic(){document.getElementById("microOut").innerText=microTopics[document.getElementById("microTopic").value]}
+function showCodeTopic(){document.getElementById("codeOut").innerText=codeExamples[document.getElementById("codeTopic").value]}
 function pick(a){return a[Math.floor(Math.random()*a.length)]}
-function speak(id){let t=document.getElementById(id).innerText;let u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.9;speechSynthesis.speak(u)}
-function newToday(){document.getElementById("todayQ").innerText=pick([...english,...selenium.map(x=>x.q),...spring.map(x=>x.q),...javaChallenges.basic.map(x=>x.q),...javaChallenges.collections.map(x=>x.q),...javaChallenges.streams.map(x=>x.q)])}
-function newEnglish(){document.getElementById("englishPrompt").innerText=pick(english)}
-function loadGrammar(){document.getElementById("grammar").value="I have completed testing yesterday.";checkGrammar()}
-function checkGrammar(){let t=document.getElementById("grammar").value;if(!t){document.getElementById("grammarOut").innerText="Please type a sentence.";return}let c=t.replace(/I have completed testing yesterday/gi,"I completed testing yesterday").replace(/I am working in this issue/gi,"I am working on this issue").replace(/I did not seen/gi,"I did not see").replace(/I have one doubt/gi,"I have one question").replace(/assign these defects in next sprint/gi,"assign these defects to the next sprint");document.getElementById("grammarOut").innerText="Suggested sentence:\\n"+c+"\\n\\nTip: Use clear professional workplace English."}
-function newJavaChallenge(){let level=document.getElementById("javaLevel").value;jc=pick(javaChallenges[level]);document.getElementById("javaChallenge").innerText=jc.q;document.getElementById("javaSolution").innerText=""}
-function showJavaSolution(){document.getElementById("javaSolution").innerText=jc.s}
-function newSelenium(){sq=pick(selenium);document.getElementById("seleniumQ").innerText=sq.q;document.getElementById("seleniumA").innerText=""}
-function showSelenium(){document.getElementById("seleniumA").innerText=sq.a}
-function newSpring(){sp=pick(spring);document.getElementById("springQ").innerText=sp.q;document.getElementById("springA").innerText=""}
-function showSpring(){document.getElementById("springA").innerText=sp.a}
-function showResume(){document.getElementById("resumeOut").innerText=resume[document.getElementById("resumeType").value]}
-function showEmail(){document.getElementById("emailOut").innerText=emails[document.getElementById("emailType").value]}
+function newInterview(){currentInterview=pick(interviews);document.getElementById("intQ").innerText=currentInterview.q;document.getElementById("intA").innerText=""}
+function showInterview(){document.getElementById("intA").innerText=currentInterview.a}
+function speak(id){let u=new SpeechSynthesisUtterance(document.getElementById(id).innerText);u.lang="en-US";u.rate=.9;speechSynthesis.speak(u)}
 function copy(id){navigator.clipboard.writeText(document.getElementById(id).innerText);alert("Copied")}
-function copyReminder(){navigator.clipboard.writeText("Learning App Practice - 8:00 PM daily: Practice English, Java coding, Selenium, and Spring Boot for 30 minutes.");alert("Reminder copied")}
-function markDone(){let d=new Date().toDateString(),last=localStorage.getItem("day"),st=Number(localStorage.getItem("streak")||"0");if(d!==last){st++;localStorage.setItem("day",d);localStorage.setItem("streak",st)}update()}
-function saveNotes(){localStorage.setItem("notes",document.getElementById("notes").value);document.getElementById("saveMsg").innerText="Saved."}
-function update(){document.getElementById("streak").innerText=localStorage.getItem("streak")||"0";document.getElementById("notes").value=localStorage.getItem("notes")||""}
-window.onload=()=>{newToday();newEnglish();newJavaChallenge();newSelenium();newSpring();showResume();showEmail();update()}
+function markDone(){let d=new Date().toDateString(),last=localStorage.getItem("dayV8"),st=Number(localStorage.getItem("streakV8")||"0");if(d!==last){st++;localStorage.setItem("dayV8",d);localStorage.setItem("streakV8",st)}update()}
+function saveNotes(){localStorage.setItem("springNotesV8",document.getElementById("myNotes").value);document.getElementById("saveMsg").innerText="Saved."}
+function update(){document.getElementById("streak").innerText=localStorage.getItem("streakV8")||"0";document.getElementById("myNotes").value=localStorage.getItem("springNotesV8")||""}
+window.onload=()=>{showSpringTopic();showRestTopic();showJpaTopic();showSecurityTopic();showMicroTopic();showCodeTopic();newInterview();update()}
 </script>
 </body>
 </html>
