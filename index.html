@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learning App V13</title>
+<title>Learning App V14</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1f4e79">
 <style>
@@ -28,17 +28,13 @@ textarea,select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:1
 .score{font-size:34px;color:#1f4e79;font-weight:bold}
 pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:12px;overflow:auto;font-size:13px;line-height:1.45}
 .badge{display:inline-block;background:#e8f1fa;color:#1f4e79;padding:5px 9px;border-radius:16px;font-size:12px;font-weight:bold}
-.subtabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.subtabs button{border:1px solid #c8d9ea;background:#f8fbff;color:#1f4e79;border-radius:12px;padding:9px 12px;font-weight:bold}
-.subtabs button.active2{background:#1f4e79;color:white}
-@media(max-width:600px){header{text-align:left;padding-right:90px}.logo{right:10px;font-size:12px}.card{padding:14px}}
 </style>
 </head>
 <body>
 <header>
 <div class="logo">LST Log</div>
-<h1>Learning App V13</h1>
-<p>Improved Layout + Complete Core Java & Advanced Java Tutorials</p>
+<h1>Learning App V14</h1>
+<p>Same tabs + existing content + more advanced learning documents</p>
 </header>
 
 <nav>
@@ -59,620 +55,449 @@ pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:12px;overflow:au
 <span class="badge">Daily 8 PM</span>
 <h2>Learning Plan</h2>
 <p><b>10 min:</b> English speaking/interview</p>
-<p><b>10 min:</b> Core Java or Advanced Java tutorial</p>
-<p><b>10 min:</b> Java coding/interview practice</p>
+<p><b>10 min:</b> Java / Spring Boot / Selenium learning document</p>
+<p><b>10 min:</b> Coding/interview practice</p>
 <button class="action" onclick="markDone()">Mark Today Complete</button>
 <p>Streak: <span class="score" id="streak">0</span> days</p>
 </div>
 <div class="card">
-<span class="badge">Today</span>
-<h2>Java Focus</h2>
-<p id="todayJava"></p>
-<button class="action" onclick="newTodayJava()">New Java Focus</button>
+<h2>Advanced Learning Documents</h2>
+<p>New advanced documents are added inside existing tabs only. No tab changes.</p>
+<p><b>Java:</b> Core + Advanced + Expert docs</p>
+<p><b>Spring Boot:</b> REST, JPA, Security, Microservices docs</p>
+<p><b>Selenium:</b> Framework, waits, POM, TestNG docs</p>
 </div>
 </div>
 </section>
 
 <section id="speaking" class="section">
-<div class="card"><h2>🎤 Live Speaking</h2><p>Use this for spoken interview practice. For best voice recognition use Chrome on Android.</p></div>
+<div class="card">
+<h2>🎤 Live Speaking Interview Practice</h2>
+<select id="interviewMode" onchange="newLiveInterview()">
+<option value="hr">HR / English Interview</option>
+<option value="qa">QA Testing Interview</option>
+<option value="java">Java Interview</option>
+<option value="spring">Spring Boot Interview</option>
+<option value="selenium">Selenium Interview</option>
+</select>
+<div class="result" id="liveQuestion"></div>
+<button class="action" onclick="newLiveInterview()">New Interview Question</button>
+<button class="action secondary" onclick="showLiveAnswer()">Show Sample Answer</button>
+<button class="action secondary" onclick="speak('liveQuestion')">Listen Question</button>
+<div class="result" id="liveAnswer">Sample answer will appear here.</div>
+</div>
 </section>
 
 <section id="vocab" class="section">
-<div class="card"><h2>Vocabulary</h2><div class="result">Workplace: update, clarify, priority, deadline, blocker, collaborate, resolve, confirm, pending, completed.
-QA: defect, regression, validation, test case, expected result, actual result, reproducible.</div></div>
+<div class="card"><h2>Vocabulary</h2><div id="vocabOut" class="result">Workplace: update, clarify, priority, deadline, blocker, collaborate, resolve, confirm, pending, completed.
+QA: defect, regression, validation, test case, expected result, actual result, reproducible.
+Advanced workplace: escalation, dependency, alignment, mitigation, stakeholder, acceptance criteria, deliverable, impact analysis.</div></div>
 </section>
 
 <section id="grammar" class="section">
 <div class="card"><h2>Grammar Checker</h2><textarea id="grammarInput" rows="4" placeholder="Example: I have completed testing yesterday."></textarea><button class="action" onclick="loadGrammar()">Load Example</button><button class="action" onclick="checkGrammar()">Check Grammar</button><div id="grammarOut" class="result"></div></div>
+<div class="card"><h2>Advanced Grammar Document</h2><div class="result">Professional grammar focus:
+
+1. Use simple past with finished time:
+I completed testing yesterday.
+
+2. Use present perfect for recent completion:
+I have completed validation.
+
+3. Use polite requests:
+Could you please clarify the expected behavior?
+
+4. Use active voice:
+I documented the defect with screenshots and logs.
+
+5. Use clear status update format:
+Completed / In progress / Blocked / Next action.</div></div>
 </section>
 
 <section id="java" class="section">
 <div class="card">
 <h2>Java Tutorial</h2>
-<p>Choose Core Java, Advanced Java, Code Examples, or Interview Practice.</p>
-<div class="subtabs">
-<button id="coreBtn" class="active2" onclick="showJavaPanel('core',this)">Core Java</button>
-<button onclick="showJavaPanel('advanced',this)">Advanced Java</button>
-<button onclick="showJavaPanel('code',this)">Code Examples</button>
-<button onclick="showJavaPanel('interview',this)">Interview Q&A</button>
-</div>
-
-<div id="javaCorePanel">
-<h3>Core Java Complete Tutorials</h3>
-<select id="coreTopic" onchange="showCoreTopic()">
-<option value="basics">1. Java Basics</option>
-<option value="variables">2. Variables & Data Types</option>
-<option value="control">3. Control Statements</option>
-<option value="oop">4. OOP Concepts</option>
-<option value="strings">5. String Handling</option>
-<option value="arrays">6. Arrays</option>
-<option value="collections">7. Collections Framework</option>
-<option value="exceptions">8. Exception Handling</option>
-<option value="fileio">9. File Handling</option>
-<option value="jdbc">10. JDBC Basics</option>
+<p>Existing Java content is kept. More advanced documents are added below.</p>
+<select id="javaDoc" onchange="showJavaDoc()">
+<option value="core">Core Java Complete Document</option>
+<option value="advanced">Advanced Java Complete Document</option>
+<option value="expert">Java Expert Interview Document</option>
+<option value="coding">Java Coding Practice Document</option>
+<option value="design">Java Design & Architecture Document</option>
 </select>
-<div id="coreOut" class="result"></div>
-<button class="action" onclick="copy('coreOut')">Copy Core Notes</button>
-<button class="action secondary" onclick="speak('coreOut')">Listen</button>
-</div>
-
-<div id="javaAdvancedPanel" style="display:none">
-<h3>Advanced Java Complete Tutorials</h3>
-<select id="advancedTopic" onchange="showAdvancedTopic()">
-<option value="generics">1. Generics</option>
-<option value="collectionsInternal">2. Collections Internals</option>
-<option value="streams">3. Streams & Lambda</option>
-<option value="multithreading">4. Multithreading</option>
-<option value="executor">5. ExecutorService</option>
-<option value="future">6. CompletableFuture</option>
-<option value="jvm">7. JVM Memory</option>
-<option value="gc">8. Garbage Collection</option>
-<option value="solid">9. SOLID Principles</option>
-<option value="patterns">10. Design Patterns</option>
-<option value="testing">11. JUnit & Mockito</option>
-</select>
-<div id="advancedOut" class="result"></div>
-<button class="action" onclick="copy('advancedOut')">Copy Advanced Notes</button>
-<button class="action secondary" onclick="speak('advancedOut')">Listen</button>
-</div>
-
-<div id="javaCodePanel" style="display:none">
-<h3>Java Code Examples</h3>
-<select id="codeTopic" onchange="showCodeTopic()">
-<option value="classObj">Class and Object</option>
-<option value="encapsulation">Encapsulation</option>
-<option value="inheritance">Inheritance</option>
-<option value="arrayList">ArrayList</option>
-<option value="hashMap">HashMap</option>
-<option value="stream">Stream API</option>
-<option value="thread">Thread</option>
-<option value="future">CompletableFuture</option>
-</select>
-<pre id="codeOut"></pre>
-</div>
-
-<div id="javaInterviewPanel" style="display:none">
-<h3>Java Interview Q&A</h3>
-<p id="javaQ"></p>
-<button class="action" onclick="newJavaInterview()">New Java Question</button>
-<button class="action secondary" onclick="showJavaAnswer()">Show Answer</button>
-<div id="javaA" class="result"></div>
-</div>
+<div id="javaDocOut" class="result"></div>
+<button class="action" onclick="copy('javaDocOut')">Copy Java Document</button>
+<button class="action secondary" onclick="speak('javaDocOut')">Listen</button>
 </div>
 </section>
 
-<section id="spring" class="section"><div class="card"><h2>Spring Boot Tutorial</h2><div class="result">Spring Boot topics: REST API, Controller, Service, Repository, JPA, Hibernate, Validation, Exception Handling, Security, JWT, Microservices.</div></div></section>
-<section id="selenium" class="section"><div class="card"><h2>Selenium Tutorial</h2><div class="result">Selenium topics: WebDriver, Locators, Waits, Actions, Dropdowns, Page Object Model, TestNG, Automation Framework.</div></div></section>
-<section id="notes" class="section"><div class="card"><h2>My Notes</h2><textarea id="notes" rows="9" placeholder="Write Java notes and practice answers..."></textarea><button class="action" onclick="saveNotes()">Save Notes</button><p id="saveMsg"></p></div></section>
+<section id="spring" class="section">
+<div class="card">
+<h2>Spring Boot Tutorial</h2>
+<p>Existing Spring Boot content is kept. More advanced documents are added below.</p>
+<select id="springDoc" onchange="showSpringDoc()">
+<option value="rest">Spring Boot REST API Document</option>
+<option value="jpa">Spring Data JPA/Hibernate Document</option>
+<option value="security">Spring Security/JWT Document</option>
+<option value="micro">Spring Boot Microservices Document</option>
+<option value="testing">Spring Boot Testing Document</option>
+</select>
+<div id="springDocOut" class="result"></div>
+<button class="action" onclick="copy('springDocOut')">Copy Spring Document</button>
+</div>
+</section>
+
+<section id="selenium" class="section">
+<div class="card">
+<h2>Selenium Tutorial</h2>
+<p>Existing Selenium content is kept. More advanced documents are added below.</p>
+<select id="seleniumDoc" onchange="showSeleniumDoc()">
+<option value="basics">Selenium Basics Document</option>
+<option value="framework">Selenium Framework Document</option>
+<option value="waits">Selenium Waits & Synchronization Document</option>
+<option value="pom">Page Object Model Document</option>
+<option value="interview">Selenium Interview Document</option>
+</select>
+<div id="seleniumDocOut" class="result"></div>
+<button class="action" onclick="copy('seleniumDocOut')">Copy Selenium Document</button>
+</div>
+</section>
+
+<section id="notes" class="section">
+<div class="card"><h2>My Notes</h2><textarea id="notes" rows="9" placeholder="Write advanced notes and practice answers..."></textarea><button class="action" onclick="saveNotes()">Save Notes</button><p id="saveMsg"></p></div>
+</section>
 </main>
 
 <script>
 if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js")}
 
-const core = {
-basics:`Java Basics
+const javaDocs={
+core:`Core Java Complete Document
 
-Java is an object-oriented, platform-independent programming language.
+1. Java basics:
+JVM, JDK, JRE, class, object, method, constructor, variables, data types.
 
-Key points:
-- Java source file has .java extension.
-- Java compiler creates .class bytecode.
-- JVM executes bytecode.
-- JDK is used for development.
-- JRE is used for running Java applications.
+2. OOP:
+Encapsulation, inheritance, polymorphism, abstraction.
 
-Simple program:
-public class Hello {
-  public static void main(String[] args) {
-    System.out.println("Hello Java");
-  }
-}
+3. String handling:
+String is immutable. StringBuilder is mutable and faster for single-thread use. StringBuffer is synchronized.
 
-Interview point:
-Java is platform independent because bytecode can run on any system with JVM.`,
-variables:`Variables & Data Types
+4. Collections:
+List, Set, Map, Queue.
+ArrayList uses dynamic array.
+LinkedList uses nodes.
+HashMap uses hashing.
+HashSet internally uses HashMap.
 
-Variables store data.
+5. Exception handling:
+try, catch, finally, throw, throws.
+Checked exceptions are compile-time.
+Unchecked exceptions are runtime.
 
-Primitive data types:
-byte, short, int, long, float, double, char, boolean.
+6. File handling:
+Use java.io and java.nio.
+Modern option: Files and Paths.
 
-Non-primitive types:
-String, arrays, classes, interfaces.
+7. JDBC:
+Use Connection, PreparedStatement, ResultSet.
+PreparedStatement helps avoid SQL injection.
 
-Example:
-int age = 30;
-String name = "Suresh";
-boolean active = true;
+Daily practice:
+Write one example for each topic and explain it aloud.`,
+advanced:`Advanced Java Complete Document
 
-Interview point:
-Primitive types store actual values. Reference types store object references.`,
-control:`Control Statements
+1. Generics:
+Provides compile-time type safety.
+Use wildcards: extends and super.
+PECS: Producer Extends, Consumer Super.
 
-Control statements control program flow.
+2. Streams:
+Functional-style processing.
+Intermediate: filter, map, flatMap, sorted.
+Terminal: collect, forEach, reduce, count.
 
-Decision statements:
-if, if-else, switch.
+3. Multithreading:
+Thread, Runnable, Callable, synchronized, volatile, deadlock, race condition.
 
-Looping statements:
-for, while, do-while, enhanced for.
+4. ExecutorService:
+Manages thread pools.
+Useful methods: submit, execute, shutdown.
 
-Jump statements:
-break, continue, return.
+5. CompletableFuture:
+Asynchronous programming.
+Useful for parallel API calls and non-blocking workflows.
 
-Example:
-for(int i = 1; i <= 5; i++) {
-  System.out.println(i);
-}
+6. JVM:
+Heap, stack, method area, PC register, native method stack.
 
-Interview point:
-Use enhanced for loop when index is not required.`,
-oop:`OOP Concepts
+7. Garbage Collection:
+Removes unused objects.
+Memory leaks can still happen if references are retained.
 
-Four pillars:
-1. Encapsulation - data hiding using private fields and public methods.
-2. Inheritance - child class reuses parent class features.
-3. Polymorphism - one name, many forms.
-4. Abstraction - hiding implementation details.
+8. Testing:
+JUnit for testing.
+Mockito for mocking dependencies.`,
+expert:`Java Expert Interview Document
 
-Overloading:
-Same method name with different parameters.
+Important expert questions:
 
-Overriding:
-Child class provides its own implementation of parent method.
+1. How does HashMap work internally?
+HashMap uses hashCode to find bucket and equals to compare keys. Collisions are handled using linked list or tree structure.
 
-Interview point:
-OOP improves reusability, maintainability, and flexibility.`,
-strings:`String Handling
+2. Difference between Comparable and Comparator?
+Comparable defines natural sorting. Comparator defines custom external sorting.
 
-String:
-Immutable object. Stored in String pool when created as literal.
+3. Difference between volatile and synchronized?
+volatile gives visibility. synchronized gives visibility and locking.
 
-StringBuilder:
-Mutable, faster, not synchronized.
+4. Why is String immutable?
+Security, caching, thread safety, and String pool optimization.
 
-StringBuffer:
-Mutable and synchronized.
+5. What is fail-fast iterator?
+Iterator throws ConcurrentModificationException when collection is structurally modified during iteration.
+
+6. What is CompletableFuture?
+It supports asynchronous programming with chaining and combining tasks.`,
+coding:`Java Coding Practice Document
+
+Practice these daily:
+
+1. Reverse a string.
+2. Check palindrome.
+3. Count duplicate characters.
+4. Find duplicate numbers.
+5. Count words using HashMap.
+6. Sort employees by salary.
+7. Find second highest number.
+8. Filter names using Stream API.
+9. Group employees by department.
+10. Create thread using Runnable.
+11. Use ExecutorService.
+12. Use CompletableFuture.
+13. Handle custom exception.
+14. Read file using Files.
+15. Write unit test using JUnit.`,
+design:`Java Design & Architecture Document
+
+1. SOLID:
+Single Responsibility, Open Closed, Liskov Substitution, Interface Segregation, Dependency Inversion.
+
+2. Design patterns:
+Singleton, Factory, Builder, Strategy, Observer, DAO, Repository.
+
+3. Clean code:
+Small methods, meaningful names, avoid duplication, single responsibility.
+
+4. Layered design:
+Controller, service, repository, model, DTO.
+
+5. Best practices:
+Use interfaces for abstraction.
+Use dependency injection.
+Write unit tests.
+Handle exceptions clearly.
+Avoid overengineering.`
+};
+
+const springDocs={
+rest:`Spring Boot REST API Document
+
+Core annotations:
+@RestController, @RequestMapping, @GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @RequestBody, @PathVariable, @RequestParam.
+
+REST methods:
+GET - retrieve
+POST - create
+PUT - complete update
+PATCH - partial update
+DELETE - remove
+
+Best practices:
+Use DTOs.
+Use ResponseEntity.
+Validate request body.
+Handle exceptions globally.
+Return correct HTTP status codes.`,
+jpa:`Spring Data JPA / Hibernate Document
+
+Main annotations:
+@Entity, @Id, @GeneratedValue, @Column, @OneToMany, @ManyToOne, @JoinColumn.
+
+Repository:
+JpaRepository gives save, findById, findAll, deleteById.
+
+Queries:
+Method query: findByEmail
+JPQL: @Query
+Native query: nativeQuery=true
+
+Best practices:
+Use transactions in service layer.
+Avoid lazy loading issues.
+Use pagination for large data.`,
+security:`Spring Security / JWT Document
+
+Authentication:
+Verifies user identity.
+
+Authorization:
+Controls access permission.
+
+JWT flow:
+1. User logs in.
+2. Server validates credentials.
+3. Server returns JWT.
+4. Client sends token in Authorization header.
+5. Server validates token for protected API.
+
+Best practices:
+Use BCrypt password encoder.
+Do not store plain passwords.
+Use role-based access.
+Validate token expiration.`,
+micro:`Spring Boot Microservices Document
+
+Main concepts:
+API Gateway, Service Discovery, Config Server, OpenFeign, Circuit Breaker, Centralized Logging, Distributed Tracing.
+
+Benefits:
+Independent deployment and scalability.
+
+Challenges:
+Network failures, monitoring, logging, distributed transactions.
+
+Best practices:
+Use correlation IDs.
+Use centralized logging.
+Use circuit breaker.
+Keep services focused on one business capability.`,
+testing:`Spring Boot Testing Document
+
+Tools:
+JUnit 5, Mockito, MockMvc, @SpringBootTest, @WebMvcTest, @DataJpaTest.
+
+Testing levels:
+Unit test service logic.
+Controller test using MockMvc.
+Repository test using DataJpaTest.
+Integration test using SpringBootTest.
+
+Best practices:
+Mock external dependencies.
+Use meaningful test names.
+Test success and failure scenarios.`
+};
+
+const seleniumDocs={
+basics:`Selenium Basics Document
+
+Selenium automates web browsers.
 
 Important methods:
-length, charAt, substring, equals, contains, replace, split, trim.
+get, findElement, click, sendKeys, getText, getTitle, close, quit.
 
-Interview point:
-String is immutable for security, caching, thread safety, and String pool optimization.`,
-arrays:`Arrays
-
-Array stores fixed-size elements of same type.
-
-Example:
-int[] nums = {1,2,3};
-
-Advantages:
-- Fast access using index.
-- Simple structure.
-
-Limitations:
-- Fixed size.
-- Same data type only.
-
-Interview point:
-Array index starts from 0.`,
-collections:`Collections Framework
-
-Collections store groups of objects.
-
-List:
-Ordered, allows duplicates.
-Examples: ArrayList, LinkedList.
-
-Set:
-No duplicates.
-Examples: HashSet, LinkedHashSet, TreeSet.
-
-Map:
-Key-value pairs.
-Examples: HashMap, LinkedHashMap, TreeMap.
-
-Queue:
-Processing order.
-Examples: PriorityQueue, ArrayDeque.
-
-Interview point:
-HashMap uses hashing internally. HashSet internally uses HashMap.`,
-exceptions:`Exception Handling
-
-Exception handling manages runtime errors.
-
-Keywords:
-try, catch, finally, throw, throws.
-
-Checked exceptions:
-Compile-time exceptions like IOException.
-
-Unchecked exceptions:
-Runtime exceptions like NullPointerException.
-
-Best practices:
-- Catch specific exceptions.
-- Avoid empty catch blocks.
-- Use try-with-resources.
-- Log useful error details.`,
-fileio:`File Handling
-
-Java supports file handling using java.io and java.nio.
-
-Common classes:
-File, FileReader, FileWriter, BufferedReader, Files, Paths.
-
-Modern approach:
-Files.readAllLines(Paths.get("file.txt"));
-
-Use cases:
-- Read files
-- Write files
-- Process logs
-- Store test data
-
-Interview point:
-java.nio is preferred for modern file operations.`,
-jdbc:`JDBC Basics
-
-JDBC connects Java applications to databases.
-
-Steps:
-1. Load driver.
-2. Create connection.
-3. Create PreparedStatement.
-4. Execute query.
-5. Process ResultSet.
-6. Close resources.
+Locators:
+id, name, className, xpath, cssSelector, linkText.
 
 Best practice:
-Use PreparedStatement to avoid SQL injection.
+Use stable locators like id or cssSelector.`,
+framework:`Selenium Framework Document
 
-Interview point:
-Use try-with-resources to close JDBC resources automatically.`
-};
-
-const advanced = {
-generics:`Generics
-
-Generics provide compile-time type safety.
-
-Example:
-List<String> names = new ArrayList<>();
-
-Benefits:
-- Avoids ClassCastException.
-- Removes manual casting.
-- Improves code readability.
-- Creates reusable classes and methods.
-
-Wildcards:
-? extends Number - read from Number or child.
-? super Integer - write Integer into Integer or parent.
-
-PECS:
-Producer Extends, Consumer Super.`,
-collectionsInternal:`Collections Internals
-
-ArrayList:
-Uses dynamic array. Fast random access.
-
-LinkedList:
-Uses doubly linked nodes. Good for frequent insert/delete.
-
-HashMap:
-Uses array of buckets and hashing.
-hashCode finds bucket.
-equals compares keys.
-Java 8 uses tree nodes when collision chain becomes large.
-
-ConcurrentHashMap:
-Thread-safe map with better concurrency than Hashtable.`,
-streams:`Streams & Lambda
-
-Lambda:
-Short syntax for functional interface implementation.
-
-Example:
-name -> name.startsWith("S")
-
-Streams:
-Process collections in functional style.
-
-Intermediate:
-filter, map, flatMap, sorted, distinct.
-
-Terminal:
-collect, forEach, reduce, count.
-
-Interview point:
-Streams are lazy; intermediate operations run only after terminal operation.`,
-multithreading:`Multithreading
-
-Multithreading allows concurrent execution.
-
-Ways:
-- Extend Thread
-- Implement Runnable
-- Implement Callable
-- Use ExecutorService
-
-Important:
-synchronized, volatile, deadlock, race condition, wait, notify, atomic classes.
-
-Interview point:
-volatile gives visibility, synchronized gives visibility plus locking.`,
-executor:`ExecutorService
-
-ExecutorService manages thread pools.
-
-Benefits:
-- Reuses threads.
-- Controls number of threads.
-- Better performance.
-- Easier task management.
-
-Common pools:
-newFixedThreadPool
-newCachedThreadPool
-newSingleThreadExecutor
-
-Methods:
-execute, submit, shutdown, invokeAll.`,
-future:`CompletableFuture
-
-CompletableFuture supports asynchronous programming.
-
-Benefits:
-- Non-blocking style.
-- Chain operations.
-- Combine multiple async tasks.
-
-Example:
-CompletableFuture.supplyAsync(() -> "java")
-.thenApply(String::toUpperCase)
-.thenAccept(System.out::println);
-
-Interview point:
-Useful for parallel API calls and background processing.`,
-jvm:`JVM Memory
-
-Main JVM memory areas:
-- Heap: objects
-- Stack: method calls and local variables
-- Method area: class metadata
-- PC register
-- Native method stack
-
-Heap:
-Young generation and old generation.
-
-Stack:
-Each thread has its own stack.
-
-Interview point:
-Objects live in heap; local primitive variables live in stack.`,
-gc:`Garbage Collection
-
-Garbage Collection removes unused objects.
-
-Object is eligible for GC when no active reference exists.
-
-Common collectors:
-Serial GC
-Parallel GC
-G1 GC
-ZGC
-
-Memory leak:
-Can still happen if unused objects are referenced.
-
-Interview point:
-System.gc() requests GC but does not guarantee immediate execution.`,
-solid:`SOLID Principles
-
-S - Single Responsibility:
-One class should have one responsibility.
-
-O - Open/Closed:
-Open for extension, closed for modification.
-
-L - Liskov Substitution:
-Child class should replace parent without breaking behavior.
-
-I - Interface Segregation:
-Use small specific interfaces.
-
-D - Dependency Inversion:
-Depend on abstraction, not concrete classes.`,
-patterns:`Design Patterns
-
-Common Java patterns:
-
-Singleton:
-Only one object.
-
-Factory:
-Centralized object creation.
-
-Builder:
-Creates complex objects step by step.
-
-Strategy:
-Change behavior dynamically.
-
-Observer:
-Notify multiple objects when state changes.
-
-DAO/Repository:
-Separate data access logic.
-
-Interview point:
-Use patterns when they solve real design problems.`,
-testing:`JUnit & Mockito
-
-JUnit:
-Used for unit testing.
-
-Mockito:
-Used for mocking dependencies.
-
-Common annotations:
-@Test
-@BeforeEach
-@Mock
-@InjectMocks
-
-Test structure:
-Arrange, Act, Assert.
+Framework components:
+Driver manager
+Base test
+Page classes
+Test classes
+Utility classes
+Config reader
+Test data
+Reports
+Screenshots
+Logs
 
 Best practices:
-- Keep tests small.
-- Mock external dependencies.
-- Test business logic.
-- Make tests repeatable.`
+Use Page Object Model.
+Use explicit waits.
+Keep test data separate.
+Capture screenshots on failure.
+Generate reports.`,
+waits:`Selenium Waits & Synchronization Document
+
+Types:
+Implicit wait
+Explicit wait
+Fluent wait
+
+Explicit wait conditions:
+visibilityOfElementLocated
+elementToBeClickable
+presenceOfElementLocated
+alertIsPresent
+
+Best practice:
+Prefer explicit wait for specific conditions.
+Avoid Thread.sleep where possible.`,
+pom:`Page Object Model Document
+
+POM stores page locators and actions in page classes.
+
+Benefits:
+Reusable code
+Clean test scripts
+Easy maintenance
+Less duplication
+
+Example structure:
+LoginPage
+HomePage
+SearchPage
+BasePage
+
+Best practice:
+Keep assertions in test classes, not page classes.`,
+interview:`Selenium Interview Document
+
+Questions:
+
+1. What is Selenium WebDriver?
+It automates browser actions.
+
+2. Difference between close and quit?
+close closes current window. quit closes all windows and ends session.
+
+3. What is explicit wait?
+Waits for specific condition.
+
+4. What is Page Object Model?
+Design pattern for storing page elements/actions.
+
+5. How do you handle dropdown?
+Use Select class for standard select tag.
+
+6. How do you handle dynamic elements?
+Use dynamic XPath/CSS and explicit waits.`
 };
 
-const code = {
-classObj:`public class Student {
-  String name;
-  int age;
-
-  void display() {
-    System.out.println(name + " - " + age);
-  }
-
-  public static void main(String[] args) {
-    Student s = new Student();
-    s.name = "Suresh";
-    s.age = 30;
-    s.display();
-  }
-}`,
-encapsulation:`public class Employee {
-  private int id;
-  private String name;
-
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
-}`,
-inheritance:`class Animal {
-  void sound() {
-    System.out.println("Animal sound");
-  }
-}
-
-class Dog extends Animal {
-  void sound() {
-    System.out.println("Bark");
-  }
-}`,
-arrayList:`import java.util.*;
-
-public class ArrayListDemo {
-  public static void main(String[] args) {
-    List<String> names = new ArrayList<>();
-    names.add("Suresh");
-    names.add("Ravi");
-    System.out.println(names);
-  }
-}`,
-hashMap:`import java.util.*;
-
-public class HashMapDemo {
-  public static void main(String[] args) {
-    Map<Integer, String> map = new HashMap<>();
-    map.put(101, "Suresh");
-    map.put(102, "Ravi");
-    System.out.println(map.get(101));
-  }
-}`,
-stream:`import java.util.*;
-import java.util.stream.*;
-
-public class StreamDemo {
-  public static void main(String[] args) {
-    List<String> names = Arrays.asList("Suresh", "Sai", "Ravi");
-    List<String> result = names.stream()
-      .filter(n -> n.startsWith("S"))
-      .collect(Collectors.toList());
-    System.out.println(result);
-  }
-}`,
-thread:`public class ThreadDemo extends Thread {
-  public void run() {
-    System.out.println("Thread running");
-  }
-
-  public static void main(String[] args) {
-    new ThreadDemo().start();
-  }
-}`,
-future:`import java.util.concurrent.*;
-
-public class FutureDemo {
-  public static void main(String[] args) {
-    CompletableFuture<String> future =
-      CompletableFuture.supplyAsync(() -> "java")
-        .thenApply(String::toUpperCase);
-
-    System.out.println(future.join());
-  }
-}`
-};
-
-const interview = [
-{q:"What is JVM, JRE, and JDK?",a:"JVM runs Java bytecode. JRE contains JVM and libraries to run applications. JDK contains JRE plus development tools like javac."},
-{q:"What are OOP concepts?",a:"The four OOP concepts are encapsulation, inheritance, polymorphism, and abstraction."},
-{q:"How does HashMap work internally?",a:"HashMap uses hashing. hashCode finds the bucket and equals compares keys. Collisions are handled using linked list or tree structure in Java 8."},
-{q:"What is Stream API?",a:"Stream API processes collections in functional style using methods like filter, map, sorted, collect, and reduce."},
-{q:"What is CompletableFuture?",a:"CompletableFuture is used for asynchronous programming and allows chaining and combining non-blocking tasks."}
-];
-let currentInterview = interview[0];
+const interviews={hr:[{q:"Tell me about yourself.",a:"My name is Suresh. I work in QA and I am learning automation, Java, Selenium, and Spring Boot."}],qa:[{q:"What is regression testing?",a:"Regression testing verifies that new code changes did not break existing functionality."}],java:[{q:"What is HashMap internal working?",a:"HashMap uses hashing, buckets, hashCode, and equals to store and retrieve key-value pairs."}],spring:[{q:"What is Spring Boot?",a:"Spring Boot simplifies Spring development with auto-configuration and starters."}],selenium:[{q:"What is Selenium WebDriver?",a:"Selenium WebDriver automates browser actions for UI testing."}]};
+let current=interviews.hr[0];
 
 function show(id,b){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}
-function showJavaPanel(panel,btn){document.getElementById('javaCorePanel').style.display=panel==='core'?'block':'none';document.getElementById('javaAdvancedPanel').style.display=panel==='advanced'?'block':'none';document.getElementById('javaCodePanel').style.display=panel==='code'?'block':'none';document.getElementById('javaInterviewPanel').style.display=panel==='interview'?'block':'none';document.querySelectorAll('.subtabs button').forEach(x=>x.classList.remove('active2'));btn.classList.add('active2')}
-function showCoreTopic(){document.getElementById('coreOut').innerText=core[document.getElementById('coreTopic').value]}
-function showAdvancedTopic(){document.getElementById('advancedOut').innerText=advanced[document.getElementById('advancedTopic').value]}
-function showCodeTopic(){document.getElementById('codeOut').innerText=code[document.getElementById('codeTopic').value]}
-function newJavaInterview(){currentInterview=interview[Math.floor(Math.random()*interview.length)];document.getElementById('javaQ').innerText=currentInterview.q;document.getElementById('javaA').innerText=''}
-function showJavaAnswer(){document.getElementById('javaA').innerText=currentInterview.a}
-function speak(id){let u=new SpeechSynthesisUtterance(document.getElementById(id).innerText);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u)}
+function showJavaDoc(){document.getElementById('javaDocOut').innerText=javaDocs[document.getElementById('javaDoc').value]}
+function showSpringDoc(){document.getElementById('springDocOut').innerText=springDocs[document.getElementById('springDoc').value]}
+function showSeleniumDoc(){document.getElementById('seleniumDocOut').innerText=seleniumDocs[document.getElementById('seleniumDoc').value]}
 function copy(id){navigator.clipboard.writeText(document.getElementById(id).innerText);alert('Copied')}
+function speak(id){let u=new SpeechSynthesisUtterance(document.getElementById(id).innerText);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u)}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function newLiveInterview(){let m=document.getElementById('interviewMode').value;current=pick(interviews[m]);document.getElementById('liveQuestion').innerText='Interviewer: '+current.q;document.getElementById('liveAnswer').innerText='Sample answer will appear here.'}
+function showLiveAnswer(){document.getElementById('liveAnswer').innerText='Sample Answer:\n'+current.a}
 function correctText(t){return t.replace(/I have completed testing yesterday/gi,'I completed testing yesterday').replace(/I am working in this issue/gi,'I am working on this issue').replace(/I did not seen/gi,'I did not see')}
 function loadGrammar(){document.getElementById('grammarInput').value='I have completed testing yesterday.';checkGrammar()}
 function checkGrammar(){document.getElementById('grammarOut').innerText='Suggested sentence:\n'+correctText(document.getElementById('grammarInput').value)}
-function newTodayJava(){let arr=['Study Core Java OOP Concepts','Practice HashMap internal working','Review Stream API and Lambda','Practice ExecutorService','Revise JVM Memory and Garbage Collection'];document.getElementById('todayJava').innerText=arr[Math.floor(Math.random()*arr.length)]}
-function markDone(){let d=new Date().toDateString(),last=localStorage.getItem('dayV13'),st=Number(localStorage.getItem('streakV13')||'0');if(d!==last){st++;localStorage.setItem('dayV13',d);localStorage.setItem('streakV13',st)}update()}
-function saveNotes(){localStorage.setItem('notesV13',document.getElementById('notes').value);document.getElementById('saveMsg').innerText='Saved.'}
-function update(){document.getElementById('streak').innerText=localStorage.getItem('streakV13')||'0';document.getElementById('notes').value=localStorage.getItem('notesV13')||''}
-window.onload=()=>{showCoreTopic();showAdvancedTopic();showCodeTopic();newJavaInterview();newTodayJava();update()}
+function markDone(){let d=new Date().toDateString(),last=localStorage.getItem('dayV14'),st=Number(localStorage.getItem('streakV14')||'0');if(d!==last){st++;localStorage.setItem('dayV14',d);localStorage.setItem('streakV14',st)}update()}
+function saveNotes(){localStorage.setItem('notesV14',document.getElementById('notes').value);document.getElementById('saveMsg').innerText='Saved.'}
+function update(){document.getElementById('streak').innerText=localStorage.getItem('streakV14')||'0';document.getElementById('notes').value=localStorage.getItem('notesV14')||''}
+window.onload=()=>{showJavaDoc();showSpringDoc();showSeleniumDoc();newLiveInterview();update()}
 </script>
 </body>
 </html>

@@ -1,10 +1,10 @@
 {
-"name":"Learning App V13 Java Layout",
-"short_name":"LearningV13",
+"name":"Learning App V14 Advanced Docs",
+"short_name":"LearningV14",
 "start_url":"./index.html",
 "display":"standalone",
 "background_color":"#eef4fb",
 "theme_color":"#1f4e79",
-"description":"Learning app with improved layout and complete Core Java and Advanced Java tutorials",
+"description":"Learning app with same tabs and more advanced learning documents",
 "icons":[{"src":"icon.svg","sizes":"192x192","type":"image/svg+xml"},{"src":"icon.svg","sizes":"512x512","type":"image/svg+xml"}]
 }
