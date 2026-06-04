@@ -3,26 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learning App V11</title>
+<title>Learning App V13</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1f4e79">
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef4fb;color:#1f2937}
-header{background:#1f4e79;color:white;padding:18px;text-align:center}header h1{margin:0;font-size:24px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#eef4fb;color:#1f2937}
+header{background:#1f4e79;color:white;padding:18px;text-align:center;position:relative}
+.logo{position:absolute;top:14px;right:18px;background:white;color:#1f4e79;padding:8px 12px;border-radius:20px;font-weight:bold;font-size:14px}
+header h1{margin:0;font-size:24px}
+header p{margin:6px 0 0;font-size:14px}
 nav{display:flex;overflow-x:auto;gap:8px;background:white;padding:10px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px #0002}
 nav button{white-space:nowrap;background:#e8f1fa;color:#1f4e79;border:1px solid #c8d9ea;border-radius:20px;padding:9px 13px;font-weight:bold}
-nav button.active{background:#1f4e79;color:white}main{padding:14px;max-width:1150px;margin:auto}.section{display:none}.section.active{display:block}
-.card{background:white;padding:16px;border-radius:16px;box-shadow:0 4px 14px #0001;margin-bottom:14px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-h2,h3{color:#1f4e79}button.action{background:#1f4e79;color:white;border:0;border-radius:10px;padding:11px 14px;margin:5px 5px 5px 0;font-size:15px}
-button.secondary{background:#425466}button.danger{background:#9f1239}
+nav button.active{background:#1f4e79;color:white}
+main{padding:16px;max-width:1180px;margin:auto}
+.section{display:none}.section.active{display:block}
+.card{background:white;padding:18px;border-radius:18px;box-shadow:0 4px 14px #0001;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+h2,h3{color:#1f4e79}
+button.action{background:#1f4e79;color:white;border:0;border-radius:10px;padding:11px 14px;margin:5px 5px 5px 0;font-size:15px}
+button.secondary{background:#425466}
 textarea,select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;margin-top:7px}
-.result{background:#f8fbff;border-left:5px solid #1f4e79;padding:12px;border-radius:10px;margin-top:10px;white-space:pre-wrap;line-height:1.5}
+.result{background:#f8fbff;border-left:5px solid #1f4e79;padding:14px;border-radius:12px;margin-top:10px;white-space:pre-wrap;line-height:1.55}
 .score{font-size:34px;color:#1f4e79;font-weight:bold}
+pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:12px;overflow:auto;font-size:13px;line-height:1.45}
+.badge{display:inline-block;background:#e8f1fa;color:#1f4e79;padding:5px 9px;border-radius:16px;font-size:12px;font-weight:bold}
+.subtabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.subtabs button{border:1px solid #c8d9ea;background:#f8fbff;color:#1f4e79;border-radius:12px;padding:9px 12px;font-weight:bold}
+.subtabs button.active2{background:#1f4e79;color:white}
+@media(max-width:600px){header{text-align:left;padding-right:90px}.logo{right:10px;font-size:12px}.card{padding:14px}}
 </style>
 </head>
 <body>
-<header><h1>Learning App V11</h1><p>Live Speaking + Interview Questions & Answers + English + Java + Spring Boot + Selenium</p></header>
+<header>
+<div class="logo">LST Log</div>
+<h1>Learning App V13</h1>
+<p>Improved Layout + Complete Core Java & Advanced Java Tutorials</p>
+</header>
+
 <nav>
 <button class="active" onclick="show('home',this)">Home</button>
 <button onclick="show('speaking',this)">🎤 Live Speaking</button>
@@ -33,105 +51,628 @@ textarea,select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:1
 <button onclick="show('selenium',this)">Selenium</button>
 <button onclick="show('notes',this)">Notes</button>
 </nav>
+
 <main>
 <section id="home" class="section active">
-<div class="card"><h2>Daily 8 PM Learning Plan</h2><p><b>10 min:</b> Live speaking interview</p><p><b>10 min:</b> English grammar/vocabulary</p><p><b>10 min:</b> Java / Spring Boot / Selenium</p><button class="action" onclick="markDone()">Mark Today Complete</button><p>Streak: <span class="score" id="streak">0</span> days</p></div>
+<div class="grid">
+<div class="card">
+<span class="badge">Daily 8 PM</span>
+<h2>Learning Plan</h2>
+<p><b>10 min:</b> English speaking/interview</p>
+<p><b>10 min:</b> Core Java or Advanced Java tutorial</p>
+<p><b>10 min:</b> Java coding/interview practice</p>
+<button class="action" onclick="markDone()">Mark Today Complete</button>
+<p>Streak: <span class="score" id="streak">0</span> days</p>
+</div>
+<div class="card">
+<span class="badge">Today</span>
+<h2>Java Focus</h2>
+<p id="todayJava"></p>
+<button class="action" onclick="newTodayJava()">New Java Focus</button>
+</div>
+</div>
 </section>
 
 <section id="speaking" class="section">
+<div class="card"><h2>🎤 Live Speaking</h2><p>Use this for spoken interview practice. For best voice recognition use Chrome on Android.</p></div>
+</section>
+
+<section id="vocab" class="section">
+<div class="card"><h2>Vocabulary</h2><div class="result">Workplace: update, clarify, priority, deadline, blocker, collaborate, resolve, confirm, pending, completed.
+QA: defect, regression, validation, test case, expected result, actual result, reproducible.</div></div>
+</section>
+
+<section id="grammar" class="section">
+<div class="card"><h2>Grammar Checker</h2><textarea id="grammarInput" rows="4" placeholder="Example: I have completed testing yesterday."></textarea><button class="action" onclick="loadGrammar()">Load Example</button><button class="action" onclick="checkGrammar()">Check Grammar</button><div id="grammarOut" class="result"></div></div>
+</section>
+
+<section id="java" class="section">
 <div class="card">
-<h2>🎤 Live Speaking Interview Practice</h2>
-<p>Select interview mode. Click <b>New Interview Question</b>, answer by speaking, then compare with sample answer.</p>
-<select id="interviewMode" onchange="newLiveInterview()">
-<option value="hr">HR / English Interview</option>
-<option value="qa">QA Testing Interview</option>
-<option value="java">Java Interview</option>
-<option value="spring">Spring Boot Interview</option>
-<option value="selenium">Selenium Interview</option>
+<h2>Java Tutorial</h2>
+<p>Choose Core Java, Advanced Java, Code Examples, or Interview Practice.</p>
+<div class="subtabs">
+<button id="coreBtn" class="active2" onclick="showJavaPanel('core',this)">Core Java</button>
+<button onclick="showJavaPanel('advanced',this)">Advanced Java</button>
+<button onclick="showJavaPanel('code',this)">Code Examples</button>
+<button onclick="showJavaPanel('interview',this)">Interview Q&A</button>
+</div>
+
+<div id="javaCorePanel">
+<h3>Core Java Complete Tutorials</h3>
+<select id="coreTopic" onchange="showCoreTopic()">
+<option value="basics">1. Java Basics</option>
+<option value="variables">2. Variables & Data Types</option>
+<option value="control">3. Control Statements</option>
+<option value="oop">4. OOP Concepts</option>
+<option value="strings">5. String Handling</option>
+<option value="arrays">6. Arrays</option>
+<option value="collections">7. Collections Framework</option>
+<option value="exceptions">8. Exception Handling</option>
+<option value="fileio">9. File Handling</option>
+<option value="jdbc">10. JDBC Basics</option>
 </select>
-<div class="result" id="liveQuestion"></div>
-<button class="action" onclick="newLiveInterview()">New Interview Question</button>
-<button class="action secondary" onclick="showLiveAnswer()">Show Sample Answer</button>
-<button class="action secondary" onclick="speak('liveQuestion')">Listen Question</button>
-<div class="result" id="liveAnswer">Sample answer will appear here.</div>
+<div id="coreOut" class="result"></div>
+<button class="action" onclick="copy('coreOut')">Copy Core Notes</button>
+<button class="action secondary" onclick="speak('coreOut')">Listen</button>
 </div>
 
-<div class="card">
-<h3>Speak Your Interview Answer</h3>
-<button class="action" onclick="startVoice()">Start Speaking</button>
-<button class="action danger" onclick="stopVoice()">Stop</button>
-<textarea id="spokenText" rows="6" placeholder="Your spoken answer will appear here..."></textarea>
-<button class="action" onclick="analyzeSpeaking()">Analyze Speaking</button>
-<button class="action secondary" onclick="speakTextArea('spokenText')">Listen to My Answer</button>
-<div id="speakingFeedback" class="result">Speaking feedback will appear here.</div>
+<div id="javaAdvancedPanel" style="display:none">
+<h3>Advanced Java Complete Tutorials</h3>
+<select id="advancedTopic" onchange="showAdvancedTopic()">
+<option value="generics">1. Generics</option>
+<option value="collectionsInternal">2. Collections Internals</option>
+<option value="streams">3. Streams & Lambda</option>
+<option value="multithreading">4. Multithreading</option>
+<option value="executor">5. ExecutorService</option>
+<option value="future">6. CompletableFuture</option>
+<option value="jvm">7. JVM Memory</option>
+<option value="gc">8. Garbage Collection</option>
+<option value="solid">9. SOLID Principles</option>
+<option value="patterns">10. Design Patterns</option>
+<option value="testing">11. JUnit & Mockito</option>
+</select>
+<div id="advancedOut" class="result"></div>
+<button class="action" onclick="copy('advancedOut')">Copy Advanced Notes</button>
+<button class="action secondary" onclick="speak('advancedOut')">Listen</button>
 </div>
 
-<div class="grid">
-<div class="card"><h3>Pronunciation Words</h3><div id="pronunciationWords" class="result"></div><button class="action" onclick="newPronunciation()">New Words</button><button class="action secondary" onclick="speak('pronunciationWords')">Listen</button></div>
-<div class="card"><h3>Speaking Progress</h3><p>Speaking practice count: <span class="score" id="speakCount">0</span></p></div>
+<div id="javaCodePanel" style="display:none">
+<h3>Java Code Examples</h3>
+<select id="codeTopic" onchange="showCodeTopic()">
+<option value="classObj">Class and Object</option>
+<option value="encapsulation">Encapsulation</option>
+<option value="inheritance">Inheritance</option>
+<option value="arrayList">ArrayList</option>
+<option value="hashMap">HashMap</option>
+<option value="stream">Stream API</option>
+<option value="thread">Thread</option>
+<option value="future">CompletableFuture</option>
+</select>
+<pre id="codeOut"></pre>
+</div>
+
+<div id="javaInterviewPanel" style="display:none">
+<h3>Java Interview Q&A</h3>
+<p id="javaQ"></p>
+<button class="action" onclick="newJavaInterview()">New Java Question</button>
+<button class="action secondary" onclick="showJavaAnswer()">Show Answer</button>
+<div id="javaA" class="result"></div>
+</div>
 </div>
 </section>
 
-<section id="vocab" class="section"><div class="card"><h2>Vocabulary</h2><div id="vocabOut" class="result">Workplace: update, clarify, priority, deadline, blocker, collaborate, resolve, confirm, pending, completed.\nQA: defect, regression, validation, test case, expected result, actual result, reproducible.</div><button class="action secondary" onclick="speak('vocabOut')">Listen</button></div></section>
-<section id="grammar" class="section"><div class="card"><h2>Grammar Checker</h2><textarea id="grammarInput" rows="4" placeholder="Example: I have completed testing yesterday."></textarea><button class="action" onclick="loadGrammar()">Load Example</button><button class="action" onclick="checkGrammar()">Check Grammar</button><div id="grammarOut" class="result"></div></div></section>
-<section id="java" class="section"><div class="card"><h2>Java Tutorial</h2><div class="result">Java topics: OOP, Collections, Exceptions, Streams, Lambda, Generics, Multithreading, ExecutorService, CompletableFuture, JVM memory, Garbage Collection.</div></div></section>
 <section id="spring" class="section"><div class="card"><h2>Spring Boot Tutorial</h2><div class="result">Spring Boot topics: REST API, Controller, Service, Repository, JPA, Hibernate, Validation, Exception Handling, Security, JWT, Microservices.</div></div></section>
 <section id="selenium" class="section"><div class="card"><h2>Selenium Tutorial</h2><div class="result">Selenium topics: WebDriver, Locators, Waits, Actions, Dropdowns, Page Object Model, TestNG, Automation Framework.</div></div></section>
-<section id="notes" class="section"><div class="card"><h2>My Notes</h2><textarea id="notes" rows="9" placeholder="Write speaking feedback, interview answers, Java/Spring/Selenium notes..."></textarea><button class="action" onclick="saveNotes()">Save Notes</button><p id="saveMsg"></p></div></section>
+<section id="notes" class="section"><div class="card"><h2>My Notes</h2><textarea id="notes" rows="9" placeholder="Write Java notes and practice answers..."></textarea><button class="action" onclick="saveNotes()">Save Notes</button><p id="saveMsg"></p></div></section>
 </main>
 
 <script>
 if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js")}
-const interviews={
-hr:[
-{q:"Tell me about yourself.",a:"My name is Suresh. I work in QA and I have experience in testing, API validation, defect reporting, and automation learning. I am improving my English communication and technical skills every day."},
-{q:"What are your strengths?",a:"My strengths are attention to detail, ownership, continuous learning, and clear communication. I carefully validate requirements and report issues with proper evidence."},
-{q:"Why should we hire you?",a:"You should hire me because I have QA experience, I understand testing processes, and I am actively improving automation, Java, Selenium, and Spring Boot skills."}
-],
-qa:[
-{q:"What is regression testing?",a:"Regression testing verifies that new code changes did not break existing functionality. After a fix or new feature, I retest related areas to confirm the application still works correctly."},
-{q:"What details do you include in a defect?",a:"I include title, environment, steps to reproduce, expected result, actual result, screenshots, logs, test data, severity, and priority."},
-{q:"What is API testing?",a:"API testing validates request payload, response payload, status code, headers, authentication, authorization, and business rules without using the UI."}
-],
-java:[
-{q:"Explain OOP concepts.",a:"The four OOP concepts are encapsulation, inheritance, polymorphism, and abstraction. They help write reusable, maintainable, and organized code."},
-{q:"Difference between ArrayList and LinkedList?",a:"ArrayList uses a dynamic array and is faster for index-based access. LinkedList uses nodes and is better for frequent insertions and deletions."},
-{q:"What is HashMap internal working?",a:"HashMap stores key-value pairs. It uses hashCode to find the bucket. If collision happens, equals is used to identify the correct key. Java 8 can use tree structure for long collision chains."},
-{q:"What is Stream API?",a:"Stream API processes collections in a functional style. Common methods are filter, map, sorted, collect, and forEach. Streams are lazy until a terminal operation is called."}
-],
-spring:[
-{q:"What is Spring Boot?",a:"Spring Boot simplifies Spring application development using auto-configuration, starter dependencies, embedded servers, and production-ready features."},
-{q:"What is Dependency Injection?",a:"Dependency Injection means Spring provides required objects automatically instead of creating them manually. It improves loose coupling and testing."},
-{q:"What is @RestController?",a:"@RestController is used to create REST APIs. It returns response data directly, usually as JSON."},
-{q:"What is JWT?",a:"JWT is JSON Web Token. It is used for stateless authentication. After login, the client sends the token in the Authorization header for protected APIs."}
-],
-selenium:[
-{q:"What is Selenium WebDriver?",a:"Selenium WebDriver automates browser actions for testing web applications. It can click, type, read text, and validate UI behavior."},
-{q:"What is explicit wait?",a:"Explicit wait waits for a specific condition, such as element visibility or clickability, before continuing test execution."},
-{q:"What is Page Object Model?",a:"Page Object Model is a design pattern where each page has a separate class containing locators and actions. It improves reusability and maintenance."},
-{q:"Difference between close and quit?",a:"close closes the current browser window. quit closes all browser windows and ends the WebDriver session."}
-]
+
+const core = {
+basics:`Java Basics
+
+Java is an object-oriented, platform-independent programming language.
+
+Key points:
+- Java source file has .java extension.
+- Java compiler creates .class bytecode.
+- JVM executes bytecode.
+- JDK is used for development.
+- JRE is used for running Java applications.
+
+Simple program:
+public class Hello {
+  public static void main(String[] args) {
+    System.out.println("Hello Java");
+  }
+}
+
+Interview point:
+Java is platform independent because bytecode can run on any system with JVM.`,
+variables:`Variables & Data Types
+
+Variables store data.
+
+Primitive data types:
+byte, short, int, long, float, double, char, boolean.
+
+Non-primitive types:
+String, arrays, classes, interfaces.
+
+Example:
+int age = 30;
+String name = "Suresh";
+boolean active = true;
+
+Interview point:
+Primitive types store actual values. Reference types store object references.`,
+control:`Control Statements
+
+Control statements control program flow.
+
+Decision statements:
+if, if-else, switch.
+
+Looping statements:
+for, while, do-while, enhanced for.
+
+Jump statements:
+break, continue, return.
+
+Example:
+for(int i = 1; i <= 5; i++) {
+  System.out.println(i);
+}
+
+Interview point:
+Use enhanced for loop when index is not required.`,
+oop:`OOP Concepts
+
+Four pillars:
+1. Encapsulation - data hiding using private fields and public methods.
+2. Inheritance - child class reuses parent class features.
+3. Polymorphism - one name, many forms.
+4. Abstraction - hiding implementation details.
+
+Overloading:
+Same method name with different parameters.
+
+Overriding:
+Child class provides its own implementation of parent method.
+
+Interview point:
+OOP improves reusability, maintainability, and flexibility.`,
+strings:`String Handling
+
+String:
+Immutable object. Stored in String pool when created as literal.
+
+StringBuilder:
+Mutable, faster, not synchronized.
+
+StringBuffer:
+Mutable and synchronized.
+
+Important methods:
+length, charAt, substring, equals, contains, replace, split, trim.
+
+Interview point:
+String is immutable for security, caching, thread safety, and String pool optimization.`,
+arrays:`Arrays
+
+Array stores fixed-size elements of same type.
+
+Example:
+int[] nums = {1,2,3};
+
+Advantages:
+- Fast access using index.
+- Simple structure.
+
+Limitations:
+- Fixed size.
+- Same data type only.
+
+Interview point:
+Array index starts from 0.`,
+collections:`Collections Framework
+
+Collections store groups of objects.
+
+List:
+Ordered, allows duplicates.
+Examples: ArrayList, LinkedList.
+
+Set:
+No duplicates.
+Examples: HashSet, LinkedHashSet, TreeSet.
+
+Map:
+Key-value pairs.
+Examples: HashMap, LinkedHashMap, TreeMap.
+
+Queue:
+Processing order.
+Examples: PriorityQueue, ArrayDeque.
+
+Interview point:
+HashMap uses hashing internally. HashSet internally uses HashMap.`,
+exceptions:`Exception Handling
+
+Exception handling manages runtime errors.
+
+Keywords:
+try, catch, finally, throw, throws.
+
+Checked exceptions:
+Compile-time exceptions like IOException.
+
+Unchecked exceptions:
+Runtime exceptions like NullPointerException.
+
+Best practices:
+- Catch specific exceptions.
+- Avoid empty catch blocks.
+- Use try-with-resources.
+- Log useful error details.`,
+fileio:`File Handling
+
+Java supports file handling using java.io and java.nio.
+
+Common classes:
+File, FileReader, FileWriter, BufferedReader, Files, Paths.
+
+Modern approach:
+Files.readAllLines(Paths.get("file.txt"));
+
+Use cases:
+- Read files
+- Write files
+- Process logs
+- Store test data
+
+Interview point:
+java.nio is preferred for modern file operations.`,
+jdbc:`JDBC Basics
+
+JDBC connects Java applications to databases.
+
+Steps:
+1. Load driver.
+2. Create connection.
+3. Create PreparedStatement.
+4. Execute query.
+5. Process ResultSet.
+6. Close resources.
+
+Best practice:
+Use PreparedStatement to avoid SQL injection.
+
+Interview point:
+Use try-with-resources to close JDBC resources automatically.`
 };
-const words=["validation, requirement, automation, deployment, environment, regression, authentication, repository","controller, service, repository, entity, dependency, injection, configuration, microservice","selenium, webdriver, locator, explicit wait, assertion, framework, execution, browser","collections, hashmap, arraylist, exception, stream, lambda, optional, concurrency"];
-let current=interviews.hr[0], recognition;
+
+const advanced = {
+generics:`Generics
+
+Generics provide compile-time type safety.
+
+Example:
+List<String> names = new ArrayList<>();
+
+Benefits:
+- Avoids ClassCastException.
+- Removes manual casting.
+- Improves code readability.
+- Creates reusable classes and methods.
+
+Wildcards:
+? extends Number - read from Number or child.
+? super Integer - write Integer into Integer or parent.
+
+PECS:
+Producer Extends, Consumer Super.`,
+collectionsInternal:`Collections Internals
+
+ArrayList:
+Uses dynamic array. Fast random access.
+
+LinkedList:
+Uses doubly linked nodes. Good for frequent insert/delete.
+
+HashMap:
+Uses array of buckets and hashing.
+hashCode finds bucket.
+equals compares keys.
+Java 8 uses tree nodes when collision chain becomes large.
+
+ConcurrentHashMap:
+Thread-safe map with better concurrency than Hashtable.`,
+streams:`Streams & Lambda
+
+Lambda:
+Short syntax for functional interface implementation.
+
+Example:
+name -> name.startsWith("S")
+
+Streams:
+Process collections in functional style.
+
+Intermediate:
+filter, map, flatMap, sorted, distinct.
+
+Terminal:
+collect, forEach, reduce, count.
+
+Interview point:
+Streams are lazy; intermediate operations run only after terminal operation.`,
+multithreading:`Multithreading
+
+Multithreading allows concurrent execution.
+
+Ways:
+- Extend Thread
+- Implement Runnable
+- Implement Callable
+- Use ExecutorService
+
+Important:
+synchronized, volatile, deadlock, race condition, wait, notify, atomic classes.
+
+Interview point:
+volatile gives visibility, synchronized gives visibility plus locking.`,
+executor:`ExecutorService
+
+ExecutorService manages thread pools.
+
+Benefits:
+- Reuses threads.
+- Controls number of threads.
+- Better performance.
+- Easier task management.
+
+Common pools:
+newFixedThreadPool
+newCachedThreadPool
+newSingleThreadExecutor
+
+Methods:
+execute, submit, shutdown, invokeAll.`,
+future:`CompletableFuture
+
+CompletableFuture supports asynchronous programming.
+
+Benefits:
+- Non-blocking style.
+- Chain operations.
+- Combine multiple async tasks.
+
+Example:
+CompletableFuture.supplyAsync(() -> "java")
+.thenApply(String::toUpperCase)
+.thenAccept(System.out::println);
+
+Interview point:
+Useful for parallel API calls and background processing.`,
+jvm:`JVM Memory
+
+Main JVM memory areas:
+- Heap: objects
+- Stack: method calls and local variables
+- Method area: class metadata
+- PC register
+- Native method stack
+
+Heap:
+Young generation and old generation.
+
+Stack:
+Each thread has its own stack.
+
+Interview point:
+Objects live in heap; local primitive variables live in stack.`,
+gc:`Garbage Collection
+
+Garbage Collection removes unused objects.
+
+Object is eligible for GC when no active reference exists.
+
+Common collectors:
+Serial GC
+Parallel GC
+G1 GC
+ZGC
+
+Memory leak:
+Can still happen if unused objects are referenced.
+
+Interview point:
+System.gc() requests GC but does not guarantee immediate execution.`,
+solid:`SOLID Principles
+
+S - Single Responsibility:
+One class should have one responsibility.
+
+O - Open/Closed:
+Open for extension, closed for modification.
+
+L - Liskov Substitution:
+Child class should replace parent without breaking behavior.
+
+I - Interface Segregation:
+Use small specific interfaces.
+
+D - Dependency Inversion:
+Depend on abstraction, not concrete classes.`,
+patterns:`Design Patterns
+
+Common Java patterns:
+
+Singleton:
+Only one object.
+
+Factory:
+Centralized object creation.
+
+Builder:
+Creates complex objects step by step.
+
+Strategy:
+Change behavior dynamically.
+
+Observer:
+Notify multiple objects when state changes.
+
+DAO/Repository:
+Separate data access logic.
+
+Interview point:
+Use patterns when they solve real design problems.`,
+testing:`JUnit & Mockito
+
+JUnit:
+Used for unit testing.
+
+Mockito:
+Used for mocking dependencies.
+
+Common annotations:
+@Test
+@BeforeEach
+@Mock
+@InjectMocks
+
+Test structure:
+Arrange, Act, Assert.
+
+Best practices:
+- Keep tests small.
+- Mock external dependencies.
+- Test business logic.
+- Make tests repeatable.`
+};
+
+const code = {
+classObj:`public class Student {
+  String name;
+  int age;
+
+  void display() {
+    System.out.println(name + " - " + age);
+  }
+
+  public static void main(String[] args) {
+    Student s = new Student();
+    s.name = "Suresh";
+    s.age = 30;
+    s.display();
+  }
+}`,
+encapsulation:`public class Employee {
+  private int id;
+  private String name;
+
+  public int getId() {
+    return id;
+  }
+
+  public void setId(int id) {
+    this.id = id;
+  }
+}`,
+inheritance:`class Animal {
+  void sound() {
+    System.out.println("Animal sound");
+  }
+}
+
+class Dog extends Animal {
+  void sound() {
+    System.out.println("Bark");
+  }
+}`,
+arrayList:`import java.util.*;
+
+public class ArrayListDemo {
+  public static void main(String[] args) {
+    List<String> names = new ArrayList<>();
+    names.add("Suresh");
+    names.add("Ravi");
+    System.out.println(names);
+  }
+}`,
+hashMap:`import java.util.*;
+
+public class HashMapDemo {
+  public static void main(String[] args) {
+    Map<Integer, String> map = new HashMap<>();
+    map.put(101, "Suresh");
+    map.put(102, "Ravi");
+    System.out.println(map.get(101));
+  }
+}`,
+stream:`import java.util.*;
+import java.util.stream.*;
+
+public class StreamDemo {
+  public static void main(String[] args) {
+    List<String> names = Arrays.asList("Suresh", "Sai", "Ravi");
+    List<String> result = names.stream()
+      .filter(n -> n.startsWith("S"))
+      .collect(Collectors.toList());
+    System.out.println(result);
+  }
+}`,
+thread:`public class ThreadDemo extends Thread {
+  public void run() {
+    System.out.println("Thread running");
+  }
+
+  public static void main(String[] args) {
+    new ThreadDemo().start();
+  }
+}`,
+future:`import java.util.concurrent.*;
+
+public class FutureDemo {
+  public static void main(String[] args) {
+    CompletableFuture<String> future =
+      CompletableFuture.supplyAsync(() -> "java")
+        .thenApply(String::toUpperCase);
+
+    System.out.println(future.join());
+  }
+}`
+};
+
+const interview = [
+{q:"What is JVM, JRE, and JDK?",a:"JVM runs Java bytecode. JRE contains JVM and libraries to run applications. JDK contains JRE plus development tools like javac."},
+{q:"What are OOP concepts?",a:"The four OOP concepts are encapsulation, inheritance, polymorphism, and abstraction."},
+{q:"How does HashMap work internally?",a:"HashMap uses hashing. hashCode finds the bucket and equals compares keys. Collisions are handled using linked list or tree structure in Java 8."},
+{q:"What is Stream API?",a:"Stream API processes collections in functional style using methods like filter, map, sorted, collect, and reduce."},
+{q:"What is CompletableFuture?",a:"CompletableFuture is used for asynchronous programming and allows chaining and combining non-blocking tasks."}
+];
+let currentInterview = interview[0];
+
 function show(id,b){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}
-function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function showJavaPanel(panel,btn){document.getElementById('javaCorePanel').style.display=panel==='core'?'block':'none';document.getElementById('javaAdvancedPanel').style.display=panel==='advanced'?'block':'none';document.getElementById('javaCodePanel').style.display=panel==='code'?'block':'none';document.getElementById('javaInterviewPanel').style.display=panel==='interview'?'block':'none';document.querySelectorAll('.subtabs button').forEach(x=>x.classList.remove('active2'));btn.classList.add('active2')}
+function showCoreTopic(){document.getElementById('coreOut').innerText=core[document.getElementById('coreTopic').value]}
+function showAdvancedTopic(){document.getElementById('advancedOut').innerText=advanced[document.getElementById('advancedTopic').value]}
+function showCodeTopic(){document.getElementById('codeOut').innerText=code[document.getElementById('codeTopic').value]}
+function newJavaInterview(){currentInterview=interview[Math.floor(Math.random()*interview.length)];document.getElementById('javaQ').innerText=currentInterview.q;document.getElementById('javaA').innerText=''}
+function showJavaAnswer(){document.getElementById('javaA').innerText=currentInterview.a}
 function speak(id){let u=new SpeechSynthesisUtterance(document.getElementById(id).innerText);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u)}
-function speakTextArea(id){let u=new SpeechSynthesisUtterance(document.getElementById(id).value);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u)}
-function newLiveInterview(){let m=document.getElementById('interviewMode').value;current=pick(interviews[m]);document.getElementById('liveQuestion').innerText='Interviewer: '+current.q;document.getElementById('liveAnswer').innerText='Sample answer will appear here.'}
-function showLiveAnswer(){document.getElementById('liveAnswer').innerText='Sample Answer:\n'+current.a}
-function correctText(t){return t.replace(/I have completed testing yesterday/gi,'I completed testing yesterday').replace(/I am working in this issue/gi,'I am working on this issue').replace(/I did not seen/gi,'I did not see').replace(/I have one doubt/gi,'I have one question')}
-function startVoice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){document.getElementById('speakingFeedback').innerText='Voice recognition not supported. Use Chrome on Android.';return}recognition=new SR();recognition.lang='en-US';recognition.continuous=true;recognition.interimResults=true;recognition.onresult=e=>{let t='';for(let i=0;i<e.results.length;i++){t+=e.results[i][0].transcript+' '}document.getElementById('spokenText').value=t.trim()};recognition.start();document.getElementById('speakingFeedback').innerText='Listening... Speak clearly.'}
-function stopVoice(){if(recognition)recognition.stop();document.getElementById('speakingFeedback').innerText='Stopped. Click Analyze Speaking.'}
-function analyzeSpeaking(){let t=document.getElementById('spokenText').value.trim();if(!t){document.getElementById('speakingFeedback').innerText='Please speak first.';return}let w=t.split(/\s+/).length;let c=correctText(t);let score=70+(w>=20?10:0)+(w>=40?10:0)-(t!==c?5:0);document.getElementById('speakingFeedback').innerText='Words spoken: '+w+'\nSpeaking score: '+score+'/100\n\nYour answer:\n'+t+'\n\nSuggested correction:\n'+c+'\n\nCompare with sample answer and try again.';markSpeaking()}
-function newPronunciation(){document.getElementById('pronunciationWords').innerText=pick(words)}
-function markSpeaking(){let c=Number(localStorage.getItem('speakCountV11')||'0')+1;localStorage.setItem('speakCountV11',c);update()}
+function copy(id){navigator.clipboard.writeText(document.getElementById(id).innerText);alert('Copied')}
+function correctText(t){return t.replace(/I have completed testing yesterday/gi,'I completed testing yesterday').replace(/I am working in this issue/gi,'I am working on this issue').replace(/I did not seen/gi,'I did not see')}
 function loadGrammar(){document.getElementById('grammarInput').value='I have completed testing yesterday.';checkGrammar()}
-function checkGrammar(){let t=document.getElementById('grammarInput').value;if(!t){document.getElementById('grammarOut').innerText='Please type a sentence.';return}document.getElementById('grammarOut').innerText='Suggested sentence:\n'+correctText(t)}
-function markDone(){let d=new Date().toDateString(),last=localStorage.getItem('dayV11'),st=Number(localStorage.getItem('streakV11')||'0');if(d!==last){st++;localStorage.setItem('dayV11',d);localStorage.setItem('streakV11',st)}update()}
-function saveNotes(){localStorage.setItem('notesV11',document.getElementById('notes').value);document.getElementById('saveMsg').innerText='Saved.'}
-function update(){document.getElementById('streak').innerText=localStorage.getItem('streakV11')||'0';document.getElementById('speakCount').innerText=localStorage.getItem('speakCountV11')||'0';document.getElementById('notes').value=localStorage.getItem('notesV11')||''}
-window.onload=()=>{newLiveInterview();newPronunciation();update()}
+function checkGrammar(){document.getElementById('grammarOut').innerText='Suggested sentence:\n'+correctText(document.getElementById('grammarInput').value)}
+function newTodayJava(){let arr=['Study Core Java OOP Concepts','Practice HashMap internal working','Review Stream API and Lambda','Practice ExecutorService','Revise JVM Memory and Garbage Collection'];document.getElementById('todayJava').innerText=arr[Math.floor(Math.random()*arr.length)]}
+function markDone(){let d=new Date().toDateString(),last=localStorage.getItem('dayV13'),st=Number(localStorage.getItem('streakV13')||'0');if(d!==last){st++;localStorage.setItem('dayV13',d);localStorage.setItem('streakV13',st)}update()}
+function saveNotes(){localStorage.setItem('notesV13',document.getElementById('notes').value);document.getElementById('saveMsg').innerText='Saved.'}
+function update(){document.getElementById('streak').innerText=localStorage.getItem('streakV13')||'0';document.getElementById('notes').value=localStorage.getItem('notesV13')||''}
+window.onload=()=>{showCoreTopic();showAdvancedTopic();showCodeTopic();newJavaInterview();newTodayJava();update()}
 </script>
 </body>
 </html>
