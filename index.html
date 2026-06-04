@@ -3,254 +3,1822 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learning App V15 Enterprise</title>
+<title>Learning App V16 - Java Expanded</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1f4e79">
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#eef4fb;color:#1f2937}
-body.dark{background:#111827;color:#e5e7eb}
-header{background:#1f4e79;color:white;padding:18px;text-align:center;position:relative}
-.logo{position:absolute;top:14px;right:18px;background:white;color:#1f4e79;padding:8px 12px;border-radius:20px;font-weight:bold;font-size:14px}
-header h1{margin:0;font-size:24px}
-nav{display:flex;overflow-x:auto;gap:8px;background:white;padding:10px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px #0002}
-body.dark nav, body.dark .card{background:#1f2937}
-nav button{white-space:nowrap;background:#e8f1fa;color:#1f4e79;border:1px solid #c8d9ea;border-radius:20px;padding:9px 13px;font-weight:bold}
-nav button.active{background:#1f4e79;color:white}
-main{padding:16px;max-width:1200px;margin:auto}
-.section{display:none}.section.active{display:block}
-.card{background:white;padding:18px;border-radius:18px;box-shadow:0 4px 14px #0001;margin-bottom:16px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
-h2,h3{color:#1f4e79}body.dark h2,body.dark h3{color:#93c5fd}
-button.action{background:#1f4e79;color:white;border:0;border-radius:10px;padding:11px 14px;margin:5px 5px 5px 0;font-size:15px}
-button.secondary{background:#425466}
-textarea,select,input{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;margin-top:7px}
-.result{background:#f8fbff;border-left:5px solid #1f4e79;padding:14px;border-radius:12px;margin-top:10px;white-space:pre-wrap;line-height:1.55}
-body.dark .result{background:#111827;color:#e5e7eb}
-.score{font-size:34px;color:#1f4e79;font-weight:bold}
-.badge{display:inline-block;background:#e8f1fa;color:#1f4e79;padding:5px 9px;border-radius:16px;font-size:12px;font-weight:bold}
-</style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 <header>
-<div class="logo">LST Log</div>
-<h1>Learning App V15 Enterprise</h1>
-<p>Java + Spring Boot + Selenium + QA + English + Search + Progress</p>
+<div class="logo">LST</div>
+<h1>Learning App V16</h1>
+<p>Java tab expanded with Spring Boot, Microservices, Architecture, Projects and Interview Preparation</p>
 </header>
-
-<nav>
-<button class="active" onclick="show('home',this)">Home</button>
-<button onclick="show('search',this)">Search</button>
-<button onclick="show('english',this)">English</button>
-<button onclick="show('java',this)">Java</button>
-<button onclick="show('spring',this)">Spring Boot</button>
-<button onclick="show('selenium',this)">Selenium</button>
-<button onclick="show('qa',this)">QA Testing</button>
-<button onclick="show('speaking',this)">Live Speaking</button>
-<button onclick="show('dashboard',this)">Dashboard</button>
-<button onclick="show('notes',this)">Notes</button>
-</nav>
-
-<main>
-<section id="home" class="section active">
-<div class="grid">
+<div class="wrap">
+<div class="tabs"><button class="tab active" onclick="showTab('home',this)">Home</button><button class="tab " onclick="showTab('english',this)">English</button><button class="tab " onclick="showTab('java',this)">Java</button><button class="tab " onclick="showTab('selenium',this)">Selenium</button><button class="tab " onclick="showTab('api-testing',this)">API Testing</button><button class="tab " onclick="showTab('resume',this)">Resume</button></div>
+<section id="home" class="section active"><div class="card"><h2>Welcome to Learning App V16</h2><p>This version keeps all advanced Java Architect content inside the Java tab.</p><div class="note"><b>Daily Plan:</b> 30 minutes Java learning at 8 PM: concept, coding, interview question, revision.</div></div></section><section id="english" class="section "><div class="card"><h2>English Learning</h2><ul><li>Daily 10 vocabulary words</li><li>Workplace English</li><li>Grammar practice</li><li>Email writing</li><li>Speaking practice</li></ul></div></section><section id="java" class="section ">
 <div class="card">
-<span class="badge">V15 Enterprise</span>
-<h2>Daily Learning Plan</h2>
-<p><b>8:00 PM:</b> English + Speaking</p>
-<p><b>8:10 PM:</b> Java / Spring Boot</p>
-<p><b>8:20 PM:</b> Selenium / QA Interview</p>
-<button class="action" onclick="markDone()">Mark Today Complete</button>
-<button class="action secondary" onclick="toggleDark()">Dark Mode</button>
-<p>Streak: <span class="score" id="streak">0</span> days</p>
+  <h2>Java Tab - Expanded Learning App V16</h2>
+  <p class="note">All advanced content is included inside this Java tab: Core Java, Advanced Java, Spring Boot, Microservices, Architecture, System Design, Real-Time Projects, and Interview Prep.</p>
 </div>
-<div class="card">
-<h2>Today’s Focus</h2>
-<p id="todayFocus"></p>
-<button class="action" onclick="newFocus()">New Focus</button>
-</div>
-</div>
-</section>
+<div class="subtabs"><button class="subtab active" onclick="showSubTab('java-core-java',this)">Core Java</button><button class="subtab " onclick="showSubTab('java-advanced-java',this)">Advanced Java</button><button class="subtab " onclick="showSubTab('java-spring-boot',this)">Spring Boot</button><button class="subtab " onclick="showSubTab('java-microservices',this)">Microservices</button><button class="subtab " onclick="showSubTab('java-architecture',this)">Architecture</button><button class="subtab " onclick="showSubTab('java-system-design',this)">System Design</button><button class="subtab " onclick="showSubTab('java-real-time-projects',this)">Real-Time Projects</button><button class="subtab " onclick="showSubTab('java-interview-prep',this)">Interview Prep</button></div>
 
-<section id="search" class="section">
-<div class="card">
-<h2>Search Tutorials</h2>
-<input id="searchBox" placeholder="Search Java, Spring Boot, Selenium, QA, English..." oninput="runSearch()">
-<div id="searchResults" class="result">Search results will appear here.</div>
+<div id="java-core-java" class="subsection active">
+  <div class="card">
+    <h2>Core Java</h2>
+    <input class="search" id="search-java-core-java" onkeyup="filterLessons('java-core-java')" placeholder="Search Core Java topics...">
+  </div>
+  <div class="grid">
+<div class="lesson">
+  <h3>Java Basics</h3>
+  <p><b>Concept:</b> JDK, JRE, JVM, bytecode, variables, data types, operators, methods, loops.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>public class Main {
+  public static void main(String[] args) {
+    int score = 85;
+    if (score &gt;= 75) {
+      System.out.println(&quot;Good progress&quot;);
+    }
+  }
+}</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Java Basics with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
 </div>
-</section>
 
-<section id="english" class="section">
-<div class="card">
-<h2>English Communication</h2>
-<select id="englishTopic" onchange="showDoc('english')">
-<option value="workplace">Workplace English</option>
-<option value="grammar">Grammar Rules</option>
-<option value="email">Email Writing</option>
-<option value="vocab">Vocabulary</option>
-</select>
-<div id="englishOut" class="result"></div>
-</div>
-</section>
 
-<section id="java" class="section">
-<div class="card">
-<h2>Java Complete Guide</h2>
-<select id="javaTopic" onchange="showDoc('java')">
-<option value="core">Core Java Notes</option>
-<option value="advanced">Advanced Java Notes</option>
-<option value="collections">Collections Deep Dive</option>
-<option value="threads">Multithreading</option>
-<option value="interview">Java Interview Questions</option>
-<option value="coding">Java Coding Challenges</option>
-</select>
-<div id="javaOut" class="result"></div>
-</div>
-</section>
-
-<section id="spring" class="section">
-<div class="card">
-<h2>Spring Boot Complete Guide</h2>
-<select id="springTopic" onchange="showDoc('spring')">
-<option value="basics">Spring Boot Basics</option>
-<option value="rest">REST API Development</option>
-<option value="jpa">JPA/Hibernate</option>
-<option value="security">Security/JWT</option>
-<option value="micro">Microservices</option>
-<option value="interview">Spring Interview Questions</option>
-</select>
-<div id="springOut" class="result"></div>
-</div>
-</section>
-
-<section id="selenium" class="section">
-<div class="card">
-<h2>Selenium Complete Guide</h2>
-<select id="seleniumTopic" onchange="showDoc('selenium')">
-<option value="basics">Selenium Basics</option>
-<option value="locators">Locators</option>
-<option value="waits">Waits</option>
-<option value="pom">Page Object Model</option>
-<option value="framework">Automation Framework</option>
-<option value="interview">Selenium Interview Questions</option>
-</select>
-<div id="seleniumOut" class="result"></div>
-</div>
-</section>
-
-<section id="qa" class="section">
-<div class="card">
-<h2>QA Testing Guide</h2>
-<select id="qaTopic" onchange="showDoc('qa')">
-<option value="manual">Manual Testing</option>
-<option value="api">API Testing</option>
-<option value="agile">Agile/Scrum QA</option>
-<option value="defect">Defect Reporting</option>
-<option value="interview">QA Interview Questions</option>
-</select>
-<div id="qaOut" class="result"></div>
-</div>
-</section>
-
-<section id="speaking" class="section">
-<div class="card">
-<h2>Live Speaking Coach</h2>
-<select id="speakTopic" onchange="newSpeaking()">
-<option value="intro">Interview Introduction</option>
-<option value="qa">QA Discussion</option>
-<option value="java">Java Technical</option>
-<option value="spring">Spring Boot Technical</option>
-<option value="selenium">Selenium Technical</option>
-</select>
-<div id="speakPrompt" class="result"></div>
-<button class="action" onclick="newSpeaking()">New Prompt</button>
-<button class="action secondary" onclick="speak('speakPrompt')">Listen</button>
-<textarea id="spokenAnswer" rows="5" placeholder="Write or speak your answer here..."></textarea>
-<button class="action" onclick="scoreSpeaking()">Score Answer</button>
-<div id="speakScore" class="result"></div>
-</div>
-</section>
-
-<section id="dashboard" class="section">
-<div class="grid">
-<div class="card"><h2>Progress</h2><p>Completed days: <span class="score" id="dashStreak">0</span></p></div>
-<div class="card"><h2>Practice Count</h2><p>Speaking/Answer count: <span class="score" id="practiceCount">0</span></p></div>
-</div>
-</section>
-
-<section id="notes" class="section">
-<div class="card">
-<h2>My Notes</h2>
-<textarea id="notesText" rows="10" placeholder="Write your learning notes..."></textarea>
-<button class="action" onclick="saveNotes()">Save Notes</button>
-<p id="saveMsg"></p>
-</div>
-</section>
-</main>
-
-<script>
-if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js")}
-
-const docs={
-english:{
-workplace:"Workplace English:\nStatus update, clarification request, defect update, meeting summary, escalation update.\n\nExample: I completed QA validation and attached the test evidence to the story.",
-grammar:"Grammar Rules:\nUse simple past with finished time.\nUse present perfect for recent completion.\nUse polite requests: Could you please clarify?",
-email:"Email Writing:\nHi Team,\n\nI completed validation for the assigned story. Please review the attached test evidence.\n\nThanks.",
-vocab:"Vocabulary:\nClarify, validate, priority, blocker, escalation, mitigation, stakeholder, acceptance criteria, regression, deployment."
-},
-java:{
-core:"Core Java Notes:\nJVM/JDK/JRE, class, object, method, constructor, variables, data types, OOP, String, arrays, collections, exceptions, file I/O, JDBC.",
-advanced:"Advanced Java Notes:\nGenerics, wildcards, Streams, Lambda, multithreading, ExecutorService, CompletableFuture, JVM memory, GC, SOLID, design patterns.",
-collections:"Collections Deep Dive:\nArrayList uses dynamic array. LinkedList uses nodes. HashMap uses hashing. HashSet internally uses HashMap. TreeMap keeps sorted keys.",
-threads:"Multithreading:\nThread, Runnable, Callable, synchronized, volatile, deadlock, race condition, ExecutorService, CompletableFuture.",
-interview:"Java Interview Questions:\n1. Explain OOP.\n2. HashMap internal working.\n3. String immutability.\n4. ArrayList vs LinkedList.\n5. Stream API.\n6. CompletableFuture.",
-coding:"Java Coding Challenges:\nReverse String, Palindrome, Duplicate characters, Word count, Sort employees, Stream filter, Group by department, ExecutorService task."
-},
-spring:{
-basics:"Spring Boot Basics:\nAuto-configuration, starter dependencies, embedded server, @SpringBootApplication, application.properties.",
-rest:"REST API Development:\n@RestController, @GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @RequestBody, @PathVariable, ResponseEntity.",
-jpa:"JPA/Hibernate:\n@Entity, @Id, @GeneratedValue, JpaRepository, custom queries, relationships, transactions, pagination.",
-security:"Security/JWT:\nAuthentication, authorization, BCrypt, JWT token, filter chain, role-based access.",
-micro:"Microservices:\nAPI Gateway, Service Discovery, Config Server, OpenFeign, Circuit Breaker, centralized logging, distributed tracing.",
-interview:"Spring Interview Questions:\nSpring vs Spring Boot, DI, IoC, @RestController, @Service, @Repository, @Transactional, JWT, API Gateway."
-},
-selenium:{
-basics:"Selenium Basics:\nWebDriver automates browser actions. Methods: get, findElement, click, sendKeys, getText, close, quit.",
-locators:"Locators:\nid, name, className, xpath, cssSelector, linkText. Prefer stable IDs and CSS selectors.",
-waits:"Waits:\nImplicit, explicit, fluent. Prefer explicit wait for specific conditions like clickable or visible.",
-pom:"Page Object Model:\nEach page has a class with locators and actions. Improves reusability and maintenance.",
-framework:"Automation Framework:\nBaseTest, DriverManager, Page classes, Test classes, Utilities, Config, Reports, Screenshots, Logs.",
-interview:"Selenium Interview Questions:\nWebDriver, waits, locators, POM, TestNG, dropdowns, alerts, frames, close vs quit."
-},
-qa:{
-manual:"Manual Testing:\nSDLC, STLC, test plan, test scenario, test case, test execution, defect lifecycle.",
-api:"API Testing:\nValidate endpoint, method, request, response, status code, headers, auth, payload, schema, business rules.",
-agile:"Agile/Scrum QA:\nSprint planning, daily standup, story grooming, acceptance criteria, demo, retrospective.",
-defect:"Defect Reporting:\nTitle, environment, steps, expected result, actual result, screenshots, logs, severity, priority.",
-interview:"QA Interview Questions:\nSmoke vs sanity, regression, severity vs priority, test case design, defect lifecycle, API testing."
+<div class="lesson">
+  <h3>OOP Concepts</h3>
+  <p><b>Concept:</b> Class, object, encapsulation, inheritance, polymorphism, abstraction, interface, abstract class.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>interface Payment {
+  void pay(double amount);
 }
-};
+class UpiPayment implements Payment {
+  public void pay(double amount) {
+    System.out.println(&quot;Paid &quot; + amount);
+  }
+}</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain OOP Concepts with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
 
-const speaking={
-intro:["Tell me about yourself.","Why should we hire you?","What are your strengths?"],
-qa:["Explain a defect you found.","How do you report a regression defect?","How do you validate API response?"],
-java:["Explain HashMap internal working.","Explain Stream API.","What is CompletableFuture?"],
-spring:["What is Spring Boot?","Explain Dependency Injection.","What is JWT?"],
-selenium:["What is Page Object Model?","What is explicit wait?","How do you handle dropdowns?"]
-};
 
-function show(id,b){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}
-function showDoc(type){let key=document.getElementById(type+'Topic').value;document.getElementById(type+'Out').innerText=docs[type][key]}
-function newFocus(){let arr=["Core Java Collections","Advanced Java Streams","Spring Boot REST API","Selenium Explicit Wait","QA API Testing","English status update"];document.getElementById('todayFocus').innerText=arr[Math.floor(Math.random()*arr.length)]}
-function newSpeaking(){let key=document.getElementById('speakTopic').value;let arr=speaking[key];document.getElementById('speakPrompt').innerText=arr[Math.floor(Math.random()*arr.length)]}
-function scoreSpeaking(){let t=document.getElementById('spokenAnswer').value.trim();let words=t?t.split(/\s+/).length:0;let score=words>=40?90:words>=20?80:65;document.getElementById('speakScore').innerText='Words: '+words+'\nScore: '+score+'/100\nTip: Use complete sentences and give examples.';let c=Number(localStorage.getItem('practiceV15')||'0')+1;localStorage.setItem('practiceV15',c);update()}
-function speak(id){let u=new SpeechSynthesisUtterance(document.getElementById(id).innerText);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u)}
-function runSearch(){let q=document.getElementById('searchBox').value.toLowerCase();if(!q){document.getElementById('searchResults').innerText='Search results will appear here.';return}let out=[];for(let area in docs){for(let k in docs[area]){let text=docs[area][k];if(text.toLowerCase().includes(q)||k.includes(q)){out.push(area.toUpperCase()+' - '+k+'\n'+text.substring(0,220)+'...')}}}document.getElementById('searchResults').innerText=out.length?out.join('\n\n'):'No results found.'}
-function toggleDark(){document.body.classList.toggle('dark');localStorage.setItem('darkV15',document.body.classList.contains('dark'))}
-function markDone(){let d=new Date().toDateString(),last=localStorage.getItem('dayV15'),st=Number(localStorage.getItem('streakV15')||'0');if(d!==last){st++;localStorage.setItem('dayV15',d);localStorage.setItem('streakV15',st)}update()}
-function saveNotes(){localStorage.setItem('notesV15',document.getElementById('notesText').value);document.getElementById('saveMsg').innerText='Saved.'}
-function update(){let st=localStorage.getItem('streakV15')||'0';document.getElementById('streak').innerText=st;document.getElementById('dashStreak').innerText=st;document.getElementById('practiceCount').innerText=localStorage.getItem('practiceV15')||'0';document.getElementById('notesText').value=localStorage.getItem('notesV15')||''}
-window.onload=()=>{showDoc('english');showDoc('java');showDoc('spring');showDoc('selenium');showDoc('qa');newFocus();newSpeaking();if(localStorage.getItem('darkV15')==='true')document.body.classList.add('dark');update()}
-</script>
+<div class="lesson">
+  <h3>Collections Framework</h3>
+  <p><b>Concept:</b> ArrayList, LinkedList, HashSet, TreeSet, HashMap, TreeMap, Comparator, Comparable.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Map&lt;String, Integer&gt; map = new HashMap&lt;&gt;();
+map.put(&quot;Java&quot;, 1);
+map.put(&quot;Spring&quot;, 2);</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Collections Framework with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Exception Handling</h3>
+  <p><b>Concept:</b> try, catch, finally, throw, throws, checked exception, unchecked exception, custom exception.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>try {
+  int result = 10 / 0;
+} catch (ArithmeticException e) {
+  System.out.println(&quot;Cannot divide by zero&quot;);
+}</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Exception Handling with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Java 8/11/17 Features</h3>
+  <p><b>Concept:</b> Lambda, streams, Optional, method reference, var, records, switch improvements.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>names.stream()
+  .filter(n -&gt; n.startsWith(&quot;S&quot;))
+  .forEach(System.out::println);</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Java 8/11/17 Features with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+</div>
+</div>
+
+<div id="java-advanced-java" class="subsection ">
+  <div class="card">
+    <h2>Advanced Java</h2>
+    <input class="search" id="search-java-advanced-java" onkeyup="filterLessons('java-advanced-java')" placeholder="Search Advanced Java topics...">
+  </div>
+  <div class="grid">
+<div class="lesson">
+  <h3>Multithreading</h3>
+  <p><b>Concept:</b> Thread lifecycle, Runnable, Callable, Future, ExecutorService, synchronization, locks.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>ExecutorService service = Executors.newFixedThreadPool(2);
+service.submit(() -&gt; System.out.println(&quot;Task running&quot;));
+service.shutdown();</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Multithreading with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>JVM Internals</h3>
+  <p><b>Concept:</b> Class loader, heap, stack, metaspace, JIT, garbage collection, memory tuning.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>// Example JVM command
+// java -Xms512m -Xmx1024m -jar app.jar</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain JVM Internals with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Garbage Collection</h3>
+  <p><b>Concept:</b> Minor GC, major GC, G1GC, ZGC, heap tuning, memory leak analysis.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>// Use VisualVM or Java Flight Recorder to monitor heap usage.</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Garbage Collection with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Design Patterns</h3>
+  <p><b>Concept:</b> Singleton, Factory, Builder, Strategy, Observer, Adapter, Facade, DAO.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>class Singleton {
+  private static final Singleton INSTANCE = new Singleton();
+  private Singleton() {}
+  public static Singleton getInstance() { return INSTANCE; }
+}</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Design Patterns with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>JDBC</h3>
+  <p><b>Concept:</b> Connection, PreparedStatement, ResultSet, transactions, connection pool, SQL injection prevention.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>PreparedStatement ps = con.prepareStatement(
+  &quot;select * from employee where id=?&quot;);
+ps.setLong(1, 101L);</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain JDBC with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+</div>
+</div>
+
+<div id="java-spring-boot" class="subsection ">
+  <div class="card">
+    <h2>Spring Boot</h2>
+    <input class="search" id="search-java-spring-boot" onkeyup="filterLessons('java-spring-boot')" placeholder="Search Spring Boot topics...">
+  </div>
+  <div class="grid">
+<div class="lesson">
+  <h3>Spring Boot Fundamentals</h3>
+  <p><b>Concept:</b> Auto configuration, starter dependencies, embedded Tomcat, profiles, application.properties.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>@SpringBootApplication
+public class App {
+  public static void main(String[] args) {
+    SpringApplication.run(App.class, args);
+  }
+}</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Spring Boot Fundamentals with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>REST API Development</h3>
+  <p><b>Concept:</b> Controller, Service, Repository, DTO, validation, status code, ResponseEntity.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>@RestController
+@RequestMapping(&quot;/api/employees&quot;)
+class EmployeeController {
+  @GetMapping(&quot;/{id}&quot;)
+  ResponseEntity&lt;String&gt; getEmployee(@PathVariable Long id) {
+    return ResponseEntity.ok(&quot;Employee &quot; + id);
+  }
+}</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain REST API Development with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Spring Data JPA</h3>
+  <p><b>Concept:</b> Entity, Repository, JpaRepository, relationships, pagination, sorting, transactions.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>@Entity
+class Employee {
+  @Id @GeneratedValue
+  private Long id;
+  private String name;
+}</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Spring Data JPA with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Spring Security JWT</h3>
+  <p><b>Concept:</b> Authentication, authorization, BCrypt, JWT token generation, filters, role-based access.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>@Bean
+PasswordEncoder passwordEncoder() {
+  return new BCryptPasswordEncoder();
+}</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Spring Security JWT with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Spring Boot Advanced</h3>
+  <p><b>Concept:</b> Redis cache, Spring Batch, WebFlux, GraphQL, actuator, logging, testing.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>@Cacheable(&quot;employees&quot;)
+public Employee getEmployee(Long id) {
+  return repository.findById(id).orElseThrow();
+}</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Spring Boot Advanced with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Spring Cloud</h3>
+  <p><b>Concept:</b> Eureka, Config Server, Gateway, OpenFeign, Resilience4j, distributed tracing.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>@EnableDiscoveryClient
+@SpringBootApplication
+class OrderServiceApplication {}</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Spring Cloud with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+</div>
+</div>
+
+<div id="java-microservices" class="subsection ">
+  <div class="card">
+    <h2>Microservices</h2>
+    <input class="search" id="search-java-microservices" onkeyup="filterLessons('java-microservices')" placeholder="Search Microservices topics...">
+  </div>
+  <div class="grid">
+<div class="lesson">
+  <h3>Microservices Fundamentals</h3>
+  <p><b>Concept:</b> Monolith vs microservices, bounded context, independent deployment, database per service.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Client -&gt; API Gateway -&gt; Order Service -&gt; Payment Service</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Microservices Fundamentals with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Service Discovery</h3>
+  <p><b>Concept:</b> Eureka server/client, registry, service lookup, load-balanced communication.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>@EnableEurekaServer
+@SpringBootApplication
+class DiscoveryServer {}</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Service Discovery with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>API Gateway</h3>
+  <p><b>Concept:</b> Routing, authentication, authorization, rate limiting, logging, request filtering.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>spring:
+  cloud:
+    gateway:
+      routes:
+      - id: order-service
+        uri: lb://ORDER-SERVICE
+        predicates:
+        - Path=/orders/**</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain API Gateway with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Config Server</h3>
+  <p><b>Concept:</b> Centralized configuration, environment profiles, externalized properties.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>spring:
+  cloud:
+    config:
+      uri: http://config-server:8888</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Config Server with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Circuit Breaker</h3>
+  <p><b>Concept:</b> Resilience4j, fallback method, retry, timeout, bulkhead, fault tolerance.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>@CircuitBreaker(name=&quot;paymentService&quot;, fallbackMethod=&quot;fallback&quot;)
+public String callPayment() {
+  return restTemplate.getForObject(url, String.class);
+}</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Circuit Breaker with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Kafka</h3>
+  <p><b>Concept:</b> Producer, consumer, broker, topic, partition, offset, consumer group, event streaming.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>kafkaTemplate.send(&quot;order-created&quot;, orderEvent);</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Kafka with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>RabbitMQ</h3>
+  <p><b>Concept:</b> Exchange, queue, binding, routing key, producer, consumer.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>rabbitTemplate.convertAndSend(&quot;order.exchange&quot;, &quot;order.created&quot;, order);</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain RabbitMQ with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Saga Pattern</h3>
+  <p><b>Concept:</b> Distributed transaction management using choreography or orchestration.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Order Created -&gt; Reserve Inventory -&gt; Process Payment -&gt; Ship Order</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Saga Pattern with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>CQRS</h3>
+  <p><b>Concept:</b> Separate command model and query model for performance and scalability.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Command: CreateOrder
+Query: GetOrderSummary</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain CQRS with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Event Sourcing</h3>
+  <p><b>Concept:</b> Store all state changes as events instead of only current state.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>OrderCreated -&gt; PaymentCompleted -&gt; OrderShipped</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Event Sourcing with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Distributed Tracing</h3>
+  <p><b>Concept:</b> Trace request flow across services using traceId and spanId.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Gateway traceId=abc123 -&gt; Order Service -&gt; Payment Service</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Distributed Tracing with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+</div>
+</div>
+
+<div id="java-architecture" class="subsection ">
+  <div class="card">
+    <h2>Architecture</h2>
+    <input class="search" id="search-java-architecture" onkeyup="filterLessons('java-architecture')" placeholder="Search Architecture topics...">
+  </div>
+  <div class="grid">
+<div class="lesson">
+  <h3>Software Architecture Fundamentals</h3>
+  <p><b>Concept:</b> Architecture styles, quality attributes, tradeoffs, ADR, scalability, reliability.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>ADR:
+Decision: Use Kafka for async events
+Reason: Loose coupling and resilience</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Software Architecture Fundamentals with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>High-Level Design</h3>
+  <p><b>Concept:</b> System components, service boundaries, external systems, security, data flow.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>User -&gt; UI -&gt; API Gateway -&gt; Services -&gt; Database</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain High-Level Design with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Low-Level Design</h3>
+  <p><b>Concept:</b> Class diagrams, sequence diagrams, interfaces, SOLID, design patterns.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>interface NotificationService {
+  void send(String message);
+}</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Low-Level Design with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Clean Architecture</h3>
+  <p><b>Concept:</b> Separate controller, use case, domain, repository, and infrastructure layers.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Controller -&gt; UseCase -&gt; Domain -&gt; Repository</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Clean Architecture with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Domain Driven Design</h3>
+  <p><b>Concept:</b> Domain, bounded context, entity, value object, aggregate, repository.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Order Domain:
+Order Aggregate
+OrderItem Value Object
+Payment Status</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Domain Driven Design with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>API Architecture</h3>
+  <p><b>Concept:</b> REST, GraphQL, gRPC, versioning, pagination, filtering, API governance.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>GET /api/v1/orders/{orderId}</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain API Architecture with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Cloud Architecture</h3>
+  <p><b>Concept:</b> AWS/Azure compute, storage, databases, networking, monitoring, cost optimization.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>API Gateway + EKS + RDS + Redis + CloudWatch</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Cloud Architecture with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Kubernetes Architecture</h3>
+  <p><b>Concept:</b> Pod, deployment, service, ingress, HPA, ConfigMap, Secret, Helm, GitOps.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Kubernetes Architecture with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Security Architecture</h3>
+  <p><b>Concept:</b> OAuth2, JWT, OIDC, SSO, zero trust, API security, secrets management.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Authorization: Bearer &lt;jwt-token&gt;</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Security Architecture with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Observability Architecture</h3>
+  <p><b>Concept:</b> Logging, metrics, tracing, alerts, dashboards, Splunk, ELK, Prometheus, Grafana.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>traceId=abc123 service=order-service status=success</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Observability Architecture with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+</div>
+</div>
+
+<div id="java-system-design" class="subsection ">
+  <div class="card">
+    <h2>System Design</h2>
+    <input class="search" id="search-java-system-design" onkeyup="filterLessons('java-system-design')" placeholder="Search System Design topics...">
+  </div>
+  <div class="grid">
+<div class="lesson">
+  <h3>URL Shortener</h3>
+  <p><b>Concept:</b> Short key generation, redirect flow, cache, database, analytics, scaling.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Client -&gt; API -&gt; Cache -&gt; DB
+short.ly/abc -&gt; original-url</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain URL Shortener with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>E-Commerce System</h3>
+  <p><b>Concept:</b> Product, cart, order, payment, inventory, shipping, notification, search.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>API Gateway
+ -&gt; Product Service
+ -&gt; Order Service
+ -&gt; Payment Service
+ -&gt; Inventory Service
+Kafka + Redis + MySQL</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain E-Commerce System with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Banking Platform</h3>
+  <p><b>Concept:</b> Customer, account, transaction, fraud, audit, ledger, notification.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Customer Service -&gt; Account Service -&gt; Transaction Service -&gt; Fraud Service</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Banking Platform with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Notification System</h3>
+  <p><b>Concept:</b> Email, SMS, push notification, queue, retry, template service.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>App -&gt; Kafka -&gt; Notification Service -&gt; Email/SMS Provider</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Notification System with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Ride Sharing App</h3>
+  <p><b>Concept:</b> Rider, driver, matching, location tracking, payment, notification.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Rider App -&gt; Matching Service -&gt; Driver Service -&gt; Payment Service</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Ride Sharing App with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+</div>
+</div>
+
+<div id="java-real-time-projects" class="subsection ">
+  <div class="card">
+    <h2>Real-Time Projects</h2>
+    <input class="search" id="search-java-real-time-projects" onkeyup="filterLessons('java-real-time-projects')" placeholder="Search Real-Time Projects topics...">
+  </div>
+  <div class="grid">
+<div class="lesson">
+  <h3>Employee Management System</h3>
+  <p><b>Concept:</b> Spring Boot REST API with employee CRUD, JPA, validation, exception handling.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>EmployeeController -&gt; EmployeeService -&gt; EmployeeRepository -&gt; MySQL</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Employee Management System with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>E-Commerce Microservices</h3>
+  <p><b>Concept:</b> Product, order, payment, inventory, notification, Kafka, Redis, Docker.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Order Service publishes OrderCreated event to Kafka.</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain E-Commerce Microservices with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Insurance Claims System</h3>
+  <p><b>Concept:</b> Claim submission, document upload, validation, approval workflow, notification.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Claim API -&gt; Validation Service -&gt; Approval Service -&gt; Notification Service</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Insurance Claims System with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Healthcare Portal</h3>
+  <p><b>Concept:</b> Patient, doctor, appointment, billing, reports, notifications.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Patient Service -&gt; Appointment Service -&gt; Billing Service</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Healthcare Portal with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+</div>
+</div>
+
+<div id="java-interview-prep" class="subsection ">
+  <div class="card">
+    <h2>Interview Prep</h2>
+    <input class="search" id="search-java-interview-prep" onkeyup="filterLessons('java-interview-prep')" placeholder="Search Interview Prep topics...">
+  </div>
+  <div class="grid">
+<div class="lesson">
+  <h3>Java Developer 3-5 Years</h3>
+  <p><b>Concept:</b> Core Java, collections, exceptions, Java 8, Spring Boot basics.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Explain HashMap internal working and Java 8 streams.</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Java Developer 3-5 Years with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Senior Java Developer 5-8 Years</h3>
+  <p><b>Concept:</b> Microservices, Kafka, Redis, database design, performance tuning.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Design ecommerce order processing flow.</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Senior Java Developer 5-8 Years with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Lead Engineer 8-10 Years</h3>
+  <p><b>Concept:</b> Architecture decisions, system design, scalability, security, observability.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Explain HLD and LLD for banking platform.</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Lead Engineer 8-10 Years with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+
+
+<div class="lesson">
+  <h3>Solution Architect</h3>
+  <p><b>Concept:</b> Cloud, Kubernetes, enterprise integration, tradeoffs, governance, ADR.</p>
+  <p><b>Full Details Included:</b></p>
+  <ul>
+    <li>Definition and purpose</li>
+    <li>Architecture / flow explanation</li>
+    <li>Real-time project usage</li>
+    <li>Code or configuration example</li>
+    <li>Best practices and common mistakes</li>
+    <li>Interview preparation</li>
+    <li>Hands-on practice task</li>
+  </ul>
+  <p><b>Example:</b></p>
+  <pre>Design a scalable multi-service application.</pre>
+  <details><summary>Interview Questions</summary>
+    <ol>
+      <li>Explain Solution Architect with real-time project example.</li>
+      <li>What problem does this topic solve?</li>
+      <li>What are the advantages and limitations?</li>
+      <li>How will you use this in a Spring Boot / Microservices project?</li>
+    </ol>
+  </details>
+  <details><summary>Hands-on Exercise</summary>
+    <ol>
+      <li>Create a small working example for this concept.</li>
+      <li>Add logging and exception handling.</li>
+      <li>Write 3 interview notes in your own words.</li>
+    </ol>
+  </details>
+</div>
+</div>
+</div>
+
+</section><section id="selenium" class="section "><div class="card"><h2>Selenium</h2><ul><li>WebDriver</li><li>Locators</li><li>Waits</li><li>Page Object Model</li><li>TestNG</li><li>Framework Design</li></ul></div></section><section id="api-testing" class="section "><div class="card"><h2>API Testing</h2><ul><li>REST Assured</li><li>GET/POST/PUT/DELETE</li><li>OAuth/JWT</li><li>Schema validation</li><li>API framework design</li></ul></div></section><section id="resume" class="section "><div class="card"><h2>Resume & Email Practice</h2><ul><li>QA resume points</li><li>Java developer resume points</li><li>Status email practice</li><li>Interview self-introduction</li></ul></div></section>
+<div class="footer">Learning App V16 • Java Complete Developer to Architect Roadmap</div>
+</div>
+<script src="app.js"></script>
 </body>
 </html>

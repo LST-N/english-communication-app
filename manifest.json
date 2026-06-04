@@ -1,10 +1,9 @@
 {
-"name":"Learning App V15 Enterprise",
-"short_name":"LearningV15",
-"start_url":"./index.html",
-"display":"standalone",
-"background_color":"#eef4fb",
-"theme_color":"#1f4e79",
-"description":"Enterprise learning app for English, Java, Spring Boot, Selenium and QA",
-"icons":[{"src":"icon.svg","sizes":"192x192","type":"image/svg+xml"},{"src":"icon.svg","sizes":"512x512","type":"image/svg+xml"}]
+  "name": "Learning App V16 Java Expanded",
+  "short_name": "Learning V16",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#f4f7fb",
+  "theme_color": "#2563eb",
+  "description": "Learning App V16 with expanded Java tab"
 }

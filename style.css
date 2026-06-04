@@ -1,0 +1,17 @@
+
+:root{--blue:#2563eb;--dark:#0f172a;--bg:#f4f7fb;--card:#fff;--text:#1f2937;--muted:#6b7280}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+header{background:linear-gradient(135deg,#0f172a,#1d4ed8);color:white;padding:22px;text-align:center}
+header h1{margin:0;font-size:28px}.wrap{max-width:1240px;margin:auto;padding:16px}
+.logo{position:absolute;right:18px;top:14px;background:white;color:#1d4ed8;border-radius:12px;padding:8px 10px;font-weight:bold}
+.tabs,.subtabs{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.tab,.subtab{border:1px solid #d1d5db;background:white;border-radius:999px;padding:10px 14px;font-weight:bold;cursor:pointer}
+.tab.active,.subtab.active{background:var(--blue);color:white}
+.section,.subsection{display:none}.section.active,.subsection.active{display:block}
+.card,.lesson{background:var(--card);border:1px solid #e5e7eb;border-radius:14px;padding:16px;margin:14px 0;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(310px,1fr));gap:12px}.lesson{border-left:5px solid var(--blue)}
+h2{color:#1e3a8a;margin-top:0}h3{margin-bottom:6px}.badge{display:inline-block;background:#dbeafe;color:#1e40af;border-radius:999px;padding:3px 8px;font-size:12px;font-weight:bold}
+pre{background:#111827;color:#f9fafb;padding:12px;border-radius:10px;white-space:pre-wrap;overflow:auto}.search{width:100%;padding:12px;border:1px solid #d1d5db;border-radius:10px;font-size:16px}
+.note{background:#eff6ff;border-left:5px solid var(--blue);padding:12px;border-radius:10px}.footer{text-align:center;color:var(--muted);padding:24px}
+details{background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:10px;margin:8px 0}summary{cursor:pointer;font-weight:bold}
