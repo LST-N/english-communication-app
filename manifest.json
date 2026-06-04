@@ -1,10 +1,10 @@
 {
-"name":"Learning App V14 Advanced Docs",
-"short_name":"LearningV14",
+"name":"Learning App V15 Enterprise",
+"short_name":"LearningV15",
 "start_url":"./index.html",
 "display":"standalone",
 "background_color":"#eef4fb",
 "theme_color":"#1f4e79",
-"description":"Learning app with same tabs and more advanced learning documents",
+"description":"Enterprise learning app for English, Java, Spring Boot, Selenium and QA",
 "icons":[{"src":"icon.svg","sizes":"192x192","type":"image/svg+xml"},{"src":"icon.svg","sizes":"512x512","type":"image/svg+xml"}]
 }

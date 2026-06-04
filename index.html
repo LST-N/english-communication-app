@@ -3,48 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learning App V14</title>
+<title>Learning App V15 Enterprise</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1f4e79">
 <style>
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#eef4fb;color:#1f2937}
+body.dark{background:#111827;color:#e5e7eb}
 header{background:#1f4e79;color:white;padding:18px;text-align:center;position:relative}
 .logo{position:absolute;top:14px;right:18px;background:white;color:#1f4e79;padding:8px 12px;border-radius:20px;font-weight:bold;font-size:14px}
 header h1{margin:0;font-size:24px}
-header p{margin:6px 0 0;font-size:14px}
 nav{display:flex;overflow-x:auto;gap:8px;background:white;padding:10px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px #0002}
+body.dark nav, body.dark .card{background:#1f2937}
 nav button{white-space:nowrap;background:#e8f1fa;color:#1f4e79;border:1px solid #c8d9ea;border-radius:20px;padding:9px 13px;font-weight:bold}
 nav button.active{background:#1f4e79;color:white}
-main{padding:16px;max-width:1180px;margin:auto}
+main{padding:16px;max-width:1200px;margin:auto}
 .section{display:none}.section.active{display:block}
 .card{background:white;padding:18px;border-radius:18px;box-shadow:0 4px 14px #0001;margin-bottom:16px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
-h2,h3{color:#1f4e79}
+h2,h3{color:#1f4e79}body.dark h2,body.dark h3{color:#93c5fd}
 button.action{background:#1f4e79;color:white;border:0;border-radius:10px;padding:11px 14px;margin:5px 5px 5px 0;font-size:15px}
 button.secondary{background:#425466}
-textarea,select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;margin-top:7px}
+textarea,select,input{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;margin-top:7px}
 .result{background:#f8fbff;border-left:5px solid #1f4e79;padding:14px;border-radius:12px;margin-top:10px;white-space:pre-wrap;line-height:1.55}
+body.dark .result{background:#111827;color:#e5e7eb}
 .score{font-size:34px;color:#1f4e79;font-weight:bold}
-pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:12px;overflow:auto;font-size:13px;line-height:1.45}
 .badge{display:inline-block;background:#e8f1fa;color:#1f4e79;padding:5px 9px;border-radius:16px;font-size:12px;font-weight:bold}
 </style>
 </head>
 <body>
 <header>
 <div class="logo">LST Log</div>
-<h1>Learning App V14</h1>
-<p>Same tabs + existing content + more advanced learning documents</p>
+<h1>Learning App V15 Enterprise</h1>
+<p>Java + Spring Boot + Selenium + QA + English + Search + Progress</p>
 </header>
 
 <nav>
 <button class="active" onclick="show('home',this)">Home</button>
-<button onclick="show('speaking',this)">🎤 Live Speaking</button>
-<button onclick="show('vocab',this)">Vocabulary</button>
-<button onclick="show('grammar',this)">Grammar</button>
+<button onclick="show('search',this)">Search</button>
+<button onclick="show('english',this)">English</button>
 <button onclick="show('java',this)">Java</button>
 <button onclick="show('spring',this)">Spring Boot</button>
 <button onclick="show('selenium',this)">Selenium</button>
+<button onclick="show('qa',this)">QA Testing</button>
+<button onclick="show('speaking',this)">Live Speaking</button>
+<button onclick="show('dashboard',this)">Dashboard</button>
 <button onclick="show('notes',this)">Notes</button>
 </nav>
 
@@ -52,452 +55,202 @@ pre{background:#0f172a;color:#e2e8f0;padding:14px;border-radius:12px;overflow:au
 <section id="home" class="section active">
 <div class="grid">
 <div class="card">
-<span class="badge">Daily 8 PM</span>
-<h2>Learning Plan</h2>
-<p><b>10 min:</b> English speaking/interview</p>
-<p><b>10 min:</b> Java / Spring Boot / Selenium learning document</p>
-<p><b>10 min:</b> Coding/interview practice</p>
+<span class="badge">V15 Enterprise</span>
+<h2>Daily Learning Plan</h2>
+<p><b>8:00 PM:</b> English + Speaking</p>
+<p><b>8:10 PM:</b> Java / Spring Boot</p>
+<p><b>8:20 PM:</b> Selenium / QA Interview</p>
 <button class="action" onclick="markDone()">Mark Today Complete</button>
+<button class="action secondary" onclick="toggleDark()">Dark Mode</button>
 <p>Streak: <span class="score" id="streak">0</span> days</p>
 </div>
 <div class="card">
-<h2>Advanced Learning Documents</h2>
-<p>New advanced documents are added inside existing tabs only. No tab changes.</p>
-<p><b>Java:</b> Core + Advanced + Expert docs</p>
-<p><b>Spring Boot:</b> REST, JPA, Security, Microservices docs</p>
-<p><b>Selenium:</b> Framework, waits, POM, TestNG docs</p>
+<h2>Today’s Focus</h2>
+<p id="todayFocus"></p>
+<button class="action" onclick="newFocus()">New Focus</button>
 </div>
 </div>
 </section>
 
-<section id="speaking" class="section">
+<section id="search" class="section">
 <div class="card">
-<h2>🎤 Live Speaking Interview Practice</h2>
-<select id="interviewMode" onchange="newLiveInterview()">
-<option value="hr">HR / English Interview</option>
-<option value="qa">QA Testing Interview</option>
-<option value="java">Java Interview</option>
-<option value="spring">Spring Boot Interview</option>
-<option value="selenium">Selenium Interview</option>
-</select>
-<div class="result" id="liveQuestion"></div>
-<button class="action" onclick="newLiveInterview()">New Interview Question</button>
-<button class="action secondary" onclick="showLiveAnswer()">Show Sample Answer</button>
-<button class="action secondary" onclick="speak('liveQuestion')">Listen Question</button>
-<div class="result" id="liveAnswer">Sample answer will appear here.</div>
+<h2>Search Tutorials</h2>
+<input id="searchBox" placeholder="Search Java, Spring Boot, Selenium, QA, English..." oninput="runSearch()">
+<div id="searchResults" class="result">Search results will appear here.</div>
 </div>
 </section>
 
-<section id="vocab" class="section">
-<div class="card"><h2>Vocabulary</h2><div id="vocabOut" class="result">Workplace: update, clarify, priority, deadline, blocker, collaborate, resolve, confirm, pending, completed.
-QA: defect, regression, validation, test case, expected result, actual result, reproducible.
-Advanced workplace: escalation, dependency, alignment, mitigation, stakeholder, acceptance criteria, deliverable, impact analysis.</div></div>
-</section>
-
-<section id="grammar" class="section">
-<div class="card"><h2>Grammar Checker</h2><textarea id="grammarInput" rows="4" placeholder="Example: I have completed testing yesterday."></textarea><button class="action" onclick="loadGrammar()">Load Example</button><button class="action" onclick="checkGrammar()">Check Grammar</button><div id="grammarOut" class="result"></div></div>
-<div class="card"><h2>Advanced Grammar Document</h2><div class="result">Professional grammar focus:
-
-1. Use simple past with finished time:
-I completed testing yesterday.
-
-2. Use present perfect for recent completion:
-I have completed validation.
-
-3. Use polite requests:
-Could you please clarify the expected behavior?
-
-4. Use active voice:
-I documented the defect with screenshots and logs.
-
-5. Use clear status update format:
-Completed / In progress / Blocked / Next action.</div></div>
+<section id="english" class="section">
+<div class="card">
+<h2>English Communication</h2>
+<select id="englishTopic" onchange="showDoc('english')">
+<option value="workplace">Workplace English</option>
+<option value="grammar">Grammar Rules</option>
+<option value="email">Email Writing</option>
+<option value="vocab">Vocabulary</option>
+</select>
+<div id="englishOut" class="result"></div>
+</div>
 </section>
 
 <section id="java" class="section">
 <div class="card">
-<h2>Java Tutorial</h2>
-<p>Existing Java content is kept. More advanced documents are added below.</p>
-<select id="javaDoc" onchange="showJavaDoc()">
-<option value="core">Core Java Complete Document</option>
-<option value="advanced">Advanced Java Complete Document</option>
-<option value="expert">Java Expert Interview Document</option>
-<option value="coding">Java Coding Practice Document</option>
-<option value="design">Java Design & Architecture Document</option>
+<h2>Java Complete Guide</h2>
+<select id="javaTopic" onchange="showDoc('java')">
+<option value="core">Core Java Notes</option>
+<option value="advanced">Advanced Java Notes</option>
+<option value="collections">Collections Deep Dive</option>
+<option value="threads">Multithreading</option>
+<option value="interview">Java Interview Questions</option>
+<option value="coding">Java Coding Challenges</option>
 </select>
-<div id="javaDocOut" class="result"></div>
-<button class="action" onclick="copy('javaDocOut')">Copy Java Document</button>
-<button class="action secondary" onclick="speak('javaDocOut')">Listen</button>
+<div id="javaOut" class="result"></div>
 </div>
 </section>
 
 <section id="spring" class="section">
 <div class="card">
-<h2>Spring Boot Tutorial</h2>
-<p>Existing Spring Boot content is kept. More advanced documents are added below.</p>
-<select id="springDoc" onchange="showSpringDoc()">
-<option value="rest">Spring Boot REST API Document</option>
-<option value="jpa">Spring Data JPA/Hibernate Document</option>
-<option value="security">Spring Security/JWT Document</option>
-<option value="micro">Spring Boot Microservices Document</option>
-<option value="testing">Spring Boot Testing Document</option>
+<h2>Spring Boot Complete Guide</h2>
+<select id="springTopic" onchange="showDoc('spring')">
+<option value="basics">Spring Boot Basics</option>
+<option value="rest">REST API Development</option>
+<option value="jpa">JPA/Hibernate</option>
+<option value="security">Security/JWT</option>
+<option value="micro">Microservices</option>
+<option value="interview">Spring Interview Questions</option>
 </select>
-<div id="springDocOut" class="result"></div>
-<button class="action" onclick="copy('springDocOut')">Copy Spring Document</button>
+<div id="springOut" class="result"></div>
 </div>
 </section>
 
 <section id="selenium" class="section">
 <div class="card">
-<h2>Selenium Tutorial</h2>
-<p>Existing Selenium content is kept. More advanced documents are added below.</p>
-<select id="seleniumDoc" onchange="showSeleniumDoc()">
-<option value="basics">Selenium Basics Document</option>
-<option value="framework">Selenium Framework Document</option>
-<option value="waits">Selenium Waits & Synchronization Document</option>
-<option value="pom">Page Object Model Document</option>
-<option value="interview">Selenium Interview Document</option>
+<h2>Selenium Complete Guide</h2>
+<select id="seleniumTopic" onchange="showDoc('selenium')">
+<option value="basics">Selenium Basics</option>
+<option value="locators">Locators</option>
+<option value="waits">Waits</option>
+<option value="pom">Page Object Model</option>
+<option value="framework">Automation Framework</option>
+<option value="interview">Selenium Interview Questions</option>
 </select>
-<div id="seleniumDocOut" class="result"></div>
-<button class="action" onclick="copy('seleniumDocOut')">Copy Selenium Document</button>
+<div id="seleniumOut" class="result"></div>
+</div>
+</section>
+
+<section id="qa" class="section">
+<div class="card">
+<h2>QA Testing Guide</h2>
+<select id="qaTopic" onchange="showDoc('qa')">
+<option value="manual">Manual Testing</option>
+<option value="api">API Testing</option>
+<option value="agile">Agile/Scrum QA</option>
+<option value="defect">Defect Reporting</option>
+<option value="interview">QA Interview Questions</option>
+</select>
+<div id="qaOut" class="result"></div>
+</div>
+</section>
+
+<section id="speaking" class="section">
+<div class="card">
+<h2>Live Speaking Coach</h2>
+<select id="speakTopic" onchange="newSpeaking()">
+<option value="intro">Interview Introduction</option>
+<option value="qa">QA Discussion</option>
+<option value="java">Java Technical</option>
+<option value="spring">Spring Boot Technical</option>
+<option value="selenium">Selenium Technical</option>
+</select>
+<div id="speakPrompt" class="result"></div>
+<button class="action" onclick="newSpeaking()">New Prompt</button>
+<button class="action secondary" onclick="speak('speakPrompt')">Listen</button>
+<textarea id="spokenAnswer" rows="5" placeholder="Write or speak your answer here..."></textarea>
+<button class="action" onclick="scoreSpeaking()">Score Answer</button>
+<div id="speakScore" class="result"></div>
+</div>
+</section>
+
+<section id="dashboard" class="section">
+<div class="grid">
+<div class="card"><h2>Progress</h2><p>Completed days: <span class="score" id="dashStreak">0</span></p></div>
+<div class="card"><h2>Practice Count</h2><p>Speaking/Answer count: <span class="score" id="practiceCount">0</span></p></div>
 </div>
 </section>
 
 <section id="notes" class="section">
-<div class="card"><h2>My Notes</h2><textarea id="notes" rows="9" placeholder="Write advanced notes and practice answers..."></textarea><button class="action" onclick="saveNotes()">Save Notes</button><p id="saveMsg"></p></div>
+<div class="card">
+<h2>My Notes</h2>
+<textarea id="notesText" rows="10" placeholder="Write your learning notes..."></textarea>
+<button class="action" onclick="saveNotes()">Save Notes</button>
+<p id="saveMsg"></p>
+</div>
 </section>
 </main>
 
 <script>
 if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js")}
 
-const javaDocs={
-core:`Core Java Complete Document
-
-1. Java basics:
-JVM, JDK, JRE, class, object, method, constructor, variables, data types.
-
-2. OOP:
-Encapsulation, inheritance, polymorphism, abstraction.
-
-3. String handling:
-String is immutable. StringBuilder is mutable and faster for single-thread use. StringBuffer is synchronized.
-
-4. Collections:
-List, Set, Map, Queue.
-ArrayList uses dynamic array.
-LinkedList uses nodes.
-HashMap uses hashing.
-HashSet internally uses HashMap.
-
-5. Exception handling:
-try, catch, finally, throw, throws.
-Checked exceptions are compile-time.
-Unchecked exceptions are runtime.
-
-6. File handling:
-Use java.io and java.nio.
-Modern option: Files and Paths.
-
-7. JDBC:
-Use Connection, PreparedStatement, ResultSet.
-PreparedStatement helps avoid SQL injection.
-
-Daily practice:
-Write one example for each topic and explain it aloud.`,
-advanced:`Advanced Java Complete Document
-
-1. Generics:
-Provides compile-time type safety.
-Use wildcards: extends and super.
-PECS: Producer Extends, Consumer Super.
-
-2. Streams:
-Functional-style processing.
-Intermediate: filter, map, flatMap, sorted.
-Terminal: collect, forEach, reduce, count.
-
-3. Multithreading:
-Thread, Runnable, Callable, synchronized, volatile, deadlock, race condition.
-
-4. ExecutorService:
-Manages thread pools.
-Useful methods: submit, execute, shutdown.
-
-5. CompletableFuture:
-Asynchronous programming.
-Useful for parallel API calls and non-blocking workflows.
-
-6. JVM:
-Heap, stack, method area, PC register, native method stack.
-
-7. Garbage Collection:
-Removes unused objects.
-Memory leaks can still happen if references are retained.
-
-8. Testing:
-JUnit for testing.
-Mockito for mocking dependencies.`,
-expert:`Java Expert Interview Document
-
-Important expert questions:
-
-1. How does HashMap work internally?
-HashMap uses hashCode to find bucket and equals to compare keys. Collisions are handled using linked list or tree structure.
-
-2. Difference between Comparable and Comparator?
-Comparable defines natural sorting. Comparator defines custom external sorting.
-
-3. Difference between volatile and synchronized?
-volatile gives visibility. synchronized gives visibility and locking.
-
-4. Why is String immutable?
-Security, caching, thread safety, and String pool optimization.
-
-5. What is fail-fast iterator?
-Iterator throws ConcurrentModificationException when collection is structurally modified during iteration.
-
-6. What is CompletableFuture?
-It supports asynchronous programming with chaining and combining tasks.`,
-coding:`Java Coding Practice Document
-
-Practice these daily:
-
-1. Reverse a string.
-2. Check palindrome.
-3. Count duplicate characters.
-4. Find duplicate numbers.
-5. Count words using HashMap.
-6. Sort employees by salary.
-7. Find second highest number.
-8. Filter names using Stream API.
-9. Group employees by department.
-10. Create thread using Runnable.
-11. Use ExecutorService.
-12. Use CompletableFuture.
-13. Handle custom exception.
-14. Read file using Files.
-15. Write unit test using JUnit.`,
-design:`Java Design & Architecture Document
-
-1. SOLID:
-Single Responsibility, Open Closed, Liskov Substitution, Interface Segregation, Dependency Inversion.
-
-2. Design patterns:
-Singleton, Factory, Builder, Strategy, Observer, DAO, Repository.
-
-3. Clean code:
-Small methods, meaningful names, avoid duplication, single responsibility.
-
-4. Layered design:
-Controller, service, repository, model, DTO.
-
-5. Best practices:
-Use interfaces for abstraction.
-Use dependency injection.
-Write unit tests.
-Handle exceptions clearly.
-Avoid overengineering.`
+const docs={
+english:{
+workplace:"Workplace English:\nStatus update, clarification request, defect update, meeting summary, escalation update.\n\nExample: I completed QA validation and attached the test evidence to the story.",
+grammar:"Grammar Rules:\nUse simple past with finished time.\nUse present perfect for recent completion.\nUse polite requests: Could you please clarify?",
+email:"Email Writing:\nHi Team,\n\nI completed validation for the assigned story. Please review the attached test evidence.\n\nThanks.",
+vocab:"Vocabulary:\nClarify, validate, priority, blocker, escalation, mitigation, stakeholder, acceptance criteria, regression, deployment."
+},
+java:{
+core:"Core Java Notes:\nJVM/JDK/JRE, class, object, method, constructor, variables, data types, OOP, String, arrays, collections, exceptions, file I/O, JDBC.",
+advanced:"Advanced Java Notes:\nGenerics, wildcards, Streams, Lambda, multithreading, ExecutorService, CompletableFuture, JVM memory, GC, SOLID, design patterns.",
+collections:"Collections Deep Dive:\nArrayList uses dynamic array. LinkedList uses nodes. HashMap uses hashing. HashSet internally uses HashMap. TreeMap keeps sorted keys.",
+threads:"Multithreading:\nThread, Runnable, Callable, synchronized, volatile, deadlock, race condition, ExecutorService, CompletableFuture.",
+interview:"Java Interview Questions:\n1. Explain OOP.\n2. HashMap internal working.\n3. String immutability.\n4. ArrayList vs LinkedList.\n5. Stream API.\n6. CompletableFuture.",
+coding:"Java Coding Challenges:\nReverse String, Palindrome, Duplicate characters, Word count, Sort employees, Stream filter, Group by department, ExecutorService task."
+},
+spring:{
+basics:"Spring Boot Basics:\nAuto-configuration, starter dependencies, embedded server, @SpringBootApplication, application.properties.",
+rest:"REST API Development:\n@RestController, @GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @RequestBody, @PathVariable, ResponseEntity.",
+jpa:"JPA/Hibernate:\n@Entity, @Id, @GeneratedValue, JpaRepository, custom queries, relationships, transactions, pagination.",
+security:"Security/JWT:\nAuthentication, authorization, BCrypt, JWT token, filter chain, role-based access.",
+micro:"Microservices:\nAPI Gateway, Service Discovery, Config Server, OpenFeign, Circuit Breaker, centralized logging, distributed tracing.",
+interview:"Spring Interview Questions:\nSpring vs Spring Boot, DI, IoC, @RestController, @Service, @Repository, @Transactional, JWT, API Gateway."
+},
+selenium:{
+basics:"Selenium Basics:\nWebDriver automates browser actions. Methods: get, findElement, click, sendKeys, getText, close, quit.",
+locators:"Locators:\nid, name, className, xpath, cssSelector, linkText. Prefer stable IDs and CSS selectors.",
+waits:"Waits:\nImplicit, explicit, fluent. Prefer explicit wait for specific conditions like clickable or visible.",
+pom:"Page Object Model:\nEach page has a class with locators and actions. Improves reusability and maintenance.",
+framework:"Automation Framework:\nBaseTest, DriverManager, Page classes, Test classes, Utilities, Config, Reports, Screenshots, Logs.",
+interview:"Selenium Interview Questions:\nWebDriver, waits, locators, POM, TestNG, dropdowns, alerts, frames, close vs quit."
+},
+qa:{
+manual:"Manual Testing:\nSDLC, STLC, test plan, test scenario, test case, test execution, defect lifecycle.",
+api:"API Testing:\nValidate endpoint, method, request, response, status code, headers, auth, payload, schema, business rules.",
+agile:"Agile/Scrum QA:\nSprint planning, daily standup, story grooming, acceptance criteria, demo, retrospective.",
+defect:"Defect Reporting:\nTitle, environment, steps, expected result, actual result, screenshots, logs, severity, priority.",
+interview:"QA Interview Questions:\nSmoke vs sanity, regression, severity vs priority, test case design, defect lifecycle, API testing."
+}
 };
 
-const springDocs={
-rest:`Spring Boot REST API Document
-
-Core annotations:
-@RestController, @RequestMapping, @GetMapping, @PostMapping, @PutMapping, @DeleteMapping, @RequestBody, @PathVariable, @RequestParam.
-
-REST methods:
-GET - retrieve
-POST - create
-PUT - complete update
-PATCH - partial update
-DELETE - remove
-
-Best practices:
-Use DTOs.
-Use ResponseEntity.
-Validate request body.
-Handle exceptions globally.
-Return correct HTTP status codes.`,
-jpa:`Spring Data JPA / Hibernate Document
-
-Main annotations:
-@Entity, @Id, @GeneratedValue, @Column, @OneToMany, @ManyToOne, @JoinColumn.
-
-Repository:
-JpaRepository gives save, findById, findAll, deleteById.
-
-Queries:
-Method query: findByEmail
-JPQL: @Query
-Native query: nativeQuery=true
-
-Best practices:
-Use transactions in service layer.
-Avoid lazy loading issues.
-Use pagination for large data.`,
-security:`Spring Security / JWT Document
-
-Authentication:
-Verifies user identity.
-
-Authorization:
-Controls access permission.
-
-JWT flow:
-1. User logs in.
-2. Server validates credentials.
-3. Server returns JWT.
-4. Client sends token in Authorization header.
-5. Server validates token for protected API.
-
-Best practices:
-Use BCrypt password encoder.
-Do not store plain passwords.
-Use role-based access.
-Validate token expiration.`,
-micro:`Spring Boot Microservices Document
-
-Main concepts:
-API Gateway, Service Discovery, Config Server, OpenFeign, Circuit Breaker, Centralized Logging, Distributed Tracing.
-
-Benefits:
-Independent deployment and scalability.
-
-Challenges:
-Network failures, monitoring, logging, distributed transactions.
-
-Best practices:
-Use correlation IDs.
-Use centralized logging.
-Use circuit breaker.
-Keep services focused on one business capability.`,
-testing:`Spring Boot Testing Document
-
-Tools:
-JUnit 5, Mockito, MockMvc, @SpringBootTest, @WebMvcTest, @DataJpaTest.
-
-Testing levels:
-Unit test service logic.
-Controller test using MockMvc.
-Repository test using DataJpaTest.
-Integration test using SpringBootTest.
-
-Best practices:
-Mock external dependencies.
-Use meaningful test names.
-Test success and failure scenarios.`
+const speaking={
+intro:["Tell me about yourself.","Why should we hire you?","What are your strengths?"],
+qa:["Explain a defect you found.","How do you report a regression defect?","How do you validate API response?"],
+java:["Explain HashMap internal working.","Explain Stream API.","What is CompletableFuture?"],
+spring:["What is Spring Boot?","Explain Dependency Injection.","What is JWT?"],
+selenium:["What is Page Object Model?","What is explicit wait?","How do you handle dropdowns?"]
 };
-
-const seleniumDocs={
-basics:`Selenium Basics Document
-
-Selenium automates web browsers.
-
-Important methods:
-get, findElement, click, sendKeys, getText, getTitle, close, quit.
-
-Locators:
-id, name, className, xpath, cssSelector, linkText.
-
-Best practice:
-Use stable locators like id or cssSelector.`,
-framework:`Selenium Framework Document
-
-Framework components:
-Driver manager
-Base test
-Page classes
-Test classes
-Utility classes
-Config reader
-Test data
-Reports
-Screenshots
-Logs
-
-Best practices:
-Use Page Object Model.
-Use explicit waits.
-Keep test data separate.
-Capture screenshots on failure.
-Generate reports.`,
-waits:`Selenium Waits & Synchronization Document
-
-Types:
-Implicit wait
-Explicit wait
-Fluent wait
-
-Explicit wait conditions:
-visibilityOfElementLocated
-elementToBeClickable
-presenceOfElementLocated
-alertIsPresent
-
-Best practice:
-Prefer explicit wait for specific conditions.
-Avoid Thread.sleep where possible.`,
-pom:`Page Object Model Document
-
-POM stores page locators and actions in page classes.
-
-Benefits:
-Reusable code
-Clean test scripts
-Easy maintenance
-Less duplication
-
-Example structure:
-LoginPage
-HomePage
-SearchPage
-BasePage
-
-Best practice:
-Keep assertions in test classes, not page classes.`,
-interview:`Selenium Interview Document
-
-Questions:
-
-1. What is Selenium WebDriver?
-It automates browser actions.
-
-2. Difference between close and quit?
-close closes current window. quit closes all windows and ends session.
-
-3. What is explicit wait?
-Waits for specific condition.
-
-4. What is Page Object Model?
-Design pattern for storing page elements/actions.
-
-5. How do you handle dropdown?
-Use Select class for standard select tag.
-
-6. How do you handle dynamic elements?
-Use dynamic XPath/CSS and explicit waits.`
-};
-
-const interviews={hr:[{q:"Tell me about yourself.",a:"My name is Suresh. I work in QA and I am learning automation, Java, Selenium, and Spring Boot."}],qa:[{q:"What is regression testing?",a:"Regression testing verifies that new code changes did not break existing functionality."}],java:[{q:"What is HashMap internal working?",a:"HashMap uses hashing, buckets, hashCode, and equals to store and retrieve key-value pairs."}],spring:[{q:"What is Spring Boot?",a:"Spring Boot simplifies Spring development with auto-configuration and starters."}],selenium:[{q:"What is Selenium WebDriver?",a:"Selenium WebDriver automates browser actions for UI testing."}]};
-let current=interviews.hr[0];
 
 function show(id,b){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}
-function showJavaDoc(){document.getElementById('javaDocOut').innerText=javaDocs[document.getElementById('javaDoc').value]}
-function showSpringDoc(){document.getElementById('springDocOut').innerText=springDocs[document.getElementById('springDoc').value]}
-function showSeleniumDoc(){document.getElementById('seleniumDocOut').innerText=seleniumDocs[document.getElementById('seleniumDoc').value]}
-function copy(id){navigator.clipboard.writeText(document.getElementById(id).innerText);alert('Copied')}
+function showDoc(type){let key=document.getElementById(type+'Topic').value;document.getElementById(type+'Out').innerText=docs[type][key]}
+function newFocus(){let arr=["Core Java Collections","Advanced Java Streams","Spring Boot REST API","Selenium Explicit Wait","QA API Testing","English status update"];document.getElementById('todayFocus').innerText=arr[Math.floor(Math.random()*arr.length)]}
+function newSpeaking(){let key=document.getElementById('speakTopic').value;let arr=speaking[key];document.getElementById('speakPrompt').innerText=arr[Math.floor(Math.random()*arr.length)]}
+function scoreSpeaking(){let t=document.getElementById('spokenAnswer').value.trim();let words=t?t.split(/\s+/).length:0;let score=words>=40?90:words>=20?80:65;document.getElementById('speakScore').innerText='Words: '+words+'\nScore: '+score+'/100\nTip: Use complete sentences and give examples.';let c=Number(localStorage.getItem('practiceV15')||'0')+1;localStorage.setItem('practiceV15',c);update()}
 function speak(id){let u=new SpeechSynthesisUtterance(document.getElementById(id).innerText);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u)}
-function pick(a){return a[Math.floor(Math.random()*a.length)]}
-function newLiveInterview(){let m=document.getElementById('interviewMode').value;current=pick(interviews[m]);document.getElementById('liveQuestion').innerText='Interviewer: '+current.q;document.getElementById('liveAnswer').innerText='Sample answer will appear here.'}
-function showLiveAnswer(){document.getElementById('liveAnswer').innerText='Sample Answer:\n'+current.a}
-function correctText(t){return t.replace(/I have completed testing yesterday/gi,'I completed testing yesterday').replace(/I am working in this issue/gi,'I am working on this issue').replace(/I did not seen/gi,'I did not see')}
-function loadGrammar(){document.getElementById('grammarInput').value='I have completed testing yesterday.';checkGrammar()}
-function checkGrammar(){document.getElementById('grammarOut').innerText='Suggested sentence:\n'+correctText(document.getElementById('grammarInput').value)}
-function markDone(){let d=new Date().toDateString(),last=localStorage.getItem('dayV14'),st=Number(localStorage.getItem('streakV14')||'0');if(d!==last){st++;localStorage.setItem('dayV14',d);localStorage.setItem('streakV14',st)}update()}
-function saveNotes(){localStorage.setItem('notesV14',document.getElementById('notes').value);document.getElementById('saveMsg').innerText='Saved.'}
-function update(){document.getElementById('streak').innerText=localStorage.getItem('streakV14')||'0';document.getElementById('notes').value=localStorage.getItem('notesV14')||''}
-window.onload=()=>{showJavaDoc();showSpringDoc();showSeleniumDoc();newLiveInterview();update()}
+function runSearch(){let q=document.getElementById('searchBox').value.toLowerCase();if(!q){document.getElementById('searchResults').innerText='Search results will appear here.';return}let out=[];for(let area in docs){for(let k in docs[area]){let text=docs[area][k];if(text.toLowerCase().includes(q)||k.includes(q)){out.push(area.toUpperCase()+' - '+k+'\n'+text.substring(0,220)+'...')}}}document.getElementById('searchResults').innerText=out.length?out.join('\n\n'):'No results found.'}
+function toggleDark(){document.body.classList.toggle('dark');localStorage.setItem('darkV15',document.body.classList.contains('dark'))}
+function markDone(){let d=new Date().toDateString(),last=localStorage.getItem('dayV15'),st=Number(localStorage.getItem('streakV15')||'0');if(d!==last){st++;localStorage.setItem('dayV15',d);localStorage.setItem('streakV15',st)}update()}
+function saveNotes(){localStorage.setItem('notesV15',document.getElementById('notesText').value);document.getElementById('saveMsg').innerText='Saved.'}
+function update(){let st=localStorage.getItem('streakV15')||'0';document.getElementById('streak').innerText=st;document.getElementById('dashStreak').innerText=st;document.getElementById('practiceCount').innerText=localStorage.getItem('practiceV15')||'0';document.getElementById('notesText').value=localStorage.getItem('notesV15')||''}
+window.onload=()=>{showDoc('english');showDoc('java');showDoc('spring');showDoc('selenium');showDoc('qa');newFocus();newSpeaking();if(localStorage.getItem('darkV15')==='true')document.body.classList.add('dark');update()}
 </script>
 </body>
 </html>
