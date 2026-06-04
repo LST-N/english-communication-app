@@ -1,10 +1,10 @@
 {
-"name":"Learning App V8 Spring Boot",
-"short_name":"SpringBootApp",
+"name":"Learning App V9",
+"short_name":"LearningApp",
 "start_url":"./index.html",
 "display":"standalone",
 "background_color":"#eef4fb",
 "theme_color":"#1f4e79",
-"description":"Spring Boot tutorial, REST API, JPA, Security, Microservices and interview practice",
+"description":"English vocabulary, grammar, Java, Spring Boot and Selenium tutorials",
 "icons":[{"src":"icon.svg","sizes":"192x192","type":"image/svg+xml"},{"src":"icon.svg","sizes":"512x512","type":"image/svg+xml"}]
 }

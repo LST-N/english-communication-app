@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512">
 <rect width="512" height="512" rx="90" fill="#1f4e79"/>
-<text x="256" y="165" text-anchor="middle" font-size="54" font-family="Arial" fill="white" font-weight="bold">SPRING</text>
-<text x="256" y="255" text-anchor="middle" font-size="58" font-family="Arial" fill="white" font-weight="bold">BOOT</text>
-<text x="256" y="350" text-anchor="middle" font-size="42" font-family="Arial" fill="white">V8</text>
+<text x="256" y="165" text-anchor="middle" font-size="54" font-family="Arial" fill="white" font-weight="bold">LEARNING</text>
+<text x="256" y="255" text-anchor="middle" font-size="64" font-family="Arial" fill="white" font-weight="bold">APP</text>
+<text x="256" y="350" text-anchor="middle" font-size="42" font-family="Arial" fill="white">V9</text>
 </svg>
