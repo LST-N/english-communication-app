@@ -1,374 +1,315 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>English Communication & Grammar Practice App</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #eef4fb;
-      margin: 0;
-      padding: 20px;
-      color: #222;
-    }
-    .container {
-      max-width: 1050px;
-      margin: auto;
-      background: white;
-      padding: 24px;
-      border-radius: 18px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
-    }
-    h1, h2 {
-      color: #1f4e79;
-    }
-    h1 {
-      text-align: center;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 18px;
-    }
-    .card {
-      background: #f9fbff;
-      border-left: 5px solid #1f4e79;
-      padding: 16px;
-      border-radius: 12px;
-      margin-bottom: 18px;
-    }
-    button {
-      background: #1f4e79;
-      color: white;
-      border: none;
-      padding: 10px 14px;
-      margin: 5px 4px 5px 0;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    button:hover {
-      background: #163a59;
-    }
-    textarea, input, select {
-      width: 100%;
-      padding: 10px;
-      margin-top: 8px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-      box-sizing: border-box;
-    }
-    .answer {
-      background: #fff;
-      border: 1px solid #d7e2ef;
-      padding: 10px;
-      border-radius: 8px;
-      margin-top: 8px;
-      display: none;
-    }
-    .small {
-      font-size: 14px;
-      color: #666;
-    }
-    .tag {
-      display: inline-block;
-      background: #e2edf7;
-      color: #1f4e79;
-      padding: 4px 8px;
-      border-radius: 20px;
-      font-size: 12px;
-      margin-bottom: 8px;
-    }
-    .word {
-      font-weight: bold;
-      color: #1f4e79;
-    }
-    .score {
-      font-weight: bold;
-      color: #1f4e79;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English + Java Interview Coach V3</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef4fb;color:#1f2937}
+header{background:#1f4e79;color:white;padding:22px;text-align:center}
+nav{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;background:white;padding:12px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+nav button{background:#e8f1fa;color:#1f4e79;border:1px solid #c8d9ea;border-radius:20px;padding:9px 13px;cursor:pointer;font-weight:600}
+nav button.active{background:#1f4e79;color:white}
+main{max-width:1150px;margin:auto;padding:20px}.section{display:none}.section.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+.card{background:white;padding:18px;border-radius:16px;box-shadow:0 4px 14px rgba(0,0,0,.07);margin-bottom:16px}
+h2,h3{color:#1f4e79}button.action{background:#1f4e79;color:white;border:0;border-radius:8px;padding:10px 14px;margin:5px 5px 5px 0;cursor:pointer}
+button.action.secondary{background:#425466}textarea,input,select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;margin-top:7px}
+.result{background:#f8fbff;border-left:5px solid #1f4e79;padding:12px;border-radius:10px;margin-top:10px;white-space:pre-wrap;line-height:1.5}
+.small{color:#64748b;font-size:14px}.pill{display:inline-block;background:#e8f1fa;color:#1f4e79;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:bold;margin-bottom:8px}
+.score{font-size:34px;color:#1f4e79;font-weight:bold}.word{font-weight:bold;color:#1f4e79}footer{text-align:center;color:#64748b;padding:20px}
+pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:10px;overflow:auto}
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>English Communication & Grammar Practice App</h1>
-    <p class="small" style="text-align:center;">Daily practice for speaking, grammar, workplace communication, sentence correction, and vocabulary.</p>
+<header>
+<h1>English Communication + Java Interview Coach - Version 3</h1>
+<p>Voice practice, grammar correction, QA workplace English, Java interview questions, and daily learning notes</p>
+</header>
 
-    <div class="card">
-      <h2>Daily Practice Plan</h2>
-      <p>1. Read today’s speaking prompt aloud.</p>
-      <p>2. Practice one workplace sentence.</p>
-      <p>3. Correct one grammar sentence.</p>
-      <p>4. Learn 5 words.</p>
-      <p>5. Write your own sentence and save notes.</p>
-    </div>
+<nav>
+<button class="active" onclick="showSection('home',this)">Home</button>
+<button onclick="showSection('speaking',this)">Speaking</button>
+<button onclick="showSection('grammar',this)">Grammar</button>
+<button onclick="showSection('workplace',this)">Workplace English</button>
+<button onclick="showSection('vocab',this)">Vocabulary</button>
+<button onclick="showSection('qaInterview',this)">QA Interview</button>
+<button onclick="showSection('javaInterview',this)">Java Interview</button>
+<button onclick="showSection('javaLearning',this)">Java Learning</button>
+<button onclick="showSection('progress',this)">Progress</button>
+</nav>
 
-    <div class="grid">
-      <div class="card">
-        <span class="tag">Speaking</span>
-        <h2>Daily Speaking Prompt</h2>
-        <p id="prompt"></p>
-        <button onclick="newPrompt()">New Prompt</button>
-        <button onclick="speakTextById('prompt')">Listen</button>
-      </div>
+<main>
+<section id="home" class="section active">
+<div class="card">
+<h2>Daily 30-Minute Plan</h2>
+<p><b>10 min:</b> English speaking and grammar practice.</p>
+<p><b>10 min:</b> Workplace QA communication practice.</p>
+<p><b>10 min:</b> Java interview or learning notes.</p>
+<button class="action" onclick="markPractice()">Mark Today Complete</button>
+<p id="homeMsg" class="small"></p>
+</div>
+<div class="grid">
+<div class="card"><span class="pill">Today</span><h3>Speaking Prompt</h3><p id="dailyPrompt"></p><button class="action" onclick="newDailyPrompt()">New Prompt</button><button class="action secondary" onclick="speakText('dailyPrompt')">Listen</button></div>
+<div class="card"><span class="pill">Today</span><h3>Java Question</h3><p id="homeJavaQuestion"></p><button class="action" onclick="newHomeJava()">New Java Question</button><button class="action secondary" onclick="speakText('homeJavaQuestion')">Listen</button></div>
+</div>
+</section>
 
-      <div class="card">
-        <span class="tag">Workplace</span>
-        <h2>Professional Sentence</h2>
-        <p id="workplace"></p>
-        <button onclick="newWorkplace()">New Sentence</button>
-        <button onclick="speakTextById('workplace')">Listen</button>
-      </div>
-    </div>
+<section id="speaking" class="section">
+<div class="card">
+<h2>Voice Speaking Practice</h2>
+<p class="small">Works best in Chrome. Click Start, speak in English, then check your text.</p>
+<button class="action" onclick="startVoice()">Start Speaking</button>
+<button class="action secondary" onclick="stopVoice()">Stop</button>
+<textarea id="voiceText" rows="5" placeholder="Your spoken text will appear here..."></textarea>
+<button class="action" onclick="analyzeSpeech()">Analyze Speaking</button>
+<div id="speechResult" class="result">Your feedback will appear here.</div>
+</div>
+</section>
 
-    <div class="grid">
-      <div class="card">
-        <span class="tag">Grammar</span>
-        <h2>Correct the Sentence</h2>
-        <p><b>Wrong:</b></p>
-        <p id="wrongSentence"></p>
-        <button onclick="showCorrection()">Show Correct Sentence</button>
-        <button onclick="newGrammar()">New Grammar Practice</button>
-        <div class="answer" id="grammarAnswer"></div>
-      </div>
+<section id="grammar" class="section">
+<div class="card">
+<h2>Grammar Checker</h2>
+<textarea id="grammarInput" rows="4" placeholder="Example: I have completed testing yesterday."></textarea>
+<button class="action" onclick="checkGrammar()">Check Grammar</button>
+<button class="action secondary" onclick="loadGrammarExample()">Load Example</button>
+<div id="grammarOutput" class="result">Correction will appear here.</div>
+</div>
+<div class="card"><h3>Common Grammar Rule</h3><p id="ruleText"></p><button class="action" onclick="newRule()">New Rule</button><button class="action secondary" onclick="speakText('ruleText')">Listen</button></div>
+</section>
 
-      <div class="card">
-        <span class="tag">Conversation</span>
-        <h2>Daily Conversation Practice</h2>
-        <p id="conversation"></p>
-        <button onclick="newConversation()">New Conversation</button>
-        <button onclick="speakTextById('conversation')">Listen</button>
-      </div>
-    </div>
+<section id="workplace" class="section">
+<div class="card">
+<h2>QA / IT Workplace Communication</h2>
+<select id="templateType" onchange="showTemplate()">
+<option value="status">Daily status update</option><option value="defect">Defect report</option><option value="clarify">Ask for clarification</option><option value="late">Joining late</option><option value="ooo">Out of office</option><option value="sprint">Sprint request</option>
+</select>
+<div id="templateOutput" class="result"></div>
+<button class="action" onclick="copyText('templateOutput')">Copy Template</button><button class="action secondary" onclick="speakText('templateOutput')">Listen</button>
+</div>
+<div class="card"><h3>Practice Sentence</h3><p id="qaSentence"></p><button class="action" onclick="newQASentence()">New QA Sentence</button><button class="action secondary" onclick="speakText('qaSentence')">Listen</button></div>
+</section>
 
-    <div class="card">
-      <span class="tag">Templates</span>
-      <h2>Work Communication Templates</h2>
-      <select id="templateSelect" onchange="showTemplate()">
-        <option value="late">Joining late</option>
-        <option value="defect">Defect update</option>
-        <option value="ooo">Out of office</option>
-        <option value="clarify">Asking for clarification</option>
-        <option value="status">Daily status update</option>
-      </select>
-      <div class="answer" style="display:block;" id="templateBox"></div>
-      <button onclick="speakTextById('templateBox')">Listen</button>
-    </div>
+<section id="vocab" class="section">
+<div class="card"><h2>Daily 10 Vocabulary Words</h2><div id="vocabList"></div><button class="action" onclick="newVocab()">New 10 Words</button></div>
+</section>
 
-    <div class="grid">
-      <div class="card">
-        <span class="tag">Vocabulary</span>
-        <h2>5 Daily Vocabulary Words</h2>
-        <div id="vocab"></div>
-        <button onclick="newVocab()">New Words</button>
-      </div>
+<section id="qaInterview" class="section">
+<div class="card"><h2>QA / Selenium / API Interview Practice</h2><p id="interviewQuestion"></p><button class="action" onclick="newInterviewQuestion()">New Question</button><button class="action secondary" onclick="showInterviewAnswer()">Show Sample Answer</button><div id="interviewAnswer" class="result"></div></div>
+</section>
 
-      <div class="card">
-        <span class="tag">Grammar Rules</span>
-        <h2>Simple Grammar Rule</h2>
-        <p id="rule"></p>
-        <button onclick="newRule()">New Rule</button>
-        <button onclick="speakTextById('rule')">Listen</button>
-      </div>
-    </div>
+<section id="javaInterview" class="section">
+<div class="card">
+<h2>Java Interview Questions</h2>
+<select id="javaCategory" onchange="newJavaQuestion()">
+<option value="core">Core Java</option>
+<option value="oop">OOP</option>
+<option value="collections">Collections</option>
+<option value="exceptions">Exceptions</option>
+<option value="streams">Streams & Lambda</option>
+<option value="api">Java API / Spring Boot</option>
+</select>
+<p id="javaQuestion"></p>
+<button class="action" onclick="newJavaQuestion()">New Java Question</button>
+<button class="action secondary" onclick="showJavaAnswer()">Show Answer</button>
+<button class="action secondary" onclick="speakText('javaQuestion')">Listen</button>
+<div id="javaAnswer" class="result"></div>
+</div>
+<div class="card">
+<h3>Write Your Answer</h3>
+<textarea id="javaMyAnswer" rows="5" placeholder="Write your own answer here..."></textarea>
+<button class="action" onclick="saveJavaAnswer()">Save My Answer</button>
+<p id="javaSaveMsg" class="small"></p>
+</div>
+</section>
 
-    <div class="card">
-      <span class="tag">Writing</span>
-      <h2>Write Your Own Sentence</h2>
-      <textarea id="mySentence" rows="3" placeholder="Example: I completed QA validation today."></textarea>
-      <button onclick="saveSentence()">Save My Sentence</button>
-      <p class="small" id="sentenceSaved"></p>
-    </div>
+<section id="javaLearning" class="section">
+<div class="card">
+<h2>Java Learning Document</h2>
+<select id="javaTopic" onchange="showJavaTopic()">
+<option value="day1">Day 1 - Java Basics</option>
+<option value="day2">Day 2 - OOP Concepts</option>
+<option value="day3">Day 3 - Collections</option>
+<option value="day4">Day 4 - Exception Handling</option>
+<option value="day5">Day 5 - Streams and Lambda</option>
+<option value="day6">Day 6 - REST API Basics</option>
+<option value="day7">Day 7 - Spring Boot Basics</option>
+<option value="day8">Day 8 - Interview Revision</option>
+</select>
+<div id="javaTopicOutput" class="result"></div>
+<button class="action" onclick="copyText('javaTopicOutput')">Copy Notes</button>
+<button class="action secondary" onclick="speakText('javaTopicOutput')">Listen</button>
+</div>
+<div class="card">
+<h3>Java Code Practice</h3>
+<select id="codeExample" onchange="showCodeExample()">
+<option value="list">ArrayList Example</option>
+<option value="map">HashMap Example</option>
+<option value="stream">Stream Filter Example</option>
+<option value="exception">Try-Catch Example</option>
+<option value="pojo">POJO Class Example</option>
+</select>
+<pre id="codeOutput"></pre>
+</div>
+</section>
 
-    <div class="card">
-      <span class="tag">Notes</span>
-      <h2>My Practice Notes</h2>
-      <textarea id="notes" rows="5" placeholder="Write new words, grammar mistakes, or sentences you practiced today..."></textarea>
-      <button onclick="saveNotes()">Save Notes</button>
-      <p class="small" id="saveMessage"></p>
-    </div>
+<section id="progress" class="section">
+<div class="grid">
+<div class="card"><h2>Practice Streak</h2><div class="score" id="streakCount">0</div><p>days completed</p><button class="action" onclick="markPractice()">Mark Today Complete</button></div>
+<div class="card"><h2>Confidence Rating</h2><select id="confidence"><option value="1">1 - Need more practice</option><option value="2">2 - Okay</option><option value="3">3 - Good</option><option value="4">4 - Very good</option><option value="5">5 - Excellent</option></select><button class="action" onclick="saveConfidence()">Save Rating</button><p>Last rating: <span class="score" id="lastConfidence" style="font-size:22px;">Not saved</span></p></div>
+</div>
+<div class="card"><h2>Practice Notes</h2><textarea id="notes" rows="6" placeholder="Write your new words, grammar mistakes, Java notes, and interview answers..."></textarea><button class="action" onclick="saveNotes()">Save Notes</button><p id="notesMsg" class="small"></p></div>
+</section>
+</main>
 
-    <div class="card">
-      <span class="tag">Progress</span>
-      <h2>Daily Self Rating</h2>
-      <label>How confident did you feel today?</label>
-      <select id="rating">
-        <option value="1">1 - Need more practice</option>
-        <option value="2">2 - Okay</option>
-        <option value="3">3 - Good</option>
-        <option value="4">4 - Very good</option>
-        <option value="5">5 - Excellent</option>
-      </select>
-      <button onclick="saveRating()">Save Rating</button>
-      <p>Your last rating: <span class="score" id="lastRating">Not saved</span></p>
-    </div>
-  </div>
+<footer>English Communication + Java Interview Coach Version 3</footer>
 
 <script>
-const prompts = [
-  "Introduce yourself. Talk about your job, your family, and your English learning goal.",
-  "Describe your daily work routine using simple past and present tense.",
-  "Talk about one issue you found during testing and how you reported it.",
-  "Explain why communication is important in a software team.",
-  "Describe your weekend plan using future tense.",
-  "Explain one Java or API testing concept in simple English.",
-  "Talk about a meeting you attended recently.",
-  "Describe one habit you want to improve this month."
-];
+const prompts=["Introduce yourself professionally. Mention your QA role, Java learning goal, and communication goal.","Explain your daily work routine as a QA tester.","Describe a defect you found and how you reported it.","Explain one Java concept in simple English.","Talk about why clear communication is important in Agile teams."];
+const qaSentences=["I validated the request and response payloads in Swagger.","The defect is reproducible in the QA environment.","I added the steps to reproduce, expected result, actual result, and screenshots.","I completed functional, integration, and end-to-end testing.","The API is returning a system exception while connecting to the downstream service."];
+const rules=["Use 'working on' for tasks: I am working on this defect.","Use simple past with finished time: I completed testing yesterday.","After 'did not', use base verb: I did not see any exception.","Use 'question' instead of 'doubt' in workplace English.","Use 'assign to': Please assign this defect to the next sprint."];
+const templates={status:"Hi Team,\n\nToday I completed QA validation for the assigned story. I also reviewed the API response and documented my test results. I will continue with end-to-end validation and share updates if I find any issues.\n\nThanks.",defect:"Hi Team,\n\nI found a regression defect during QA validation. The issue is reproducible. I have added the steps to reproduce, expected result, actual result, screenshots, and logs in the defect ticket.\n\nThanks.",clarify:"Hi Team,\n\nCould you please clarify the expected behavior for this scenario? I want to confirm the requirement before completing the validation.\n\nThanks.",late:"Hi Team,\n\nI will join the meeting a few minutes late due to another task. I will catch up as soon as I join.\n\nThanks.",ooo:"Hi Team,\n\nI will be out of office today due to personal work. I will check messages later and respond if anything is urgent.\n\nThanks.",sprint:"Hi Team,\n\nCould you please include these defects in the next sprint? These issues were found during QA validation and need development review.\n\nThanks."};
+const vocabGroups=[[["Clarify","Make something clear","Could you please clarify this requirement?"],["Validate","Check correctness","I validated the API response."],["Defect","Bug or issue","I found a defect in QA."],["Reproduce","Make the issue happen again","I can reproduce this issue."],["Scenario","Test situation","This scenario is failing."],["Expected","What should happen","The expected result is successful submission."],["Actual","What happened","The actual result is an error."],["Priority","Importance level","This is a high-priority defect."],["Resolve","Fix","The team resolved the issue."],["Confirm","Verify","Please confirm the expected behavior."]]];
+const qaInterview=[{q:"What is regression testing?",a:"Regression testing confirms that new code changes did not break existing functionality."},{q:"What is API testing?",a:"API testing validates request payloads, response payloads, status codes, headers, authentication, and business rules."},{q:"What details do you include in a defect ticket?",a:"Title, environment, steps to reproduce, expected result, actual result, screenshots, logs, severity, priority, and test data."}];
 
-const workplaceSentences = [
-  "I have completed the QA validation and attached the test results to the story.",
-  "I found a regression defect and created a ticket for the development team.",
-  "Could you please assign this defect to the next sprint?",
-  "I have not seen any Splunk exceptions in the QA environment.",
-  "I will join the meeting a few minutes late due to another task.",
-  "Please let me know if you need any additional details from my side.",
-  "I am currently working on functional and integration testing.",
-  "The API response is not matching the expected result."
-];
+const javaQuestions={
+core:[
+{q:"What is Java?",a:"Java is a high-level, object-oriented programming language. It is platform independent because Java code is compiled into bytecode and runs on the JVM."},
+{q:"What is JVM, JRE, and JDK?",a:"JVM runs Java bytecode. JRE contains JVM and libraries to run Java applications. JDK contains JRE plus development tools like javac."},
+{q:"What is the difference between == and equals()?",a:"== compares references for objects. equals() compares object content if the class overrides it, such as String."}
+],
+oop:[
+{q:"What are the four OOP concepts?",a:"Encapsulation, inheritance, polymorphism, and abstraction."},
+{q:"What is encapsulation?",a:"Encapsulation means wrapping data and methods together and controlling access using private fields with public getters and setters."},
+{q:"What is method overloading and overriding?",a:"Overloading means same method name with different parameters in the same class. Overriding means child class provides its own implementation of a parent method."}
+],
+collections:[
+{q:"Difference between ArrayList and LinkedList?",a:"ArrayList is faster for searching by index. LinkedList is better for frequent insertions and deletions in the middle."},
+{q:"Difference between HashMap and Hashtable?",a:"HashMap is not synchronized and allows one null key. Hashtable is synchronized and does not allow null keys or null values."},
+{q:"Difference between Set and List?",a:"List allows duplicates and maintains insertion order. Set does not allow duplicates."}
+],
+exceptions:[
+{q:"What is exception handling?",a:"Exception handling manages runtime errors using try, catch, finally, throw, and throws."},
+{q:"Difference between checked and unchecked exceptions?",a:"Checked exceptions are checked at compile time, such as IOException. Unchecked exceptions occur at runtime, such as NullPointerException."},
+{q:"What is finally block?",a:"finally block executes whether an exception occurs or not. It is commonly used for cleanup."}
+],
+streams:[
+{q:"What is a lambda expression?",a:"A lambda expression is a short way to write anonymous functions, commonly used with functional interfaces."},
+{q:"What is Java Stream API?",a:"Stream API processes collections in a functional style using operations like filter, map, sorted, and collect."},
+{q:"Difference between map and filter?",a:"filter selects elements based on a condition. map transforms each element into another value."}
+],
+api:[
+{q:"What is REST API?",a:"REST API is an architectural style for communication over HTTP using methods like GET, POST, PUT, PATCH, and DELETE."},
+{q:"What is Spring Boot?",a:"Spring Boot helps build Java applications quickly with auto-configuration, embedded servers, and production-ready features."},
+{q:"What is @RestController?",a:"@RestController is a Spring annotation used to create REST APIs. It combines @Controller and @ResponseBody."}
+]
+};
 
-const grammarItems = [
-  {
-    wrong: "I am working in this issue.",
-    correct: "I am working on this issue.",
-    reason: "Use 'working on' when talking about a task or issue."
-  },
-  {
-    wrong: "I have completed testing yesterday.",
-    correct: "I completed testing yesterday.",
-    reason: "Use simple past with a finished time like yesterday."
-  },
-  {
-    wrong: "Please assign these defects in next sprint.",
-    correct: "Please assign these defects to the next sprint.",
-    reason: "Use 'assign to' and say 'the next sprint'."
-  },
-  {
-    wrong: "I did not seen any exception.",
-    correct: "I did not see any exception.",
-    reason: "After 'did not', use the base verb: see."
-  },
-  {
-    wrong: "I will be login late today.",
-    correct: "I will log in late today.",
-    reason: "Use 'log in' as the verb."
-  },
-  {
-    wrong: "Kindly help me to keep this defect in sprint.",
-    correct: "Could you please include this defect in the sprint?",
-    reason: "This sounds more natural and professional."
-  },
-  {
-    wrong: "I have one doubt.",
-    correct: "I have one question.",
-    reason: "In workplace English, 'question' sounds more natural than 'doubt'."
+const javaDocs={
+day1:"Day 1 - Java Basics\n\nJava is object-oriented and platform independent. Main concepts: class, object, method, variable, data type, constructor, and main method.\n\nImportant terms:\n- Class: Blueprint\n- Object: Instance of class\n- Method: Behavior/action\n- Constructor: Initializes object\n\nPractice: Create a Student class with name, age, and display method.",
+day2:"Day 2 - OOP Concepts\n\nFour pillars of OOP:\n1. Encapsulation - data hiding using private fields and public methods.\n2. Inheritance - child class reuses parent class features.\n3. Polymorphism - one name, many forms.\n4. Abstraction - hiding implementation and showing only necessary details.\n\nInterview tip: Explain with real-time examples.",
+day3:"Day 3 - Collections\n\nCollections store groups of objects.\n- List: allows duplicates, ordered. Example: ArrayList.\n- Set: no duplicates. Example: HashSet.\n- Map: key-value pairs. Example: HashMap.\n\nCommon interview topics: ArrayList vs LinkedList, HashMap internal working, Set vs List.",
+day4:"Day 4 - Exception Handling\n\nException handling prevents application failure. Keywords: try, catch, finally, throw, throws.\n\nChecked exceptions are compile-time exceptions. Unchecked exceptions are runtime exceptions.\n\nBest practice: Catch specific exceptions and avoid empty catch blocks.",
+day5:"Day 5 - Streams and Lambda\n\nLambda expressions simplify code. Stream API helps process collections.\n\nCommon methods: filter, map, collect, forEach, sorted.\n\nExample: list.stream().filter(x -> x.startsWith(\"A\")).collect(Collectors.toList());",
+day6:"Day 6 - REST API Basics\n\nREST APIs use HTTP methods.\nGET - retrieve data\nPOST - create data\nPUT - update complete data\nPATCH - partial update\nDELETE - remove data\n\nCommon status codes: 200 OK, 201 Created, 400 Bad Request, 401 Unauthorized, 404 Not Found, 500 Server Error.",
+day7:"Day 7 - Spring Boot Basics\n\nSpring Boot is used to build Java applications quickly.\nImportant annotations:\n@SpringBootApplication\n@RestController\n@GetMapping\n@PostMapping\n@Service\n@Repository\n@Autowired\n\nUse Spring Boot for REST APIs and microservices.",
+day8:"Day 8 - Interview Revision\n\nRevise these topics:\n1. JVM/JRE/JDK\n2. OOP concepts\n3. Collections\n4. Exception handling\n5. Streams and lambda\n6. REST API basics\n7. Spring Boot annotations\n\nPractice explaining every answer in simple English."
+};
+
+const codeExamples={
+list:`import java.util.*;
+
+public class ArrayListExample {
+  public static void main(String[] args) {
+    List<String> names = new ArrayList<>();
+    names.add("Suresh");
+    names.add("Ravi");
+    names.add("Anil");
+
+    for (String name : names) {
+      System.out.println(name);
+    }
   }
-];
+}`,
+map:`import java.util.*;
 
-const conversations = [
-  "A: How is your work going today? B: It is going well. I am currently working on API validation.",
-  "A: Did you complete the testing? B: Yes, I completed the testing and shared the results.",
-  "A: Can you explain the issue? B: The attachment is not getting added after submitting the request.",
-  "A: Do you need any help? B: Yes, could you please help me clarify the expected behavior?",
-  "A: What are your plans for today? B: I will complete my assigned tasks and practice English for ten minutes."
-];
+public class HashMapExample {
+  public static void main(String[] args) {
+    Map<Integer, String> employees = new HashMap<>();
+    employees.put(101, "Suresh");
+    employees.put(102, "Ravi");
 
-const vocabSets = [
-  [["Collaborate","Work together"],["Deadline","Due date"],["Priority","Most important task"],["Feedback","Suggestions for improvement"],["Resolve","Fix or complete something"]],
-  [["Clarify","Make something clear"],["Validate","Check if something is correct"],["Defect","A problem or bug"],["Requirement","What needs to be done"],["Progress","Movement toward completion"]],
-  [["Confidence","Belief in yourself"],["Fluency","Speaking smoothly"],["Improve","Make better"],["Practice","Repeat to get better"],["Achievement","Something successfully completed"]],
-  [["Concern","A worry or issue"],["Available","Free or ready to use"],["Expected","What should happen"],["Actual","What really happened"],["Scenario","A situation or test case"]]
-];
+    System.out.println(employees.get(101));
+  }
+}`,
+stream:`import java.util.*;
+import java.util.stream.*;
 
-const rules = [
-  "Use 'on' with tasks: I am working on the defect.",
-  "Use simple past for finished actions: I completed testing yesterday.",
-  "Use present perfect for recent updates: I have completed the validation.",
-  "Use polite workplace English: Could you please review this?",
-  "Use 'question' instead of 'doubt' in professional English.",
-  "Use 'log in' for entering a system: I will log in at 9 AM.",
-  "Use 'attach to' for documents: I attached the results to the story."
-];
+public class StreamExample {
+  public static void main(String[] args) {
+    List<String> names = Arrays.asList("Suresh", "Sai", "Ravi");
 
-const templates = {
-  late: "Hi Team, I will join the meeting a few minutes late due to another task. I will catch up as soon as I join.",
-  defect: "Hi Team, I found a regression defect during QA validation. The issue is reproducible, and I have added the steps, expected result, actual result, and screenshots in the ticket.",
-  ooo: "Hi Team, I will be out of office today due to personal work. I will check my messages later and respond if anything is urgent.",
-  clarify: "Hi Team, could you please clarify the expected behavior for this scenario? I want to confirm before completing the validation.",
-  status: "Hi Team, today I completed QA validation for the assigned story. I am currently working on API testing, and I will share updates if I find any issues."
+    List<String> result = names.stream()
+      .filter(name -> name.startsWith("S"))
+      .collect(Collectors.toList());
+
+    System.out.println(result);
+  }
+}`,
+exception:`public class ExceptionExample {
+  public static void main(String[] args) {
+    try {
+      int result = 10 / 0;
+    } catch (ArithmeticException e) {
+      System.out.println("Cannot divide by zero");
+    } finally {
+      System.out.println("Execution completed");
+    }
+  }
+}`,
+pojo:`public class Employee {
+  private int id;
+  private String name;
+
+  public Employee(int id, String name) {
+    this.id = id;
+    this.name = name;
+  }
+
+  public int getId() { return id; }
+  public String getName() { return name; }
+}`
 };
 
-let currentGrammar = grammarItems[0];
+let recognition,currentInterview=qaInterview[0],currentJava=javaQuestions.core[0];
 
-function randomItem(arr) {
-  return arr[Math.floor(Math.random() * arr.length)];
-}
-function newPrompt() {
-  document.getElementById("prompt").innerText = randomItem(prompts);
-}
-function newWorkplace() {
-  document.getElementById("workplace").innerText = randomItem(workplaceSentences);
-}
-function newGrammar() {
-  currentGrammar = randomItem(grammarItems);
-  document.getElementById("wrongSentence").innerText = currentGrammar.wrong;
-  document.getElementById("grammarAnswer").style.display = "none";
-  document.getElementById("grammarAnswer").innerHTML = "";
-}
-function showCorrection() {
-  const box = document.getElementById("grammarAnswer");
-  box.style.display = "block";
-  box.innerHTML = "<b>Correct:</b> " + currentGrammar.correct + "<br><br><b>Reason:</b> " + currentGrammar.reason;
-}
-function newConversation() {
-  document.getElementById("conversation").innerText = randomItem(conversations);
-}
-function newVocab() {
-  const set = randomItem(vocabSets);
-  document.getElementById("vocab").innerHTML = set.map(item => `<p><span class="word">${item[0]}</span> - ${item[1]}</p>`).join("");
-}
-function newRule() {
-  document.getElementById("rule").innerText = randomItem(rules);
-}
-function showTemplate() {
-  const key = document.getElementById("templateSelect").value;
-  document.getElementById("templateBox").innerText = templates[key];
-}
-function speakTextById(id) {
-  const text = document.getElementById(id).innerText || document.getElementById(id).value;
-  const speech = new SpeechSynthesisUtterance(text);
-  speech.lang = "en-US";
-  speech.rate = 0.9;
-  window.speechSynthesis.speak(speech);
-}
-function saveNotes() {
-  localStorage.setItem("englishNotesFull", document.getElementById("notes").value);
-  document.getElementById("saveMessage").innerText = "Notes saved successfully.";
-}
-function saveSentence() {
-  localStorage.setItem("myEnglishSentence", document.getElementById("mySentence").value);
-  document.getElementById("sentenceSaved").innerText = "Your sentence was saved.";
-}
-function saveRating() {
-  const rating = document.getElementById("rating").value;
-  localStorage.setItem("englishRatingFull", rating);
-  document.getElementById("lastRating").innerText = rating + "/5";
-}
-window.onload = function() {
-  newPrompt();
-  newWorkplace();
-  newGrammar();
-  newConversation();
-  newVocab();
-  newRule();
-  showTemplate();
-  document.getElementById("notes").value = localStorage.getItem("englishNotesFull") || "";
-  document.getElementById("mySentence").value = localStorage.getItem("myEnglishSentence") || "";
-  const savedRating = localStorage.getItem("englishRatingFull");
-  if (savedRating) document.getElementById("lastRating").innerText = savedRating + "/5";
-};
+function showSection(id,btn){document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active")}
+function pick(a){return a[Math.floor(Math.random()*a.length)]}
+function newDailyPrompt(){document.getElementById("dailyPrompt").innerText=pick(prompts)}
+function newQASentence(){document.getElementById("qaSentence").innerText=pick(qaSentences)}
+function newRule(){document.getElementById("ruleText").innerText=pick(rules)}
+function newHomeJava(){document.getElementById("homeJavaQuestion").innerText=pick(javaQuestions.core.concat(javaQuestions.oop,javaQuestions.collections,javaQuestions.exceptions,javaQuestions.streams,javaQuestions.api)).q}
+function speakText(id){const el=document.getElementById(id);const text=el.innerText||el.value;const speech=new SpeechSynthesisUtterance(text);speech.lang="en-US";speech.rate=.9;window.speechSynthesis.speak(speech)}
+function startVoice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){document.getElementById("speechResult").innerText="Voice recognition is not supported in this browser. Please use Google Chrome.";return}recognition=new SR();recognition.lang="en-US";recognition.continuous=true;recognition.interimResults=true;recognition.onresult=e=>{let t="";for(let i=0;i<e.results.length;i++){t+=e.results[i][0].transcript+" "}document.getElementById("voiceText").value=t.trim()};recognition.start();document.getElementById("speechResult").innerText="Listening... Speak clearly and slowly."}
+function stopVoice(){if(recognition)recognition.stop();document.getElementById("speechResult").innerText="Voice recording stopped. Click Analyze Speaking."}
+function analyzeSpeech(){const t=document.getElementById("voiceText").value.trim();if(!t){document.getElementById("speechResult").innerText="Please speak or type something first.";return}const words=t.split(/\s+/).length;document.getElementById("speechResult").innerText="Words spoken: "+words+"\n"+(words>=40?"Good speaking length.":"Try to speak a little more. Aim for 40+ words.")+"\nTip: Speak slowly and use complete sentences."}
+function checkGrammar(){let input=document.getElementById("grammarInput").value.trim();if(!input){document.getElementById("grammarOutput").innerText="Please type a sentence.";return}let corrected=input;let notes=[];const reps=[[/I am working in this issue/gi,"I am working on this issue","Use working on for tasks/issues."],[/I have completed testing yesterday/gi,"I completed testing yesterday","Use simple past with yesterday."],[/I did not seen/gi,"I did not see","After did not, use base verb."],[/assign these defects in next sprint/gi,"assign these defects to the next sprint","Use assign to and the next sprint."],[/I have one doubt/gi,"I have one question","Use question in professional English."]];reps.forEach(([p,r,n])=>{if(p.test(corrected)){corrected=corrected.replace(p,r);notes.push(n)}});if(notes.length===0)notes.push("No common mistake found. Review spelling, tense, and punctuation.");document.getElementById("grammarOutput").innerText="Suggested sentence:\n"+corrected+"\n\nNotes:\n- "+notes.join("\n- ")}
+function loadGrammarExample(){document.getElementById("grammarInput").value="I have completed testing yesterday.";checkGrammar()}
+function showTemplate(){document.getElementById("templateOutput").innerText=templates[document.getElementById("templateType").value]}
+function copyText(id){navigator.clipboard.writeText(document.getElementById(id).innerText);alert("Copied.")}
+function newVocab(){const g=pick(vocabGroups);document.getElementById("vocabList").innerHTML=g.map(w=>`<p><span class="word">${w[0]}</span> - ${w[1]}<br><span class="small">Example: ${w[2]}</span></p>`).join("")}
+function newInterviewQuestion(){currentInterview=pick(qaInterview);document.getElementById("interviewQuestion").innerText=currentInterview.q;document.getElementById("interviewAnswer").innerText=""}
+function showInterviewAnswer(){document.getElementById("interviewAnswer").innerText=currentInterview.a}
+function newJavaQuestion(){const cat=document.getElementById("javaCategory").value;currentJava=pick(javaQuestions[cat]);document.getElementById("javaQuestion").innerText=currentJava.q;document.getElementById("javaAnswer").innerText=""}
+function showJavaAnswer(){document.getElementById("javaAnswer").innerText=currentJava.a}
+function saveJavaAnswer(){localStorage.setItem("javaMyAnswer",document.getElementById("javaMyAnswer").value);document.getElementById("javaSaveMsg").innerText="Java answer saved."}
+function showJavaTopic(){document.getElementById("javaTopicOutput").innerText=javaDocs[document.getElementById("javaTopic").value]}
+function showCodeExample(){document.getElementById("codeOutput").innerText=codeExamples[document.getElementById("codeExample").value]}
+function markPractice(){const today=new Date().toDateString();const last=localStorage.getItem("lastPracticeDay");let streak=Number(localStorage.getItem("practiceStreak")||"0");if(last!==today){streak+=1;localStorage.setItem("lastPracticeDay",today);localStorage.setItem("practiceStreak",streak);document.getElementById("homeMsg").innerText="Great job! Today's practice is marked complete."}else{document.getElementById("homeMsg").innerText="You already marked today's practice complete."}updateProgress()}
+function updateProgress(){document.getElementById("streakCount").innerText=localStorage.getItem("practiceStreak")||"0";document.getElementById("notes").value=localStorage.getItem("practiceNotes")||"";document.getElementById("javaMyAnswer").value=localStorage.getItem("javaMyAnswer")||"";const c=localStorage.getItem("confidenceRating");document.getElementById("lastConfidence").innerText=c?c+"/5":"Not saved"}
+function saveConfidence(){localStorage.setItem("confidenceRating",document.getElementById("confidence").value);updateProgress()}
+function saveNotes(){localStorage.setItem("practiceNotes",document.getElementById("notes").value);document.getElementById("notesMsg").innerText="Notes saved."}
+window.onload=()=>{newDailyPrompt();newQASentence();newRule();showTemplate();newVocab();newInterviewQuestion();newJavaQuestion();newHomeJava();showJavaTopic();showCodeExample();updateProgress()}
 </script>
 </body>
 </html>
