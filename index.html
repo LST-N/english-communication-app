@@ -3,74 +3,187 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learning App V4</title>
+<title>Learning App V5</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1f4e79">
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef4fb;color:#1f2937}
-header{background:#1f4e79;color:white;padding:18px;text-align:center}header h1{margin:0;font-size:24px}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#eef4fb;color:#1f2937}
+header{background:#1f4e79;color:white;padding:18px;text-align:center}
+header h1{margin:0;font-size:24px}
+header p{margin:6px 0 0;font-size:14px}
 nav{display:flex;overflow-x:auto;gap:8px;background:white;padding:10px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px #0002}
 nav button{white-space:nowrap;background:#e8f1fa;color:#1f4e79;border:1px solid #c8d9ea;border-radius:20px;padding:9px 13px;font-weight:bold}
-nav button.active{background:#1f4e79;color:white}main{padding:14px;max-width:1000px;margin:auto}.section{display:none}.section.active{display:block}
+nav button.active{background:#1f4e79;color:white}
+main{padding:14px;max-width:1050px;margin:auto}
+.section{display:none}.section.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
 .card{background:white;padding:16px;border-radius:16px;box-shadow:0 4px 14px #0001;margin-bottom:14px}
-h2,h3{color:#1f4e79}button.action{background:#1f4e79;color:white;border:0;border-radius:10px;padding:11px 14px;margin:5px 5px 5px 0;font-size:15px}
-button.secondary{background:#425466}textarea,select,input{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;margin-top:7px}
+h2,h3{color:#1f4e79}
+button.action{background:#1f4e79;color:white;border:0;border-radius:10px;padding:11px 14px;margin:5px 5px 5px 0;font-size:15px}
+button.secondary{background:#425466}
+textarea,select,input{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;margin-top:7px}
 .result{background:#f8fbff;border-left:5px solid #1f4e79;padding:12px;border-radius:10px;margin-top:10px;white-space:pre-wrap;line-height:1.5}
-.small{color:#64748b;font-size:14px}.score{font-size:34px;color:#1f4e79;font-weight:bold}pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:10px;overflow:auto}
+.small{color:#64748b;font-size:14px}
+.score{font-size:34px;color:#1f4e79;font-weight:bold}
+pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:10px;overflow:auto;font-size:13px}
+.badge{display:inline-block;background:#e8f1fa;color:#1f4e79;padding:5px 9px;border-radius:16px;font-weight:bold;font-size:12px}
 </style>
 </head>
 <body>
-<header><h1>Learning App V4</h1><p>English + Java + Selenium + Spring Boot + Resume Practice</p></header>
+<header>
+<h1>Learning App V5</h1>
+<p>English + Java + Selenium + Spring Boot + Resume + Email Practice</p>
+</header>
+
 <nav>
 <button class="active" onclick="show('home',this)">Home</button>
 <button onclick="show('english',this)">English</button>
-<button onclick="show('java',this)">Java Coding</button>
+<button onclick="show('java',this)">Java</button>
 <button onclick="show('selenium',this)">Selenium</button>
 <button onclick="show('spring',this)">Spring Boot</button>
 <button onclick="show('resume',this)">Resume</button>
 <button onclick="show('email',this)">Email</button>
+<button onclick="show('reminder',this)">8 PM Reminder</button>
 <button onclick="show('progress',this)">Progress</button>
 </nav>
+
 <main>
 <section id="home" class="section active">
-<div class="card"><h2>Daily 8 PM Study Plan</h2><p><b>10 min:</b> English speaking</p><p><b>10 min:</b> Java coding</p><p><b>10 min:</b> Selenium or Spring Boot interview</p><button class="action" onclick="markDone()">Mark Today Complete</button><p>Streak: <span class="score" id="streak">0</span> days</p><p class="small">Phone reminder: create a phone alarm for 8:00 PM named “Learning App Practice”.</p></div>
-<div class="card"><h3>Today’s Question</h3><p id="todayQ"></p><button class="action" onclick="newToday()">New Question</button><button class="action secondary" onclick="speak('todayQ')">Listen</button></div>
+<div class="card">
+<span class="badge">Daily Plan</span>
+<h2>30-Minute Learning Plan</h2>
+<p><b>8:00 PM - 8:10 PM:</b> English speaking and workplace grammar</p>
+<p><b>8:10 PM - 8:20 PM:</b> Java coding challenge</p>
+<p><b>8:20 PM - 8:30 PM:</b> Selenium or Spring Boot interview question</p>
+<button class="action" onclick="markDone()">Mark Today Complete</button>
+<p>Current streak: <span class="score" id="streak">0</span> days</p>
+</div>
+<div class="grid">
+<div class="card"><h3>Today’s Mixed Question</h3><p id="todayQ"></p><button class="action" onclick="newToday()">New Question</button><button class="action secondary" onclick="speak('todayQ')">Listen</button></div>
+<div class="card"><h3>Today’s Goal</h3><p id="goalText">Speak clearly, write one correct email sentence, and solve one Java problem.</p><button class="action secondary" onclick="speak('goalText')">Listen</button></div>
+</div>
 </section>
 
 <section id="english" class="section">
-<div class="card"><h2>English Speaking Practice</h2><p id="englishPrompt"></p><button class="action" onclick="newEnglish()">New Prompt</button><button class="action secondary" onclick="speak('englishPrompt')">Listen</button></div>
-<div class="card"><h2>Grammar Checker</h2><textarea id="grammar" rows="4" placeholder="Example: I have completed testing yesterday."></textarea><button class="action" onclick="checkGrammar()">Check</button><div id="grammarOut" class="result"></div></div>
+<div class="card">
+<h2>English Speaking Practice</h2>
+<p id="englishPrompt"></p>
+<button class="action" onclick="newEnglish()">New Prompt</button>
+<button class="action secondary" onclick="speak('englishPrompt')">Listen</button>
+</div>
+<div class="card">
+<h2>Grammar Checker</h2>
+<textarea id="grammar" rows="4" placeholder="Example: I have completed testing yesterday."></textarea>
+<button class="action" onclick="checkGrammar()">Check Grammar</button>
+<button class="action secondary" onclick="loadGrammar()">Load Example</button>
+<div id="grammarOut" class="result">Correction appears here.</div>
+</div>
 </section>
 
 <section id="java" class="section">
-<div class="card"><h2>Java Coding Challenges</h2><p id="javaChallenge"></p><button class="action" onclick="newJavaChallenge()">New Challenge</button><button class="action secondary" onclick="showJavaSolution()">Show Solution</button><pre id="javaSolution"></pre></div>
+<div class="card">
+<h2>Java Coding Challenges</h2>
+<select id="javaLevel" onchange="newJavaChallenge()">
+<option value="basic">Basic</option>
+<option value="collections">Collections</option>
+<option value="streams">Streams</option>
+</select>
+<p id="javaChallenge"></p>
+<button class="action" onclick="newJavaChallenge()">New Challenge</button>
+<button class="action secondary" onclick="showJavaSolution()">Show Solution</button>
+<pre id="javaSolution"></pre>
+</div>
 </section>
 
 <section id="selenium" class="section">
-<div class="card"><h2>Selenium Interview Questions</h2><p id="seleniumQ"></p><button class="action" onclick="newSelenium()">New Question</button><button class="action secondary" onclick="showSelenium()">Show Answer</button><div id="seleniumA" class="result"></div></div>
+<div class="card">
+<h2>Selenium Interview Questions</h2>
+<p id="seleniumQ"></p>
+<button class="action" onclick="newSelenium()">New Question</button>
+<button class="action secondary" onclick="showSelenium()">Show Answer</button>
+<button class="action secondary" onclick="speak('seleniumQ')">Listen</button>
+<div id="seleniumA" class="result"></div>
+</div>
 </section>
 
 <section id="spring" class="section">
-<div class="card"><h2>Spring Boot Interview Questions</h2><p id="springQ"></p><button class="action" onclick="newSpring()">New Question</button><button class="action secondary" onclick="showSpring()">Show Answer</button><div id="springA" class="result"></div></div>
+<div class="card">
+<h2>Spring Boot Interview Questions</h2>
+<p id="springQ"></p>
+<button class="action" onclick="newSpring()">New Question</button>
+<button class="action secondary" onclick="showSpring()">Show Answer</button>
+<button class="action secondary" onclick="speak('springQ')">Listen</button>
+<div id="springA" class="result"></div>
+</div>
 </section>
 
 <section id="resume" class="section">
-<div class="card"><h2>Resume Bullet Practice</h2><select id="resumeType" onchange="showResume()"><option value="qa">QA Automation</option><option value="api">API Testing</option><option value="java">Java/Spring Boot</option></select><div id="resumeOut" class="result"></div><button class="action" onclick="copy('resumeOut')">Copy</button></div>
+<div class="card">
+<h2>Resume Bullet Practice</h2>
+<select id="resumeType" onchange="showResume()">
+<option value="qa">QA Automation</option>
+<option value="selenium">Selenium Automation</option>
+<option value="api">API Testing</option>
+<option value="java">Java / Spring Boot</option>
+</select>
+<div id="resumeOut" class="result"></div>
+<button class="action" onclick="copy('resumeOut')">Copy Resume Bullets</button>
+</div>
 </section>
 
 <section id="email" class="section">
-<div class="card"><h2>Work Email Practice</h2><select id="emailType" onchange="showEmail()"><option value="status">Status update</option><option value="defect">Defect update</option><option value="clarify">Clarification</option><option value="ooo">Out of office</option></select><div id="emailOut" class="result"></div><button class="action" onclick="copy('emailOut')">Copy</button><button class="action secondary" onclick="speak('emailOut')">Listen</button></div>
+<div class="card">
+<h2>Work Email Practice</h2>
+<select id="emailType" onchange="showEmail()">
+<option value="status">Daily status update</option>
+<option value="defect">Defect update</option>
+<option value="clarify">Clarification request</option>
+<option value="sprint">Sprint assignment request</option>
+<option value="ooo">Out of office</option>
+</select>
+<div id="emailOut" class="result"></div>
+<button class="action" onclick="copy('emailOut')">Copy Email</button>
+<button class="action secondary" onclick="speak('emailOut')">Listen</button>
+</div>
+</section>
+
+<section id="reminder" class="section">
+<div class="card">
+<h2>Daily 8 PM Reminder</h2>
+<p>This app cannot send phone notifications from GitHub Pages by itself, but you can set a phone alarm.</p>
+<div class="result">Reminder title: Learning App Practice
+
+Time: 8:00 PM daily
+
+Message: Practice English, Java coding, Selenium, and Spring Boot for 30 minutes.</div>
+<button class="action" onclick="copyReminder()">Copy Reminder Text</button>
+</div>
 </section>
 
 <section id="progress" class="section">
-<div class="card"><h2>My Notes</h2><textarea id="notes" rows="8" placeholder="Write Java answers, Selenium notes, English mistakes..."></textarea><button class="action" onclick="saveNotes()">Save Notes</button><p id="saveMsg" class="small"></p></div>
+<div class="card">
+<h2>My Notes</h2>
+<textarea id="notes" rows="8" placeholder="Write English mistakes, Java answers, Selenium notes, Spring Boot notes, resume bullets..."></textarea>
+<button class="action" onclick="saveNotes()">Save Notes</button>
+<p id="saveMsg" class="small"></p>
+</div>
 </section>
 </main>
 
 <script>
 if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js")}
-const english=["Introduce yourself as a QA Automation Engineer.","Explain your daily stand-up update.","Describe one defect you found and how you reported it.","Explain Java Collections in simple English.","Practice: I completed API validation and shared the results."];
-const javaChallenges=[
+
+const english=[
+"Introduce yourself as a QA Automation Engineer.",
+"Explain your daily stand-up update in professional English.",
+"Describe a defect you found and how you reported it.",
+"Explain Java Collections in simple English.",
+"Practice: I completed API validation and shared the results."
+];
+
+const javaChallenges={
+basic:[
 {q:"Reverse a string without using built-in reverse().",s:`public class ReverseString {
  public static void main(String[] args) {
   String input = "Suresh";
@@ -81,13 +194,30 @@ const javaChallenges=[
   System.out.println(output);
  }
 }`},
-{q:"Find duplicate numbers in an array.",s:`import java.util.*;
+{q:"Check if a number is prime.",s:`public class PrimeCheck {
+ public static void main(String[] args) {
+  int num = 17;
+  boolean prime = true;
+  for (int i = 2; i <= num / 2; i++) {
+   if (num % i == 0) {
+    prime = false;
+    break;
+   }
+  }
+  System.out.println(prime ? "Prime" : "Not Prime");
+ }
+}`}
+],
+collections:[
+{q:"Find duplicate numbers in an array using Set.",s:`import java.util.*;
 public class Duplicates {
  public static void main(String[] args) {
   int[] nums = {1,2,3,2,4,1};
   Set<Integer> seen = new HashSet<>();
   for (int n : nums) {
-   if (!seen.add(n)) System.out.println("Duplicate: " + n);
+   if (!seen.add(n)) {
+    System.out.println("Duplicate: " + n);
+   }
   }
  }
 }`},
@@ -102,40 +232,77 @@ public class WordCount {
   System.out.println(map);
  }
 }`}
-];
-const selenium=[
-{q:"What is Selenium WebDriver?",a:"Selenium WebDriver is a tool used to automate web browser actions for testing web applications."},
-{q:"Difference between findElement and findElements?",a:"findElement returns the first matching element and throws an exception if not found. findElements returns a list and returns an empty list if not found."},
-{q:"What is explicit wait?",a:"Explicit wait waits for a specific condition, such as element visibility or clickability, before continuing test execution."},
-{q:"What are locators in Selenium?",a:"Locators identify web elements. Common locators are id, name, className, xpath, cssSelector, linkText, and partialLinkText."},
-{q:"What is Page Object Model?",a:"Page Object Model is a design pattern where each web page is represented as a class, improving code reuse and maintainability."}
-];
-const spring=[
-{q:"What is Spring Boot?",a:"Spring Boot helps create Java applications quickly with auto-configuration, embedded servers, and starter dependencies."},
-{q:"What is @RestController?",a:"@RestController creates REST APIs and returns data directly as JSON or text."},
-{q:"Difference between @Controller and @RestController?",a:"@Controller is used for MVC views. @RestController returns response body directly, commonly JSON."},
-{q:"What is dependency injection?",a:"Dependency injection means Spring creates and provides required objects automatically instead of creating them manually."},
-{q:"What is application.properties?",a:"application.properties stores configuration such as server port, database URL, username, password, and custom settings."}
-];
-const resume={
-qa:"• Automated regression test cases using Selenium WebDriver and improved test execution efficiency.\\n• Performed functional, integration, regression, and end-to-end testing.\\n• Created detailed defect reports with steps, expected results, actual results, screenshots, and logs.",
-api:"• Validated REST API request and response payloads using Swagger/Postman.\\n• Verified HTTP status codes, headers, authentication, and business rules.\\n• Analyzed Splunk logs to troubleshoot API exceptions and backend failures.",
-java:"• Developed Java-based automation utilities using OOP concepts, Collections, and exception handling.\\n• Built REST API concepts using Spring Boot annotations such as @RestController and @GetMapping.\\n• Used Java Streams and Lambda expressions for cleaner data processing."
+],
+streams:[
+{q:"Filter names starting with S using Stream API.",s:`import java.util.*;
+import java.util.stream.*;
+public class StreamFilter {
+ public static void main(String[] args) {
+  List<String> names = Arrays.asList("Suresh","Ravi","Sai","Anil");
+  List<String> result = names.stream()
+   .filter(name -> name.startsWith("S"))
+   .collect(Collectors.toList());
+  System.out.println(result);
+ }
+}`},
+{q:"Find even numbers using Stream API.",s:`import java.util.*;
+import java.util.stream.*;
+public class EvenNumbers {
+ public static void main(String[] args) {
+  List<Integer> nums = Arrays.asList(1,2,3,4,5,6);
+  nums.stream()
+   .filter(n -> n % 2 == 0)
+   .forEach(System.out::println);
+ }
+}`}
+]
 };
+
+const selenium=[
+{q:"What is Selenium WebDriver?",a:"Selenium WebDriver is used to automate browser actions for testing web applications."},
+{q:"Difference between findElement and findElements?",a:"findElement returns the first matching element and throws an exception if not found. findElements returns a list and returns an empty list if not found."},
+{q:"What is explicit wait?",a:"Explicit wait waits for a specific condition, such as element visibility or clickability."},
+{q:"What are locators in Selenium?",a:"Locators identify web elements. Examples: id, name, xpath, cssSelector, linkText, and className."},
+{q:"What is Page Object Model?",a:"Page Object Model is a design pattern where each page is represented as a class. It improves maintainability and reusability."},
+{q:"Difference between close() and quit()?",a:"close() closes the current browser window. quit() closes all browser windows and ends the WebDriver session."},
+{q:"How do you handle dropdowns?",a:"Use the Select class for standard HTML select dropdowns and choose by visible text, value, or index."}
+];
+
+const spring=[
+{q:"What is Spring Boot?",a:"Spring Boot helps build Java applications quickly with auto-configuration, starter dependencies, and embedded servers."},
+{q:"What is @RestController?",a:"@RestController is used to build REST APIs and returns response data directly, usually JSON."},
+{q:"Difference between @Controller and @RestController?",a:"@Controller is used for MVC views. @RestController returns response body directly."},
+{q:"What is dependency injection?",a:"Dependency injection means Spring provides required objects automatically instead of creating them manually."},
+{q:"What is application.properties?",a:"application.properties stores configuration like server port, database URL, username, and password."},
+{q:"What is @Service?",a:"@Service marks a class as a service layer component that contains business logic."},
+{q:"What is @Repository?",a:"@Repository marks a class as a data access component and helps translate database exceptions."}
+];
+
+const resume={
+qa:"• Performed functional, regression, integration, and end-to-end testing for web applications.\\n• Created detailed defect reports with steps to reproduce, expected result, actual result, screenshots, and logs.\\n• Collaborated with developers and business teams to clarify requirements and validate fixes.",
+selenium:"• Automated regression test cases using Selenium WebDriver and Java.\\n• Implemented Page Object Model to improve test automation maintainability.\\n• Used explicit waits, locators, and reusable methods to improve automation stability.",
+api:"• Validated REST API request and response payloads using Swagger and Postman.\\n• Verified status codes, headers, authentication, and business validations.\\n• Analyzed Splunk logs to troubleshoot API exceptions and backend failures.",
+java:"• Developed Java-based test automation utilities using OOP, Collections, and exception handling.\\n• Used Java Streams and Lambda expressions for clean data processing.\\n• Practiced Spring Boot REST API concepts using annotations like @RestController and @GetMapping."
+};
+
 const emails={
 status:"Hi Team,\\n\\nToday I completed QA validation for the assigned story. I reviewed the API response and documented the test results. I will continue with end-to-end validation and share updates if I find any issues.\\n\\nThanks.",
-defect:"Hi Team,\\n\\nI found a regression defect during QA validation. The issue is reproducible, and I added the steps, expected result, actual result, screenshots, and logs in the ticket.\\n\\nThanks.",
+defect:"Hi Team,\\n\\nI found a regression defect during QA validation. The issue is reproducible, and I added the steps to reproduce, expected result, actual result, screenshots, and logs in the ticket.\\n\\nThanks.",
 clarify:"Hi Team,\\n\\nCould you please clarify the expected behavior for this scenario? I want to confirm the requirement before completing validation.\\n\\nThanks.",
+sprint:"Hi Team,\\n\\nCould you please assign these defects to the next sprint? These issues were identified during QA validation and need development review.\\n\\nThanks.",
 ooo:"Hi Team,\\n\\nI will be out of office today due to personal work. I will check messages later and respond if anything is urgent.\\n\\nThanks."
 };
-let jc=javaChallenges[0], sq=selenium[0], sp=spring[0];
+
+let jc=javaChallenges.basic[0], sq=selenium[0], sp=spring[0];
+
 function show(id,b){document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active")}
 function pick(a){return a[Math.floor(Math.random()*a.length)]}
 function speak(id){let t=document.getElementById(id).innerText;let u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.9;speechSynthesis.speak(u)}
-function newToday(){document.getElementById("todayQ").innerText=pick([...english,...selenium.map(x=>x.q),...spring.map(x=>x.q),...javaChallenges.map(x=>x.q)])}
+function newToday(){document.getElementById("todayQ").innerText=pick([...english,...selenium.map(x=>x.q),...spring.map(x=>x.q),...javaChallenges.basic.map(x=>x.q),...javaChallenges.collections.map(x=>x.q),...javaChallenges.streams.map(x=>x.q)])}
 function newEnglish(){document.getElementById("englishPrompt").innerText=pick(english)}
-function checkGrammar(){let t=document.getElementById("grammar").value;let c=t.replace(/I have completed testing yesterday/gi,"I completed testing yesterday").replace(/I am working in this issue/gi,"I am working on this issue").replace(/I did not seen/gi,"I did not see").replace(/I have one doubt/gi,"I have one question");document.getElementById("grammarOut").innerText="Suggested sentence:\\n"+c+"\\n\\nTip: Use professional workplace English."}
-function newJavaChallenge(){jc=pick(javaChallenges);document.getElementById("javaChallenge").innerText=jc.q;document.getElementById("javaSolution").innerText=""}
+function loadGrammar(){document.getElementById("grammar").value="I have completed testing yesterday.";checkGrammar()}
+function checkGrammar(){let t=document.getElementById("grammar").value;if(!t){document.getElementById("grammarOut").innerText="Please type a sentence.";return}let c=t.replace(/I have completed testing yesterday/gi,"I completed testing yesterday").replace(/I am working in this issue/gi,"I am working on this issue").replace(/I did not seen/gi,"I did not see").replace(/I have one doubt/gi,"I have one question").replace(/assign these defects in next sprint/gi,"assign these defects to the next sprint");document.getElementById("grammarOut").innerText="Suggested sentence:\\n"+c+"\\n\\nTip: Use clear professional workplace English."}
+function newJavaChallenge(){let level=document.getElementById("javaLevel").value;jc=pick(javaChallenges[level]);document.getElementById("javaChallenge").innerText=jc.q;document.getElementById("javaSolution").innerText=""}
 function showJavaSolution(){document.getElementById("javaSolution").innerText=jc.s}
 function newSelenium(){sq=pick(selenium);document.getElementById("seleniumQ").innerText=sq.q;document.getElementById("seleniumA").innerText=""}
 function showSelenium(){document.getElementById("seleniumA").innerText=sq.a}
@@ -144,6 +311,7 @@ function showSpring(){document.getElementById("springA").innerText=sp.a}
 function showResume(){document.getElementById("resumeOut").innerText=resume[document.getElementById("resumeType").value]}
 function showEmail(){document.getElementById("emailOut").innerText=emails[document.getElementById("emailType").value]}
 function copy(id){navigator.clipboard.writeText(document.getElementById(id).innerText);alert("Copied")}
+function copyReminder(){navigator.clipboard.writeText("Learning App Practice - 8:00 PM daily: Practice English, Java coding, Selenium, and Spring Boot for 30 minutes.");alert("Reminder copied")}
 function markDone(){let d=new Date().toDateString(),last=localStorage.getItem("day"),st=Number(localStorage.getItem("streak")||"0");if(d!==last){st++;localStorage.setItem("day",d);localStorage.setItem("streak",st)}update()}
 function saveNotes(){localStorage.setItem("notes",document.getElementById("notes").value);document.getElementById("saveMsg").innerText="Saved."}
 function update(){document.getElementById("streak").innerText=localStorage.getItem("streak")||"0";document.getElementById("notes").value=localStorage.getItem("notes")||""}
