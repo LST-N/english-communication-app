@@ -3,973 +3,105 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Learning App V9</title>
+<title>Learning App V10</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1f4e79">
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#eef4fb;color:#1f2937}
-header{background:#1f4e79;color:white;padding:18px;text-align:center}
-header h1{margin:0;font-size:24px}
-header p{margin:6px 0 0;font-size:14px}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef4fb;color:#1f2937}
+header{background:#1f4e79;color:white;padding:18px;text-align:center}header h1{margin:0;font-size:24px}
 nav{display:flex;overflow-x:auto;gap:8px;background:white;padding:10px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px #0002}
 nav button{white-space:nowrap;background:#e8f1fa;color:#1f4e79;border:1px solid #c8d9ea;border-radius:20px;padding:9px 13px;font-weight:bold}
-nav button.active{background:#1f4e79;color:white}
-main{padding:14px;max-width:1150px;margin:auto}
-.section{display:none}.section.active{display:block}
+nav button.active{background:#1f4e79;color:white}main{padding:14px;max-width:1150px;margin:auto}.section{display:none}.section.active{display:block}
 .card{background:white;padding:16px;border-radius:16px;box-shadow:0 4px 14px #0001;margin-bottom:14px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
-h2,h3{color:#1f4e79}
-button.action{background:#1f4e79;color:white;border:0;border-radius:10px;padding:11px 14px;margin:5px 5px 5px 0;font-size:15px}
-button.secondary{background:#425466}
-textarea,select,input{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;margin-top:7px}
+h2,h3{color:#1f4e79}button.action{background:#1f4e79;color:white;border:0;border-radius:10px;padding:11px 14px;margin:5px 5px 5px 0;font-size:15px}
+button.secondary{background:#425466}button.danger{background:#9f1239}
+textarea,select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;margin-top:7px}
 .result{background:#f8fbff;border-left:5px solid #1f4e79;padding:12px;border-radius:10px;margin-top:10px;white-space:pre-wrap;line-height:1.5}
 .score{font-size:34px;color:#1f4e79;font-weight:bold}
-pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:10px;overflow:auto;font-size:13px}
-.badge{display:inline-block;background:#e8f1fa;color:#1f4e79;padding:5px 9px;border-radius:16px;font-size:12px;font-weight:bold}
 </style>
 </head>
 <body>
-<header>
-<h1>Learning App V9</h1>
-<p>English Vocabulary + Grammar + Java Development + Spring Boot + Selenium</p>
-</header>
-
+<header><h1>Learning App V10</h1><p>English Vocabulary + Grammar + Live Speaking + Java + Spring Boot + Selenium</p></header>
 <nav>
 <button class="active" onclick="show('home',this)">Home</button>
-<button onclick="show('vocabulary',this)">English Vocabulary</button>
+<button onclick="show('vocab',this)">English Vocabulary</button>
 <button onclick="show('grammar',this)">English Grammar</button>
-<button onclick="show('javaDev',this)">Java Tutorial</button>
-<button onclick="show('springBoot',this)">Spring Boot</button>
+<button onclick="show('speaking',this)">🎤 Live Speaking</button>
+<button onclick="show('java',this)">Java Tutorial</button>
+<button onclick="show('spring',this)">Spring Boot</button>
 <button onclick="show('selenium',this)">Selenium</button>
-<button onclick="show('interview',this)">Interview</button>
 <button onclick="show('notes',this)">Notes</button>
 </nav>
-
 <main>
 <section id="home" class="section active">
-<div class="card">
-<span class="badge">Daily 8 PM Plan</span>
-<h2>Daily Learning Plan</h2>
-<p><b>10 min:</b> English Vocabulary + Grammar</p>
-<p><b>10 min:</b> Java Development Tutorial</p>
-<p><b>10 min:</b> Spring Boot or Selenium Tutorial</p>
-<button class="action" onclick="markDone()">Mark Today Complete</button>
-<p>Streak: <span class="score" id="streak">0</span> days</p>
-</div>
-<div class="grid">
-<div class="card"><h3>Today’s English Practice</h3><p id="todayEnglish"></p><button class="action" onclick="newTodayEnglish()">New English</button><button class="action secondary" onclick="speak('todayEnglish')">Listen</button></div>
-<div class="card"><h3>Today’s Development Practice</h3><p id="todayDev"></p><button class="action" onclick="newTodayDev()">New Dev Topic</button><button class="action secondary" onclick="speak('todayDev')">Listen</button></div>
-</div>
+<div class="card"><h2>Daily 8 PM Learning Plan</h2><p><b>10 min:</b> English vocabulary and grammar</p><p><b>10 min:</b> Live speaking practice</p><p><b>10 min:</b> Java / Spring Boot / Selenium</p><button class="action" onclick="markDone()">Mark Today Complete</button><p>Streak: <span class="score" id="streak">0</span> days</p></div>
 </section>
 
-<section id="vocabulary" class="section">
-<div class="card">
-<h2>English Vocabulary</h2>
-<select id="vocabTopic" onchange="showVocab()">
-<option value="workplace">Workplace English</option>
-<option value="qa">QA Testing Vocabulary</option>
-<option value="api">API Vocabulary</option>
-<option value="meeting">Meeting Vocabulary</option>
-<option value="daily">Daily Conversation</option>
-</select>
-<div id="vocabOut" class="result"></div>
-<button class="action" onclick="copy('vocabOut')">Copy Words</button>
-<button class="action secondary" onclick="speak('vocabOut')">Listen</button>
-</div>
+<section id="vocab" class="section">
+<div class="card"><h2>English Vocabulary</h2><select id="vocabTopic" onchange="showVocab()"><option value="work">Workplace</option><option value="qa">QA Testing</option><option value="api">API</option><option value="meeting">Meeting</option></select><div id="vocabOut" class="result"></div><button class="action secondary" onclick="speak('vocabOut')">Listen</button></div>
 </section>
 
 <section id="grammar" class="section">
-<div class="card">
-<h2>English Grammar</h2>
-<select id="grammarTopic" onchange="showGrammarTopic()">
-<option value="tenses">Tenses</option>
-<option value="prepositions">Prepositions</option>
-<option value="workGrammar">Workplace Grammar</option>
-<option value="emailGrammar">Email Grammar</option>
-<option value="commonMistakes">Common Mistakes</option>
-</select>
-<div id="grammarLesson" class="result"></div>
-</div>
-<div class="card">
-<h3>Grammar Checker</h3>
-<textarea id="grammarInput" rows="4" placeholder="Example: I have completed testing yesterday."></textarea>
-<button class="action" onclick="checkGrammar()">Check Grammar</button>
-<button class="action secondary" onclick="loadGrammar()">Load Example</button>
-<div id="grammarOut" class="result"></div>
-</div>
+<div class="card"><h2>English Grammar</h2><select id="grammarTopic" onchange="showGrammarLesson()"><option value="tenses">Tenses</option><option value="prep">Prepositions</option><option value="mistakes">Common Mistakes</option><option value="email">Email Grammar</option></select><div id="grammarLesson" class="result"></div></div>
+<div class="card"><h3>Grammar Checker</h3><textarea id="grammarInput" rows="4" placeholder="Example: I have completed testing yesterday."></textarea><button class="action" onclick="checkGrammar()">Check Grammar</button><button class="action secondary" onclick="loadGrammar()">Load Example</button><div id="grammarOut" class="result"></div></div>
 </section>
 
-<section id="javaDev" class="section">
-<div class="card">
-<h2>Java Development Tutorial</h2>
-<select id="javaTopic" onchange="showJava()">
-<option value="basics">Java Basics</option>
-<option value="oop">OOP Concepts</option>
-<option value="collections">Collections</option>
-<option value="exceptions">Exception Handling</option>
-<option value="streams">Streams and Lambda</option>
-<option value="multithreading">Multithreading</option>
-<option value="advanced">Advanced Java</option>
-<option value="coding">Java Coding Practice</option>
-</select>
-<div id="javaOut" class="result"></div>
-<button class="action" onclick="copy('javaOut')">Copy Java Notes</button>
-<button class="action secondary" onclick="speak('javaOut')">Listen</button>
-</div>
-<div class="card">
-<h3>Java Code Example</h3>
-<select id="javaCodeTopic" onchange="showJavaCode()">
-<option value="arraylist">ArrayList</option>
-<option value="hashmap">HashMap</option>
-<option value="stream">Stream Filter</option>
-<option value="thread">Thread</option>
-<option value="optional">Optional</option>
-</select>
-<pre id="javaCodeOut"></pre>
-</div>
+<section id="speaking" class="section">
+<div class="card"><h2>🎤 Live Speaking Practice</h2><p>Select scenario and practice like a live agent.</p><select id="speakMode" onchange="newAgentPrompt()"><option value="standup">Daily Standup</option><option value="qa">QA Testing Discussion</option><option value="java">Java Technical Speaking</option><option value="spring">Spring Boot Speaking</option><option value="selenium">Selenium Speaking</option><option value="interview">Interview Introduction</option></select><div class="result" id="agentPrompt"></div><button class="action" onclick="newAgentPrompt()">New Agent Prompt</button><button class="action secondary" onclick="speak('agentPrompt')">Listen to Agent</button></div>
+<div class="card"><h3>Speak Your Answer</h3><button class="action" onclick="startVoice()">Start Speaking</button><button class="action danger" onclick="stopVoice()">Stop</button><textarea id="spokenText" rows="6" placeholder="Your spoken answer will appear here..."></textarea><button class="action" onclick="analyzeSpeaking()">Analyze Speaking</button><button class="action secondary" onclick="speakTextArea('spokenText')">Listen to My Answer</button><div id="speakingFeedback" class="result">Speaking feedback will appear here.</div></div>
+<div class="grid"><div class="card"><h3>Pronunciation Words</h3><div id="pronunciationWords" class="result"></div><button class="action" onclick="newPronunciation()">New Words</button><button class="action secondary" onclick="speak('pronunciationWords')">Listen</button></div><div class="card"><h3>Speaking Progress</h3><p>Speaking practice count: <span class="score" id="speakCount">0</span></p></div></div>
 </section>
 
-<section id="springBoot" class="section">
-<div class="card">
-<h2>Spring Boot Tutorials</h2>
-<select id="springTopic" onchange="showSpring()">
-<option value="intro">Spring Boot Introduction</option>
-<option value="architecture">Architecture</option>
-<option value="rest">REST API</option>
-<option value="jpa">JPA/Hibernate</option>
-<option value="validation">Validation</option>
-<option value="exception">Exception Handling</option>
-<option value="security">Spring Security/JWT</option>
-<option value="microservices">Microservices</option>
-<option value="testing">Testing</option>
-</select>
-<div id="springOut" class="result"></div>
-<button class="action" onclick="copy('springOut')">Copy Spring Notes</button>
-<button class="action secondary" onclick="speak('springOut')">Listen</button>
-</div>
-<div class="card">
-<h3>Spring Boot Code Example</h3>
-<select id="springCodeTopic" onchange="showSpringCode()">
-<option value="controller">Controller</option>
-<option value="service">Service</option>
-<option value="entity">Entity</option>
-<option value="repository">Repository</option>
-<option value="exception">Global Exception Handler</option>
-</select>
-<pre id="springCodeOut"></pre>
-</div>
+<section id="java" class="section">
+<div class="card"><h2>Java Tutorial</h2><select id="javaTopic" onchange="showJava()"><option value="basics">Java Basics</option><option value="oop">OOP</option><option value="collections">Collections</option><option value="streams">Streams</option><option value="advanced">Advanced Java</option></select><div id="javaOut" class="result"></div></div>
+</section>
+
+<section id="spring" class="section">
+<div class="card"><h2>Spring Boot Tutorials</h2><select id="springTopic" onchange="showSpring()"><option value="intro">Introduction</option><option value="rest">REST API</option><option value="jpa">JPA/Hibernate</option><option value="security">Security/JWT</option><option value="micro">Microservices</option></select><div id="springOut" class="result"></div></div>
 </section>
 
 <section id="selenium" class="section">
-<div class="card">
-<h2>Selenium Tutorials</h2>
-<select id="seleniumTopic" onchange="showSelenium()">
-<option value="intro">Selenium Introduction</option>
-<option value="webdriver">WebDriver Basics</option>
-<option value="locators">Locators</option>
-<option value="waits">Waits</option>
-<option value="actions">Actions Class</option>
-<option value="dropdown">Dropdowns</option>
-<option value="pom">Page Object Model</option>
-<option value="testng">TestNG</option>
-<option value="framework">Automation Framework</option>
-</select>
-<div id="seleniumOut" class="result"></div>
-<button class="action" onclick="copy('seleniumOut')">Copy Selenium Notes</button>
-<button class="action secondary" onclick="speak('seleniumOut')">Listen</button>
-</div>
-<div class="card">
-<h3>Selenium Code Example</h3>
-<select id="seleniumCodeTopic" onchange="showSeleniumCode()">
-<option value="launch">Launch Browser</option>
-<option value="locator">Find Element</option>
-<option value="wait">Explicit Wait</option>
-<option value="dropdown">Dropdown</option>
-<option value="pom">Page Object</option>
-</select>
-<pre id="seleniumCodeOut"></pre>
-</div>
-</section>
-
-<section id="interview" class="section">
-<div class="card">
-<h2>Interview Practice</h2>
-<select id="interviewType" onchange="newInterview()">
-<option value="java">Java</option>
-<option value="spring">Spring Boot</option>
-<option value="selenium">Selenium</option>
-<option value="english">English Workplace</option>
-</select>
-<p id="intQ"></p>
-<button class="action" onclick="newInterview()">New Question</button>
-<button class="action secondary" onclick="showInterviewAnswer()">Show Answer</button>
-<div id="intA" class="result"></div>
-</div>
+<div class="card"><h2>Selenium Tutorials</h2><select id="seleniumTopic" onchange="showSelenium()"><option value="intro">Introduction</option><option value="webdriver">WebDriver</option><option value="locators">Locators</option><option value="waits">Waits</option><option value="pom">Page Object Model</option><option value="framework">Framework</option></select><div id="seleniumOut" class="result"></div></div>
 </section>
 
 <section id="notes" class="section">
-<div class="card">
-<h2>My Learning Notes</h2>
-<textarea id="myNotes" rows="9" placeholder="Write vocabulary, grammar mistakes, Java notes, Spring Boot notes, Selenium notes..."></textarea>
-<button class="action" onclick="saveNotes()">Save Notes</button>
-<p id="saveMsg"></p>
-</div>
+<div class="card"><h2>My Notes</h2><textarea id="notes" rows="9" placeholder="Write vocabulary, grammar, speaking feedback, Java, Spring Boot, Selenium notes..."></textarea><button class="action" onclick="saveNotes()">Save Notes</button><p id="saveMsg"></p></div>
 </section>
 </main>
 
 <script>
 if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js")}
-
-const vocab={
-workplace:`Workplace English Vocabulary
-
-1. Update - latest progress
-Example: I will share the update by evening.
-
-2. Clarify - make clear
-Example: Could you please clarify the requirement?
-
-3. Priority - importance
-Example: This defect is high priority.
-
-4. Deadline - due date
-Example: The deadline is Friday.
-
-5. Blocker - something stopping progress
-Example: I have one blocker.
-
-6. Collaborate - work together
-Example: I collaborated with the development team.
-
-7. Resolve - fix
-Example: The issue has been resolved.
-
-8. Confirm - verify
-Example: Please confirm the expected behavior.
-
-9. Pending - not completed yet
-Example: Validation is still pending.
-
-10. Completed - finished
-Example: I completed the testing.`,
-qa:`QA Testing Vocabulary
-
-1. Defect - bug or issue
-2. Regression - old feature broken after new change
-3. Validation - checking correctness
-4. Test case - testing step/document
-5. Test data - input data used for testing
-6. Expected result - what should happen
-7. Actual result - what happened
-8. Reproducible - issue happens again
-9. Environment - QA/UAT/Production setup
-10. Severity - impact level of defect`,
-api:`API Vocabulary
-
-1. Endpoint - API URL
-2. Request - data sent to API
-3. Response - data returned from API
-4. Payload - request/response body
-5. Header - metadata
-6. Status code - HTTP result
-7. Authentication - identity check
-8. Authorization - access permission
-9. Token - security value
-10. Timeout - request took too long`,
-meeting:`Meeting Vocabulary
-
-1. Agenda - meeting plan
-2. Discussion - conversation
-3. Action item - task after meeting
-4. Follow-up - next communication
-5. Minutes - meeting notes
-6. Decision - final choice
-7. Attendee - person in meeting
-8. Availability - free time
-9. Reschedule - change meeting time
-10. Summary - short recap`,
-daily:`Daily Conversation Vocabulary
-
-1. Appreciate - thankful
-2. Available - free
-3. Convenient - suitable
-4. Improve - make better
-5. Practice - repeat to learn
-6. Explain - make understandable
-7. Prepare - get ready
-8. Important - valuable
-9. Comfortable - easy/relaxed
-10. Confident - sure about yourself`
-};
-
-const grammarLessons={
-tenses:`English Grammar - Tenses
-
-Present simple:
-I work in QA.
-
-Present continuous:
-I am working on API validation.
-
-Past simple:
-I completed testing yesterday.
-
-Present perfect:
-I have completed the validation.
-
-Future:
-I will complete testing today.
-
-Tip:
-Use past simple with finished time words like yesterday, last week, and last month.`,
-prepositions:`Prepositions
-
-Correct workplace examples:
-- I am working on this issue.
-- I attached the results to the story.
-- I am waiting for the deployment.
-- I will join the meeting at 10 AM.
-- I found the issue in the QA environment.
-
-Common correction:
-Wrong: working in this issue
-Correct: working on this issue`,
-workGrammar:`Workplace Grammar
-
-Use polite and clear sentences:
-- Could you please review this?
-- Could you please clarify the expected behavior?
-- I have completed the validation.
-- I will share the update shortly.
-- This issue is reproducible in QA.
-
-Avoid:
-I have one doubt.
-
-Use:
-I have one question.`,
-emailGrammar:`Email Grammar
-
-Professional email structure:
-1. Greeting
-2. Context
-3. Clear request/update
-4. Closing
-
-Example:
-Hi Team,
-
-I completed QA validation for the assigned story. I have attached the test results for review.
-
-Thanks.
-
-Tips:
-- Keep sentences short.
-- Use polite words.
-- Avoid unclear phrases.`,
-commonMistakes:`Common Mistakes
-
-Wrong: I have completed testing yesterday.
-Correct: I completed testing yesterday.
-
-Wrong: I am working in this issue.
-Correct: I am working on this issue.
-
-Wrong: I did not seen any exception.
-Correct: I did not see any exception.
-
-Wrong: I have one doubt.
-Correct: I have one question.
-
-Wrong: Assign defects in next sprint.
-Correct: Assign defects to the next sprint.`
-};
-
-const javaTopics={
-basics:`Java Basics
-
-Java is object-oriented and platform independent.
-
-Important concepts:
-- Class: blueprint
-- Object: instance of class
-- Method: behavior
-- Variable: stores data
-- Constructor: initializes object
-- JVM: runs bytecode
-- JDK: development kit
-- JRE: runtime environment
-
-Interview point:
-Java code is compiled into bytecode and executed by JVM.`,
-oop:`OOP Concepts
-
-Four pillars:
-1. Encapsulation - data hiding
-2. Inheritance - reuse parent class features
-3. Polymorphism - one name, many forms
-4. Abstraction - hide implementation details
-
-Example:
-Overloading: same method name, different parameters.
-Overriding: child class changes parent method behavior.`,
-collections:`Collections
-
-Collections store groups of objects.
-
-List:
-Allows duplicates and keeps order.
-
-Set:
-Does not allow duplicates.
-
-Map:
-Stores key-value pairs.
-
-Common classes:
-ArrayList, LinkedList, HashSet, TreeSet, HashMap, TreeMap.
-
-Interview point:
-HashMap uses hashing internally.`,
-exceptions:`Exception Handling
-
-Exception handling manages runtime errors.
-
-Keywords:
-try, catch, finally, throw, throws
-
-Checked exception:
-Compile-time exception like IOException.
-
-Unchecked exception:
-Runtime exception like NullPointerException.
-
-Best practice:
-Catch specific exceptions and avoid empty catch blocks.`,
-streams:`Streams and Lambda
-
-Lambda is a short function syntax.
-Stream API processes collections.
-
-Common methods:
-filter, map, sorted, collect, forEach, reduce
-
-Example:
-names.stream()
- .filter(n -> n.startsWith("S"))
- .collect(Collectors.toList());
-
-Interview point:
-Streams are lazy until terminal operation is called.`,
-multithreading:`Multithreading
-
-Multithreading allows multiple tasks to run at the same time.
-
-Important topics:
-- Thread
-- Runnable
-- Callable
-- synchronized
-- volatile
-- ExecutorService
-- Deadlock
-- Race condition
-
-Interview point:
-volatile gives visibility, synchronized gives visibility and locking.`,
-advanced:`Advanced Java
-
-Important expert topics:
-- Generics
-- Collections internal working
-- Stream API
-- CompletableFuture
-- ExecutorService
-- JVM memory
-- Garbage collection
-- SOLID principles
-- Design patterns
-
-Daily practice:
-Explain one concept, write one example, answer one interview question.`,
-coding:`Java Coding Practice
-
-Practice these:
-1. Reverse a string
-2. Find duplicates
-3. Count words using HashMap
-4. Filter list using Stream
-5. Sort employees by salary
-6. Find second highest number
-7. Use Optional
-8. Create ExecutorService
-9. Handle exceptions
-10. Build POJO class`
-};
-
-const javaCode={
-arraylist:`import java.util.*;
-
-public class ArrayListExample {
-  public static void main(String[] args) {
-    List<String> names = new ArrayList<>();
-    names.add("Suresh");
-    names.add("Ravi");
-
-    for(String name : names) {
-      System.out.println(name);
-    }
-  }
-}`,
-hashmap:`import java.util.*;
-
-public class HashMapExample {
-  public static void main(String[] args) {
-    Map<Integer, String> map = new HashMap<>();
-    map.put(101, "Suresh");
-    map.put(102, "Ravi");
-
-    System.out.println(map.get(101));
-  }
-}`,
-stream:`import java.util.*;
-import java.util.stream.*;
-
-public class StreamExample {
-  public static void main(String[] args) {
-    List<String> names = Arrays.asList("Suresh", "Sai", "Ravi");
-
-    List<String> result = names.stream()
-      .filter(n -> n.startsWith("S"))
-      .collect(Collectors.toList());
-
-    System.out.println(result);
-  }
-}`,
-thread:`public class ThreadExample extends Thread {
-  public void run() {
-    System.out.println("Thread is running");
-  }
-
-  public static void main(String[] args) {
-    ThreadExample t = new ThreadExample();
-    t.start();
-  }
-}`,
-optional:`import java.util.*;
-
-public class OptionalExample {
-  public static void main(String[] args) {
-    String name = null;
-    Optional<String> optional = Optional.ofNullable(name);
-
-    System.out.println(optional.orElse("Default Name"));
-  }
-}`
-};
-
-const springTopics={
-intro:`Spring Boot Introduction
-
-Spring Boot simplifies Spring application development.
-
-Benefits:
-- Auto-configuration
-- Embedded server
-- Starter dependencies
-- Less XML/manual setup
-- Production-ready features
-
-Common dependencies:
-Spring Web, Spring Data JPA, Validation, MySQL Driver, Spring Security.`,
-architecture:`Spring Boot Architecture
-
-Common layers:
-Client -> Controller -> Service -> Repository -> Database
-
-Controller:
-Handles HTTP request.
-
-Service:
-Contains business logic.
-
-Repository:
-Communicates with database.
-
-Entity:
-Maps Java object to database table.`,
-rest:`REST API Tutorial
-
-REST uses HTTP methods:
-GET - retrieve
-POST - create
-PUT - full update
-PATCH - partial update
-DELETE - remove
-
-Common annotations:
-@RestController
-@RequestMapping
-@GetMapping
-@PostMapping
-@RequestBody
-@PathVariable
-@RequestParam`,
-jpa:`JPA/Hibernate Tutorial
-
-JPA maps Java objects to database tables.
-Hibernate is a JPA implementation.
-
-Important annotations:
-@Entity
-@Id
-@GeneratedValue
-@Column
-@OneToMany
-@ManyToOne
-
-Repository:
-interface UserRepository extends JpaRepository<User, Long>`,
-validation:`Validation
-
-Validation checks request data.
-
-Common annotations:
-@NotNull
-@NotBlank
-@Email
-@Size
-@Min
-@Max
-
-Use @Valid in controller:
-public ResponseEntity<?> create(@Valid @RequestBody UserDto userDto)`,
-exception:`Spring Boot Exception Handling
-
-Use @ControllerAdvice for global exception handling.
-
-Use @ExceptionHandler for specific exceptions.
-
-Benefits:
-- Clean error response
-- Reusable exception logic
-- Better API error handling`,
-security:`Spring Security/JWT
-
-Spring Security protects APIs.
-
-Authentication:
-Who are you?
-
-Authorization:
-What can you access?
-
-JWT flow:
-Login -> server returns token -> client sends token in Authorization header.
-
-Common header:
-Authorization: Bearer token`,
-microservices:`Spring Boot Microservices
-
-Microservices split large apps into smaller services.
-
-Important concepts:
-- API Gateway
-- Service Discovery
-- Config Server
-- OpenFeign
-- Circuit Breaker
-- Centralized Logging
-- Distributed Tracing
-
-Challenge:
-More services means more monitoring and operational complexity.`,
-testing:`Spring Boot Testing
-
-Common tools:
-JUnit
-Mockito
-MockMvc
-SpringBootTest
-
-Testing types:
-- Unit testing
-- Integration testing
-- Controller testing
-- Repository testing
-
-Best practice:
-Test service logic separately from controller and database.`
-};
-
-const springCode={
-controller:`@RestController
-@RequestMapping("/api/users")
-public class UserController {
-
-  private final UserService userService;
-
-  public UserController(UserService userService) {
-    this.userService = userService;
-  }
-
-  @GetMapping("/{id}")
-  public User getUser(@PathVariable Long id) {
-    return userService.getUser(id);
-  }
-}`,
-service:`@Service
-public class UserService {
-
-  private final UserRepository userRepository;
-
-  public UserService(UserRepository userRepository) {
-    this.userRepository = userRepository;
-  }
-
-  public User getUser(Long id) {
-    return userRepository.findById(id)
-      .orElseThrow(() -> new RuntimeException("User not found"));
-  }
-}`,
-entity:`@Entity
-public class User {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
-  private String name;
-  private String email;
-}`,
-repository:`public interface UserRepository extends JpaRepository<User, Long> {
-
-  Optional<User> findByEmail(String email);
-
-  List<User> findByStatus(String status);
-}`,
-exception:`@ControllerAdvice
-public class GlobalExceptionHandler {
-
-  @ExceptionHandler(RuntimeException.class)
-  public ResponseEntity<String> handle(RuntimeException ex) {
-    return ResponseEntity.badRequest().body(ex.getMessage());
-  }
-}`
-};
-
-const seleniumTopics={
-intro:`Selenium Introduction
-
-Selenium is used for automating web applications.
-
-Main tools:
-- Selenium WebDriver
-- Selenium Grid
-- Selenium IDE
-
-Use cases:
-- UI automation
-- Regression testing
-- Cross-browser testing`,
-webdriver:`WebDriver Basics
-
-WebDriver controls browser actions.
-
-Common methods:
-get()
-findElement()
-click()
-sendKeys()
-getText()
-getTitle()
-close()
-quit()
-
-Interview point:
-close closes current window, quit closes entire browser session.`,
-locators:`Selenium Locators
-
-Locators identify elements.
-
-Common locators:
-id
-name
-className
-tagName
-linkText
-partialLinkText
-xpath
-cssSelector
-
-Best practice:
-Prefer stable id or cssSelector. Avoid long brittle XPath.`,
-waits:`Waits
-
-Waits handle synchronization.
-
-Types:
-Implicit wait
-Explicit wait
-Fluent wait
-
-Explicit wait example:
-Wait until element is visible or clickable.
-
-Interview point:
-Explicit wait is preferred for specific conditions.`,
-actions:`Actions Class
-
-Actions class handles advanced user actions.
-
-Examples:
-mouse hover
-drag and drop
-right click
-double click
-keyboard actions
-
-Useful for complex UI interactions.`,
-dropdown:`Dropdowns
-
-For standard HTML select dropdowns, use Select class.
-
-Methods:
-selectByVisibleText()
-selectByValue()
-selectByIndex()
-
-For custom dropdowns, use normal click and locator logic.`,
-pom:`Page Object Model
-
-POM is a design pattern.
-
-Each web page has a separate class.
-Elements and actions are stored in page classes.
-
-Benefits:
-- Reusable code
-- Easy maintenance
-- Clean test scripts`,
-testng:`TestNG
-
-TestNG is a testing framework.
-
-Common annotations:
-@Test
-@BeforeMethod
-@AfterMethod
-@BeforeClass
-@AfterClass
-
-Features:
-- Priority
-- Groups
-- Parallel execution
-- DataProvider
-- Assertions`,
-framework:`Automation Framework
-
-Common framework components:
-- Page classes
-- Test classes
-- Utilities
-- Config reader
-- Driver manager
-- Reports
-- Screenshots
-- Test data
-- Logs
-
-Goal:
-Reusable, maintainable, and scalable automation.`
-};
-
-const seleniumCode={
-launch:`WebDriver driver = new ChromeDriver();
-driver.get("https://example.com");
-driver.manage().window().maximize();
-System.out.println(driver.getTitle());
-driver.quit();`,
-locator:`WebElement username = driver.findElement(By.id("username"));
-username.sendKeys("testuser");
-
-WebElement login = driver.findElement(By.cssSelector("button[type='submit']"));
-login.click();`,
-wait:`WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-
-WebElement button = wait.until(
-  ExpectedConditions.elementToBeClickable(By.id("submit"))
-);
-
-button.click();`,
-dropdown:`WebElement dropdown = driver.findElement(By.id("country"));
-
-Select select = new Select(dropdown);
-select.selectByVisibleText("United States");`,
-pom:`public class LoginPage {
-  WebDriver driver;
-
-  By username = By.id("username");
-  By password = By.id("password");
-  By loginBtn = By.id("login");
-
-  public LoginPage(WebDriver driver) {
-    this.driver = driver;
-  }
-
-  public void login(String user, String pass) {
-    driver.findElement(username).sendKeys(user);
-    driver.findElement(password).sendKeys(pass);
-    driver.findElement(loginBtn).click();
-  }
-}`
-};
-
-const interviews={
-java:[
-{q:"What is JVM, JRE, and JDK?",a:"JVM runs bytecode. JRE provides runtime environment. JDK includes JRE plus development tools."},
-{q:"Difference between ArrayList and LinkedList?",a:"ArrayList is better for index-based access. LinkedList is better for frequent insertions and deletions."}
-],
-spring:[
-{q:"What is Spring Boot?",a:"Spring Boot simplifies Spring development using auto-configuration, starters, and embedded servers."},
-{q:"What is @RestController?",a:"@RestController creates REST APIs and returns data directly as JSON or text."}
-],
-selenium:[
-{q:"What is Selenium WebDriver?",a:"WebDriver automates browser actions for UI testing."},
-{q:"What is Page Object Model?",a:"POM stores page elements and actions in page classes for better maintainability."}
-],
-english:[
-{q:"How do you give a daily status update?",a:"Today I completed QA validation for the assigned story. I will continue with API testing and share updates if I find any issues."},
-{q:"How do you ask for clarification?",a:"Could you please clarify the expected behavior for this scenario?"}
-]
-};
-
-let currentInterview=interviews.java[0];
-
-function show(id,b){document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active")}
+const vocab={work:"Workplace words:\nUpdate, clarify, priority, deadline, blocker, collaborate, resolve, confirm, pending, completed.",qa:"QA words:\nDefect, regression, validation, test case, test data, expected result, actual result, reproducible, environment, severity.",api:"API words:\nEndpoint, request, response, payload, header, status code, authentication, authorization, token, timeout.",meeting:"Meeting words:\nAgenda, action item, follow-up, decision, summary, attendee, availability, reschedule."};
+const grammar={tenses:"Tenses:\nPresent: I work in QA.\nPresent continuous: I am working on API validation.\nPast: I completed testing yesterday.\nPresent perfect: I have completed validation.",prep:"Prepositions:\nI am working on this issue.\nI attached the results to the story.\nI am waiting for deployment.",mistakes:"Common mistakes:\nWrong: I have completed testing yesterday. Correct: I completed testing yesterday.\nWrong: I did not seen. Correct: I did not see.",email:"Email grammar:\nUse greeting, short context, clear request/update, and closing. Example: Hi Team, I completed QA validation and attached the results. Thanks."};
+const prompts={standup:["What did you work on yesterday?","What are you working on today?","Do you have any blockers?"],qa:["Explain the defect you found.","How do you validate an API response?","Explain expected and actual result."],java:["Explain HashMap internal working.","Explain Stream API.","Difference between ArrayList and LinkedList?"],spring:["Explain Dependency Injection.","What is @RestController?","What is JWT authentication?"],selenium:["Explain Page Object Model.","What is explicit wait?","How do you handle dropdowns?"],interview:["Introduce yourself as a QA Automation Engineer.","Explain your Java and Selenium experience.","Tell me about a challenging defect."]};
+const words=["validation, requirement, automation, deployment, environment, regression, authentication, repository","controller, service, repository, entity, dependency, injection, configuration, microservice","selenium, webdriver, locator, explicit wait, assertion, framework, execution, browser","collections, hashmap, arraylist, exception, stream, lambda, optional, concurrency"];
+const java={basics:"Java is object-oriented and platform independent. Class is blueprint, object is instance, method is behavior. JVM runs bytecode.",oop:"OOP: Encapsulation, Inheritance, Polymorphism, Abstraction.",collections:"Collections: List allows duplicates, Set removes duplicates, Map stores key-value pairs. HashMap uses hashing.",streams:"Streams process collections. Common methods: filter, map, collect, forEach, reduce.",advanced:"Advanced Java: Generics, multithreading, ExecutorService, CompletableFuture, JVM memory, Garbage Collection, SOLID."};
+const spring={intro:"Spring Boot simplifies Spring development with auto-configuration, starters, and embedded servers.",rest:"REST API: GET retrieves, POST creates, PUT updates, DELETE removes. Use @RestController and mappings.",jpa:"JPA maps Java objects to database tables. Use @Entity, @Id, @GeneratedValue, JpaRepository.",security:"Spring Security protects APIs. JWT is used for stateless authentication.",micro:"Microservices: API Gateway, Service Discovery, Config Server, OpenFeign, Circuit Breaker, Logging, Tracing."};
+const selenium={intro:"Selenium automates web applications for UI testing.",webdriver:"WebDriver controls browser actions: get, findElement, click, sendKeys, close, quit.",locators:"Locators: id, name, xpath, cssSelector, linkText. Prefer stable id/css.",waits:"Waits: implicit, explicit, fluent. Explicit wait is best for specific conditions.",pom:"Page Object Model stores elements and actions in page classes.",framework:"Framework: page classes, test classes, utilities, config, reports, screenshots, logs."};
+let recognition;
+function show(id,b){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active')}
 function pick(a){return a[Math.floor(Math.random()*a.length)]}
-function speak(id){let u=new SpeechSynthesisUtterance(document.getElementById(id).innerText);u.lang="en-US";u.rate=.9;speechSynthesis.speak(u)}
-function copy(id){navigator.clipboard.writeText(document.getElementById(id).innerText);alert("Copied")}
-function showVocab(){document.getElementById("vocabOut").innerText=vocab[document.getElementById("vocabTopic").value]}
-function showGrammarTopic(){document.getElementById("grammarLesson").innerText=grammarLessons[document.getElementById("grammarTopic").value]}
-function loadGrammar(){document.getElementById("grammarInput").value="I have completed testing yesterday.";checkGrammar()}
-function checkGrammar(){let t=document.getElementById("grammarInput").value;if(!t){document.getElementById("grammarOut").innerText="Please type a sentence.";return}let c=t.replace(/I have completed testing yesterday/gi,"I completed testing yesterday").replace(/I am working in this issue/gi,"I am working on this issue").replace(/I did not seen/gi,"I did not see").replace(/I have one doubt/gi,"I have one question").replace(/assign defects in next sprint/gi,"assign defects to the next sprint");document.getElementById("grammarOut").innerText="Suggested sentence:\\n"+c+"\\n\\nTip: Use clear professional English."}
-function showJava(){document.getElementById("javaOut").innerText=javaTopics[document.getElementById("javaTopic").value]}
-function showJavaCode(){document.getElementById("javaCodeOut").innerText=javaCode[document.getElementById("javaCodeTopic").value]}
-function showSpring(){document.getElementById("springOut").innerText=springTopics[document.getElementById("springTopic").value]}
-function showSpringCode(){document.getElementById("springCodeOut").innerText=springCode[document.getElementById("springCodeTopic").value]}
-function showSelenium(){document.getElementById("seleniumOut").innerText=seleniumTopics[document.getElementById("seleniumTopic").value]}
-function showSeleniumCode(){document.getElementById("seleniumCodeOut").innerText=seleniumCode[document.getElementById("seleniumCodeTopic").value]}
-function newInterview(){let type=document.getElementById("interviewType").value;currentInterview=pick(interviews[type]);document.getElementById("intQ").innerText=currentInterview.q;document.getElementById("intA").innerText=""}
-function showInterviewAnswer(){document.getElementById("intA").innerText=currentInterview.a}
-function newTodayEnglish(){let all=["Learn 10 workplace vocabulary words.","Practice grammar: past simple vs present perfect.","Practice daily status update aloud.","Correct one workplace sentence."];document.getElementById("todayEnglish").innerText=pick(all)}
-function newTodayDev(){let all=["Study Java Collections.","Practice Spring Boot REST Controller.","Review Selenium explicit wait.","Practice Java Stream API.","Review Spring Boot JPA Repository."];document.getElementById("todayDev").innerText=pick(all)}
-function markDone(){let d=new Date().toDateString(),last=localStorage.getItem("dayV9"),st=Number(localStorage.getItem("streakV9")||"0");if(d!==last){st++;localStorage.setItem("dayV9",d);localStorage.setItem("streakV9",st)}update()}
-function saveNotes(){localStorage.setItem("notesV9",document.getElementById("myNotes").value);document.getElementById("saveMsg").innerText="Saved."}
-function update(){document.getElementById("streak").innerText=localStorage.getItem("streakV9")||"0";document.getElementById("myNotes").value=localStorage.getItem("notesV9")||""}
-window.onload=()=>{showVocab();showGrammarTopic();showJava();showJavaCode();showSpring();showSpringCode();showSelenium();showSeleniumCode();newInterview();newTodayEnglish();newTodayDev();update()}
+function speak(id){let u=new SpeechSynthesisUtterance(document.getElementById(id).innerText);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u)}
+function speakTextArea(id){let u=new SpeechSynthesisUtterance(document.getElementById(id).value);u.lang='en-US';u.rate=.9;speechSynthesis.speak(u)}
+function showVocab(){document.getElementById('vocabOut').innerText=vocab[document.getElementById('vocabTopic').value]}
+function showGrammarLesson(){document.getElementById('grammarLesson').innerText=grammar[document.getElementById('grammarTopic').value]}
+function loadGrammar(){document.getElementById('grammarInput').value='I have completed testing yesterday.';checkGrammar()}
+function correctText(t){return t.replace(/I have completed testing yesterday/gi,'I completed testing yesterday').replace(/I am working in this issue/gi,'I am working on this issue').replace(/I did not seen/gi,'I did not see').replace(/I have one doubt/gi,'I have one question')}
+function checkGrammar(){let t=document.getElementById('grammarInput').value;if(!t){document.getElementById('grammarOut').innerText='Please type a sentence.';return}document.getElementById('grammarOut').innerText='Suggested sentence:\n'+correctText(t)+'\n\nTip: Use clear professional English.'}
+function newAgentPrompt(){let m=document.getElementById('speakMode').value;document.getElementById('agentPrompt').innerText='Agent: '+pick(prompts[m])}
+function startVoice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){document.getElementById('speakingFeedback').innerText='Voice recognition not supported. Use Chrome on Android.';return}recognition=new SR();recognition.lang='en-US';recognition.continuous=true;recognition.interimResults=true;recognition.onresult=e=>{let t='';for(let i=0;i<e.results.length;i++){t+=e.results[i][0].transcript+' '}document.getElementById('spokenText').value=t.trim()};recognition.start();document.getElementById('speakingFeedback').innerText='Listening... Speak clearly.'}
+function stopVoice(){if(recognition)recognition.stop();document.getElementById('speakingFeedback').innerText='Stopped. Click Analyze Speaking.'}
+function analyzeSpeaking(){let t=document.getElementById('spokenText').value.trim();if(!t){document.getElementById('speakingFeedback').innerText='Please speak first.';return}let w=t.split(/\s+/).length;let c=correctText(t);let score=70+(w>=20?10:0)+(w>=40?10:0)-(t!==c?5:0);document.getElementById('speakingFeedback').innerText='Words spoken: '+w+'\nSpeaking score: '+score+'/100\n\nYour answer:\n'+t+'\n\nSuggested correction:\n'+c+'\n\nTip: Speak slowly and use complete sentences.';markSpeaking()}
+function newPronunciation(){document.getElementById('pronunciationWords').innerText=pick(words)}
+function markSpeaking(){let c=Number(localStorage.getItem('speakCountV10')||'0')+1;localStorage.setItem('speakCountV10',c);update()}
+function showJava(){document.getElementById('javaOut').innerText=java[document.getElementById('javaTopic').value]}
+function showSpring(){document.getElementById('springOut').innerText=spring[document.getElementById('springTopic').value]}
+function showSelenium(){document.getElementById('seleniumOut').innerText=selenium[document.getElementById('seleniumTopic').value]}
+function markDone(){let d=new Date().toDateString(),last=localStorage.getItem('dayV10'),st=Number(localStorage.getItem('streakV10')||'0');if(d!==last){st++;localStorage.setItem('dayV10',d);localStorage.setItem('streakV10',st)}update()}
+function saveNotes(){localStorage.setItem('notesV10',document.getElementById('notes').value);document.getElementById('saveMsg').innerText='Saved.'}
+function update(){document.getElementById('streak').innerText=localStorage.getItem('streakV10')||'0';document.getElementById('speakCount').innerText=localStorage.getItem('speakCountV10')||'0';document.getElementById('notes').value=localStorage.getItem('notesV10')||''}
+window.onload=()=>{showVocab();showGrammarLesson();newAgentPrompt();newPronunciation();showJava();showSpring();showSelenium();update()}
 </script>
 </body>
 </html>
