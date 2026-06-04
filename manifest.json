@@ -1,0 +1,21 @@
+{
+  "name": "English Java Coach",
+  "short_name": "EngJavaCoach",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#eef4fb",
+  "theme_color": "#1f4e79",
+  "description": "Mobile app for English communication, grammar, QA workplace English, and Java interview practice.",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml"
+    }
+  ]
+}
