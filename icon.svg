@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512">
 <rect width="512" height="512" rx="90" fill="#1f4e79"/>
-<text x="256" y="230" text-anchor="middle" font-size="76" font-family="Arial" fill="white" font-weight="bold">ENG</text>
-<text x="256" y="330" text-anchor="middle" font-size="76" font-family="Arial" fill="white" font-weight="bold">JAVA</text>
+<text x="256" y="205" text-anchor="middle" font-size="68" font-family="Arial" fill="white" font-weight="bold">LEARN</text>
+<text x="256" y="310" text-anchor="middle" font-size="68" font-family="Arial" fill="white" font-weight="bold">APP</text>
 </svg>

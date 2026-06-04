@@ -3,207 +3,151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Java Coach Mobile</title>
+<title>Learning App V4</title>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1f4e79">
 <style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:#eef4fb;color:#1f2937}
-header{background:#1f4e79;color:white;padding:18px;text-align:center}
-header h1{font-size:22px;margin:0}
-header p{font-size:14px;margin:6px 0 0}
-nav{display:flex;overflow-x:auto;gap:8px;background:white;padding:10px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px rgba(0,0,0,.08)}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef4fb;color:#1f2937}
+header{background:#1f4e79;color:white;padding:18px;text-align:center}header h1{margin:0;font-size:24px}
+nav{display:flex;overflow-x:auto;gap:8px;background:white;padding:10px;position:sticky;top:0;z-index:10;box-shadow:0 2px 8px #0002}
 nav button{white-space:nowrap;background:#e8f1fa;color:#1f4e79;border:1px solid #c8d9ea;border-radius:20px;padding:9px 13px;font-weight:bold}
-nav button.active{background:#1f4e79;color:white}
-main{padding:14px;max-width:900px;margin:auto}
-.section{display:none}.section.active{display:block}
-.card{background:white;padding:16px;border-radius:16px;box-shadow:0 4px 14px rgba(0,0,0,.07);margin-bottom:14px}
-h2,h3{color:#1f4e79}
-button.action{background:#1f4e79;color:white;border:0;border-radius:10px;padding:11px 14px;margin:5px 5px 5px 0;font-size:15px}
-button.secondary{background:#425466}
-textarea,select{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;margin-top:7px}
+nav button.active{background:#1f4e79;color:white}main{padding:14px;max-width:1000px;margin:auto}.section{display:none}.section.active{display:block}
+.card{background:white;padding:16px;border-radius:16px;box-shadow:0 4px 14px #0001;margin-bottom:14px}
+h2,h3{color:#1f4e79}button.action{background:#1f4e79;color:white;border:0;border-radius:10px;padding:11px 14px;margin:5px 5px 5px 0;font-size:15px}
+button.secondary{background:#425466}textarea,select,input{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;margin-top:7px}
 .result{background:#f8fbff;border-left:5px solid #1f4e79;padding:12px;border-radius:10px;margin-top:10px;white-space:pre-wrap;line-height:1.5}
-.word{font-weight:bold;color:#1f4e79}
-.small{color:#64748b;font-size:14px}
-.score{font-size:34px;color:#1f4e79;font-weight:bold}
-pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:10px;overflow:auto;font-size:13px}
+.small{color:#64748b;font-size:14px}.score{font-size:34px;color:#1f4e79;font-weight:bold}pre{background:#0f172a;color:#e2e8f0;padding:12px;border-radius:10px;overflow:auto}
 </style>
 </head>
 <body>
-<header>
-<h1>English + Java Coach</h1>
-<p>Mobile practice app for English, QA, Java, and interviews</p>
-</header>
-
+<header><h1>Learning App V4</h1><p>English + Java + Selenium + Spring Boot + Resume Practice</p></header>
 <nav>
-<button class="active" onclick="showSection('home',this)">Home</button>
-<button onclick="showSection('speak',this)">Speak</button>
-<button onclick="showSection('grammar',this)">Grammar</button>
-<button onclick="showSection('work',this)">Work</button>
-<button onclick="showSection('java',this)">Java</button>
-<button onclick="showSection('notes',this)">Notes</button>
+<button class="active" onclick="show('home',this)">Home</button>
+<button onclick="show('english',this)">English</button>
+<button onclick="show('java',this)">Java Coding</button>
+<button onclick="show('selenium',this)">Selenium</button>
+<button onclick="show('spring',this)">Spring Boot</button>
+<button onclick="show('resume',this)">Resume</button>
+<button onclick="show('email',this)">Email</button>
+<button onclick="show('progress',this)">Progress</button>
 </nav>
-
 <main>
 <section id="home" class="section active">
-<div class="card">
-<h2>Daily Practice</h2>
-<p><b>10 min:</b> English speaking</p>
-<p><b>10 min:</b> Workplace grammar</p>
-<p><b>10 min:</b> Java interview</p>
-<button class="action" onclick="markDone()">Mark Today Complete</button>
-<p>Streak: <span class="score" id="streak">0</span> days</p>
-</div>
-<div class="card">
-<h3>Today’s Prompt</h3>
-<p id="prompt"></p>
-<button class="action" onclick="newPrompt()">New Prompt</button>
-<button class="action secondary" onclick="speakText('prompt')">Listen</button>
-</div>
+<div class="card"><h2>Daily 8 PM Study Plan</h2><p><b>10 min:</b> English speaking</p><p><b>10 min:</b> Java coding</p><p><b>10 min:</b> Selenium or Spring Boot interview</p><button class="action" onclick="markDone()">Mark Today Complete</button><p>Streak: <span class="score" id="streak">0</span> days</p><p class="small">Phone reminder: create a phone alarm for 8:00 PM named “Learning App Practice”.</p></div>
+<div class="card"><h3>Today’s Question</h3><p id="todayQ"></p><button class="action" onclick="newToday()">New Question</button><button class="action secondary" onclick="speak('todayQ')">Listen</button></div>
 </section>
 
-<section id="speak" class="section">
-<div class="card">
-<h2>Voice Practice</h2>
-<p class="small">Use Chrome on Android for best voice recognition.</p>
-<button class="action" onclick="startVoice()">Start Speaking</button>
-<button class="action secondary" onclick="stopVoice()">Stop</button>
-<textarea id="voiceText" rows="6" placeholder="Your spoken English appears here..."></textarea>
-<button class="action" onclick="analyzeVoice()">Analyze</button>
-<div id="voiceResult" class="result">Feedback appears here.</div>
-</div>
-</section>
-
-<section id="grammar" class="section">
-<div class="card">
-<h2>Grammar Checker</h2>
-<textarea id="grammarInput" rows="5" placeholder="Example: I have completed testing yesterday."></textarea>
-<button class="action" onclick="checkGrammar()">Check</button>
-<button class="action secondary" onclick="loadExample()">Example</button>
-<div id="grammarResult" class="result">Correction appears here.</div>
-</div>
-</section>
-
-<section id="work" class="section">
-<div class="card">
-<h2>QA Workplace English</h2>
-<select id="template" onchange="showTemplate()">
-<option value="status">Daily status</option>
-<option value="defect">Defect report</option>
-<option value="clarify">Clarification</option>
-<option value="late">Joining late</option>
-<option value="ooo">Out of office</option>
-</select>
-<div id="templateText" class="result"></div>
-<button class="action" onclick="copyText('templateText')">Copy</button>
-<button class="action secondary" onclick="speakText('templateText')">Listen</button>
-</div>
+<section id="english" class="section">
+<div class="card"><h2>English Speaking Practice</h2><p id="englishPrompt"></p><button class="action" onclick="newEnglish()">New Prompt</button><button class="action secondary" onclick="speak('englishPrompt')">Listen</button></div>
+<div class="card"><h2>Grammar Checker</h2><textarea id="grammar" rows="4" placeholder="Example: I have completed testing yesterday."></textarea><button class="action" onclick="checkGrammar()">Check</button><div id="grammarOut" class="result"></div></div>
 </section>
 
 <section id="java" class="section">
-<div class="card">
-<h2>Java Interview</h2>
-<select id="javaCat" onchange="newJava()">
-<option value="core">Core Java</option>
-<option value="oop">OOP</option>
-<option value="collections">Collections</option>
-<option value="api">Spring Boot / API</option>
-</select>
-<p id="javaQ"></p>
-<button class="action" onclick="newJava()">New Question</button>
-<button class="action secondary" onclick="showJavaAnswer()">Show Answer</button>
-<div id="javaA" class="result"></div>
-</div>
-<div class="card">
-<h2>Java Learning Notes</h2>
-<select id="javaNote" onchange="showJavaNote()">
-<option value="basics">Java Basics</option>
-<option value="oop">OOP Concepts</option>
-<option value="collections">Collections</option>
-<option value="rest">REST API</option>
-</select>
-<div id="javaNoteText" class="result"></div>
-</div>
+<div class="card"><h2>Java Coding Challenges</h2><p id="javaChallenge"></p><button class="action" onclick="newJavaChallenge()">New Challenge</button><button class="action secondary" onclick="showJavaSolution()">Show Solution</button><pre id="javaSolution"></pre></div>
 </section>
 
-<section id="notes" class="section">
-<div class="card">
-<h2>My Notes</h2>
-<textarea id="myNotes" rows="8" placeholder="Write English mistakes, Java notes, interview answers..."></textarea>
-<button class="action" onclick="saveNotes()">Save Notes</button>
-<p id="saveMsg" class="small"></p>
-</div>
+<section id="selenium" class="section">
+<div class="card"><h2>Selenium Interview Questions</h2><p id="seleniumQ"></p><button class="action" onclick="newSelenium()">New Question</button><button class="action secondary" onclick="showSelenium()">Show Answer</button><div id="seleniumA" class="result"></div></div>
+</section>
+
+<section id="spring" class="section">
+<div class="card"><h2>Spring Boot Interview Questions</h2><p id="springQ"></p><button class="action" onclick="newSpring()">New Question</button><button class="action secondary" onclick="showSpring()">Show Answer</button><div id="springA" class="result"></div></div>
+</section>
+
+<section id="resume" class="section">
+<div class="card"><h2>Resume Bullet Practice</h2><select id="resumeType" onchange="showResume()"><option value="qa">QA Automation</option><option value="api">API Testing</option><option value="java">Java/Spring Boot</option></select><div id="resumeOut" class="result"></div><button class="action" onclick="copy('resumeOut')">Copy</button></div>
+</section>
+
+<section id="email" class="section">
+<div class="card"><h2>Work Email Practice</h2><select id="emailType" onchange="showEmail()"><option value="status">Status update</option><option value="defect">Defect update</option><option value="clarify">Clarification</option><option value="ooo">Out of office</option></select><div id="emailOut" class="result"></div><button class="action" onclick="copy('emailOut')">Copy</button><button class="action secondary" onclick="speak('emailOut')">Listen</button></div>
+</section>
+
+<section id="progress" class="section">
+<div class="card"><h2>My Notes</h2><textarea id="notes" rows="8" placeholder="Write Java answers, Selenium notes, English mistakes..."></textarea><button class="action" onclick="saveNotes()">Save Notes</button><p id="saveMsg" class="small"></p></div>
 </section>
 </main>
 
 <script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js");
-}
-
-const prompts=[
-"Introduce yourself professionally and mention your QA role.",
-"Explain your daily work routine in English.",
-"Describe a defect you found and how you reported it.",
-"Explain one Java concept in simple English.",
-"Talk about your English learning goal for this month."
+if("serviceWorker" in navigator){navigator.serviceWorker.register("service-worker.js")}
+const english=["Introduce yourself as a QA Automation Engineer.","Explain your daily stand-up update.","Describe one defect you found and how you reported it.","Explain Java Collections in simple English.","Practice: I completed API validation and shared the results."];
+const javaChallenges=[
+{q:"Reverse a string without using built-in reverse().",s:`public class ReverseString {
+ public static void main(String[] args) {
+  String input = "Suresh";
+  String output = "";
+  for (int i = input.length() - 1; i >= 0; i--) {
+   output += input.charAt(i);
+  }
+  System.out.println(output);
+ }
+}`},
+{q:"Find duplicate numbers in an array.",s:`import java.util.*;
+public class Duplicates {
+ public static void main(String[] args) {
+  int[] nums = {1,2,3,2,4,1};
+  Set<Integer> seen = new HashSet<>();
+  for (int n : nums) {
+   if (!seen.add(n)) System.out.println("Duplicate: " + n);
+  }
+ }
+}`},
+{q:"Count words in a sentence using HashMap.",s:`import java.util.*;
+public class WordCount {
+ public static void main(String[] args) {
+  String sentence = "java is easy java is powerful";
+  Map<String,Integer> map = new HashMap<>();
+  for(String word: sentence.split(" ")) {
+   map.put(word, map.getOrDefault(word,0)+1);
+  }
+  System.out.println(map);
+ }
+}`}
 ];
-
-const templates={
-status:"Hi Team,\n\nToday I completed QA validation for the assigned story. I also reviewed the API response and documented my test results. I will continue with end-to-end validation and share updates if I find any issues.\n\nThanks.",
-defect:"Hi Team,\n\nI found a regression defect during QA validation. The issue is reproducible. I added steps to reproduce, expected result, actual result, screenshots, and logs in the defect ticket.\n\nThanks.",
-clarify:"Hi Team,\n\nCould you please clarify the expected behavior for this scenario? I want to confirm the requirement before completing validation.\n\nThanks.",
-late:"Hi Team,\n\nI will join the meeting a few minutes late due to another task. I will catch up as soon as I join.\n\nThanks.",
-ooo:"Hi Team,\n\nI will be out of office today due to personal work. I will check messages later and respond if anything is urgent.\n\nThanks."
+const selenium=[
+{q:"What is Selenium WebDriver?",a:"Selenium WebDriver is a tool used to automate web browser actions for testing web applications."},
+{q:"Difference between findElement and findElements?",a:"findElement returns the first matching element and throws an exception if not found. findElements returns a list and returns an empty list if not found."},
+{q:"What is explicit wait?",a:"Explicit wait waits for a specific condition, such as element visibility or clickability, before continuing test execution."},
+{q:"What are locators in Selenium?",a:"Locators identify web elements. Common locators are id, name, className, xpath, cssSelector, linkText, and partialLinkText."},
+{q:"What is Page Object Model?",a:"Page Object Model is a design pattern where each web page is represented as a class, improving code reuse and maintainability."}
+];
+const spring=[
+{q:"What is Spring Boot?",a:"Spring Boot helps create Java applications quickly with auto-configuration, embedded servers, and starter dependencies."},
+{q:"What is @RestController?",a:"@RestController creates REST APIs and returns data directly as JSON or text."},
+{q:"Difference between @Controller and @RestController?",a:"@Controller is used for MVC views. @RestController returns response body directly, commonly JSON."},
+{q:"What is dependency injection?",a:"Dependency injection means Spring creates and provides required objects automatically instead of creating them manually."},
+{q:"What is application.properties?",a:"application.properties stores configuration such as server port, database URL, username, password, and custom settings."}
+];
+const resume={
+qa:"• Automated regression test cases using Selenium WebDriver and improved test execution efficiency.\\n• Performed functional, integration, regression, and end-to-end testing.\\n• Created detailed defect reports with steps, expected results, actual results, screenshots, and logs.",
+api:"• Validated REST API request and response payloads using Swagger/Postman.\\n• Verified HTTP status codes, headers, authentication, and business rules.\\n• Analyzed Splunk logs to troubleshoot API exceptions and backend failures.",
+java:"• Developed Java-based automation utilities using OOP concepts, Collections, and exception handling.\\n• Built REST API concepts using Spring Boot annotations such as @RestController and @GetMapping.\\n• Used Java Streams and Lambda expressions for cleaner data processing."
 };
-
-const javaQuestions={
-core:[
-{q:"What is Java?",a:"Java is a high-level, object-oriented programming language. It is platform independent because Java code runs on the JVM."},
-{q:"What is JVM, JRE, and JDK?",a:"JVM runs bytecode. JRE contains JVM and libraries. JDK contains JRE plus development tools."}
-],
-oop:[
-{q:"What are the four OOP concepts?",a:"Encapsulation, inheritance, polymorphism, and abstraction."},
-{q:"What is method overloading?",a:"Method overloading means same method name with different parameters in the same class."}
-],
-collections:[
-{q:"Difference between List and Set?",a:"List allows duplicates and maintains order. Set does not allow duplicates."},
-{q:"Difference between ArrayList and LinkedList?",a:"ArrayList is better for search by index. LinkedList is better for frequent insert/delete."}
-],
-api:[
-{q:"What is REST API?",a:"REST API communicates over HTTP using GET, POST, PUT, PATCH, and DELETE."},
-{q:"What is Spring Boot?",a:"Spring Boot helps build Java applications quickly using auto-configuration and embedded servers."}
-]
+const emails={
+status:"Hi Team,\\n\\nToday I completed QA validation for the assigned story. I reviewed the API response and documented the test results. I will continue with end-to-end validation and share updates if I find any issues.\\n\\nThanks.",
+defect:"Hi Team,\\n\\nI found a regression defect during QA validation. The issue is reproducible, and I added the steps, expected result, actual result, screenshots, and logs in the ticket.\\n\\nThanks.",
+clarify:"Hi Team,\\n\\nCould you please clarify the expected behavior for this scenario? I want to confirm the requirement before completing validation.\\n\\nThanks.",
+ooo:"Hi Team,\\n\\nI will be out of office today due to personal work. I will check messages later and respond if anything is urgent.\\n\\nThanks."
 };
-
-const javaNotes={
-basics:"Java Basics:\n- Java is object-oriented.\n- Java runs on JVM.\n- Class is a blueprint.\n- Object is an instance of a class.\n- Method is an action or behavior.",
-oop:"OOP Concepts:\n1. Encapsulation - data hiding.\n2. Inheritance - reuse parent class features.\n3. Polymorphism - one name, many forms.\n4. Abstraction - hiding implementation details.",
-collections:"Collections:\n- List allows duplicates.\n- Set removes duplicates.\n- Map stores key-value pairs.\nCommon classes: ArrayList, HashSet, HashMap.",
-rest:"REST API:\nGET retrieves data.\nPOST creates data.\nPUT updates complete data.\nPATCH updates partial data.\nDELETE removes data."
-};
-
-let recognition;
-let currentJava=javaQuestions.core[0];
-
-function showSection(id,btn){document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active")}
+let jc=javaChallenges[0], sq=selenium[0], sp=spring[0];
+function show(id,b){document.querySelectorAll(".section").forEach(s=>s.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll("nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active")}
 function pick(a){return a[Math.floor(Math.random()*a.length)]}
-function newPrompt(){document.getElementById("prompt").innerText=pick(prompts)}
-function speakText(id){let text=document.getElementById(id).innerText||document.getElementById(id).value;let u=new SpeechSynthesisUtterance(text);u.lang="en-US";u.rate=.9;speechSynthesis.speak(u)}
-function startVoice(){const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){document.getElementById("voiceResult").innerText="Voice recognition not supported. Use Chrome on Android.";return}recognition=new SR();recognition.lang="en-US";recognition.continuous=true;recognition.interimResults=true;recognition.onresult=e=>{let t="";for(let i=0;i<e.results.length;i++){t+=e.results[i][0].transcript+" "}document.getElementById("voiceText").value=t.trim()};recognition.start();document.getElementById("voiceResult").innerText="Listening..."}
-function stopVoice(){if(recognition)recognition.stop();document.getElementById("voiceResult").innerText="Stopped. Click Analyze."}
-function analyzeVoice(){let t=document.getElementById("voiceText").value.trim();if(!t){document.getElementById("voiceResult").innerText="Speak first.";return}let words=t.split(/\s+/).length;document.getElementById("voiceResult").innerText="Words spoken: "+words+"\nTip: Speak slowly, use full sentences, and pause clearly."}
-function checkGrammar(){let t=document.getElementById("grammarInput").value.trim();if(!t){document.getElementById("grammarResult").innerText="Type a sentence first.";return}let c=t;let notes=[];const r=[[/I have completed testing yesterday/gi,"I completed testing yesterday","Use simple past with yesterday."],[/I am working in this issue/gi,"I am working on this issue","Use working on for tasks."],[/I did not seen/gi,"I did not see","After did not use base verb."],[/I have one doubt/gi,"I have one question","Use question in workplace English."]];r.forEach(x=>{if(x[0].test(c)){c=c.replace(x[0],x[1]);notes.push(x[2])}});if(!notes.length)notes.push("No common mistake found.");document.getElementById("grammarResult").innerText="Suggested sentence:\n"+c+"\n\nNotes:\n- "+notes.join("\n- ")}
-function loadExample(){document.getElementById("grammarInput").value="I have completed testing yesterday.";checkGrammar()}
-function showTemplate(){document.getElementById("templateText").innerText=templates[document.getElementById("template").value]}
-function copyText(id){navigator.clipboard.writeText(document.getElementById(id).innerText);alert("Copied")}
-function newJava(){let cat=document.getElementById("javaCat").value;currentJava=pick(javaQuestions[cat]);document.getElementById("javaQ").innerText=currentJava.q;document.getElementById("javaA").innerText=""}
-function showJavaAnswer(){document.getElementById("javaA").innerText=currentJava.a}
-function showJavaNote(){document.getElementById("javaNoteText").innerText=javaNotes[document.getElementById("javaNote").value]}
-function markDone(){let today=new Date().toDateString();let last=localStorage.getItem("doneDay");let streak=Number(localStorage.getItem("streak")||"0");if(today!==last){streak++;localStorage.setItem("doneDay",today);localStorage.setItem("streak",streak)}update()}
-function saveNotes(){localStorage.setItem("notes",document.getElementById("myNotes").value);document.getElementById("saveMsg").innerText="Saved."}
-function update(){document.getElementById("streak").innerText=localStorage.getItem("streak")||"0";document.getElementById("myNotes").value=localStorage.getItem("notes")||""}
-window.onload=()=>{newPrompt();showTemplate();newJava();showJavaNote();update()}
+function speak(id){let t=document.getElementById(id).innerText;let u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.9;speechSynthesis.speak(u)}
+function newToday(){document.getElementById("todayQ").innerText=pick([...english,...selenium.map(x=>x.q),...spring.map(x=>x.q),...javaChallenges.map(x=>x.q)])}
+function newEnglish(){document.getElementById("englishPrompt").innerText=pick(english)}
+function checkGrammar(){let t=document.getElementById("grammar").value;let c=t.replace(/I have completed testing yesterday/gi,"I completed testing yesterday").replace(/I am working in this issue/gi,"I am working on this issue").replace(/I did not seen/gi,"I did not see").replace(/I have one doubt/gi,"I have one question");document.getElementById("grammarOut").innerText="Suggested sentence:\\n"+c+"\\n\\nTip: Use professional workplace English."}
+function newJavaChallenge(){jc=pick(javaChallenges);document.getElementById("javaChallenge").innerText=jc.q;document.getElementById("javaSolution").innerText=""}
+function showJavaSolution(){document.getElementById("javaSolution").innerText=jc.s}
+function newSelenium(){sq=pick(selenium);document.getElementById("seleniumQ").innerText=sq.q;document.getElementById("seleniumA").innerText=""}
+function showSelenium(){document.getElementById("seleniumA").innerText=sq.a}
+function newSpring(){sp=pick(spring);document.getElementById("springQ").innerText=sp.q;document.getElementById("springA").innerText=""}
+function showSpring(){document.getElementById("springA").innerText=sp.a}
+function showResume(){document.getElementById("resumeOut").innerText=resume[document.getElementById("resumeType").value]}
+function showEmail(){document.getElementById("emailOut").innerText=emails[document.getElementById("emailType").value]}
+function copy(id){navigator.clipboard.writeText(document.getElementById(id).innerText);alert("Copied")}
+function markDone(){let d=new Date().toDateString(),last=localStorage.getItem("day"),st=Number(localStorage.getItem("streak")||"0");if(d!==last){st++;localStorage.setItem("day",d);localStorage.setItem("streak",st)}update()}
+function saveNotes(){localStorage.setItem("notes",document.getElementById("notes").value);document.getElementById("saveMsg").innerText="Saved."}
+function update(){document.getElementById("streak").innerText=localStorage.getItem("streak")||"0";document.getElementById("notes").value=localStorage.getItem("notes")||""}
+window.onload=()=>{newToday();newEnglish();newJavaChallenge();newSelenium();newSpring();showResume();showEmail();update()}
 </script>
 </body>
 </html>
