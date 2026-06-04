@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>English Communication & Grammar Practice App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef4fb;
+      margin: 0;
+      padding: 20px;
+      color: #222;
+    }
+    .container {
+      max-width: 1050px;
+      margin: auto;
+      background: white;
+      padding: 24px;
+      border-radius: 18px;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    }
+    h1, h2 {
+      color: #1f4e79;
+    }
+    h1 {
+      text-align: center;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px;
+    }
+    .card {
+      background: #f9fbff;
+      border-left: 5px solid #1f4e79;
+      padding: 16px;
+      border-radius: 12px;
+      margin-bottom: 18px;
+    }
+    button {
+      background: #1f4e79;
+      color: white;
+      border: none;
+      padding: 10px 14px;
+      margin: 5px 4px 5px 0;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:hover {
+      background: #163a59;
+    }
+    textarea, input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+      box-sizing: border-box;
+    }
+    .answer {
+      background: #fff;
+      border: 1px solid #d7e2ef;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 8px;
+      display: none;
+    }
+    .small {
+      font-size: 14px;
+      color: #666;
+    }
+    .tag {
+      display: inline-block;
+      background: #e2edf7;
+      color: #1f4e79;
+      padding: 4px 8px;
+      border-radius: 20px;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+    .word {
+      font-weight: bold;
+      color: #1f4e79;
+    }
+    .score {
+      font-weight: bold;
+      color: #1f4e79;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>English Communication & Grammar Practice App</h1>
+    <p class="small" style="text-align:center;">Daily practice for speaking, grammar, workplace communication, sentence correction, and vocabulary.</p>
+
+    <div class="card">
+      <h2>Daily Practice Plan</h2>
+      <p>1. Read today’s speaking prompt aloud.</p>
+      <p>2. Practice one workplace sentence.</p>
+      <p>3. Correct one grammar sentence.</p>
+      <p>4. Learn 5 words.</p>
+      <p>5. Write your own sentence and save notes.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <span class="tag">Speaking</span>
+        <h2>Daily Speaking Prompt</h2>
+        <p id="prompt"></p>
+        <button onclick="newPrompt()">New Prompt</button>
+        <button onclick="speakTextById('prompt')">Listen</button>
+      </div>
+
+      <div class="card">
+        <span class="tag">Workplace</span>
+        <h2>Professional Sentence</h2>
+        <p id="workplace"></p>
+        <button onclick="newWorkplace()">New Sentence</button>
+        <button onclick="speakTextById('workplace')">Listen</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <span class="tag">Grammar</span>
+        <h2>Correct the Sentence</h2>
+        <p><b>Wrong:</b></p>
+        <p id="wrongSentence"></p>
+        <button onclick="showCorrection()">Show Correct Sentence</button>
+        <button onclick="newGrammar()">New Grammar Practice</button>
+        <div class="answer" id="grammarAnswer"></div>
+      </div>
+
+      <div class="card">
+        <span class="tag">Conversation</span>
+        <h2>Daily Conversation Practice</h2>
+        <p id="conversation"></p>
+        <button onclick="newConversation()">New Conversation</button>
+        <button onclick="speakTextById('conversation')">Listen</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="tag">Templates</span>
+      <h2>Work Communication Templates</h2>
+      <select id="templateSelect" onchange="showTemplate()">
+        <option value="late">Joining late</option>
+        <option value="defect">Defect update</option>
+        <option value="ooo">Out of office</option>
+        <option value="clarify">Asking for clarification</option>
+        <option value="status">Daily status update</option>
+      </select>
+      <div class="answer" style="display:block;" id="templateBox"></div>
+      <button onclick="speakTextById('templateBox')">Listen</button>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <span class="tag">Vocabulary</span>
+        <h2>5 Daily Vocabulary Words</h2>
+        <div id="vocab"></div>
+        <button onclick="newVocab()">New Words</button>
+      </div>
+
+      <div class="card">
+        <span class="tag">Grammar Rules</span>
+        <h2>Simple Grammar Rule</h2>
+        <p id="rule"></p>
+        <button onclick="newRule()">New Rule</button>
+        <button onclick="speakTextById('rule')">Listen</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <span class="tag">Writing</span>
+      <h2>Write Your Own Sentence</h2>
+      <textarea id="mySentence" rows="3" placeholder="Example: I completed QA validation today."></textarea>
+      <button onclick="saveSentence()">Save My Sentence</button>
+      <p class="small" id="sentenceSaved"></p>
+    </div>
+
+    <div class="card">
+      <span class="tag">Notes</span>
+      <h2>My Practice Notes</h2>
+      <textarea id="notes" rows="5" placeholder="Write new words, grammar mistakes, or sentences you practiced today..."></textarea>
+      <button onclick="saveNotes()">Save Notes</button>
+      <p class="small" id="saveMessage"></p>
+    </div>
+
+    <div class="card">
+      <span class="tag">Progress</span>
+      <h2>Daily Self Rating</h2>
+      <label>How confident did you feel today?</label>
+      <select id="rating">
+        <option value="1">1 - Need more practice</option>
+        <option value="2">2 - Okay</option>
+        <option value="3">3 - Good</option>
+        <option value="4">4 - Very good</option>
+        <option value="5">5 - Excellent</option>
+      </select>
+      <button onclick="saveRating()">Save Rating</button>
+      <p>Your last rating: <span class="score" id="lastRating">Not saved</span></p>
+    </div>
+  </div>
+
+<script>
+const prompts = [
+  "Introduce yourself. Talk about your job, your family, and your English learning goal.",
+  "Describe your daily work routine using simple past and present tense.",
+  "Talk about one issue you found during testing and how you reported it.",
+  "Explain why communication is important in a software team.",
+  "Describe your weekend plan using future tense.",
+  "Explain one Java or API testing concept in simple English.",
+  "Talk about a meeting you attended recently.",
+  "Describe one habit you want to improve this month."
+];
+
+const workplaceSentences = [
+  "I have completed the QA validation and attached the test results to the story.",
+  "I found a regression defect and created a ticket for the development team.",
+  "Could you please assign this defect to the next sprint?",
+  "I have not seen any Splunk exceptions in the QA environment.",
+  "I will join the meeting a few minutes late due to another task.",
+  "Please let me know if you need any additional details from my side.",
+  "I am currently working on functional and integration testing.",
+  "The API response is not matching the expected result."
+];
+
+const grammarItems = [
+  {
+    wrong: "I am working in this issue.",
+    correct: "I am working on this issue.",
+    reason: "Use 'working on' when talking about a task or issue."
+  },
+  {
+    wrong: "I have completed testing yesterday.",
+    correct: "I completed testing yesterday.",
+    reason: "Use simple past with a finished time like yesterday."
+  },
+  {
+    wrong: "Please assign these defects in next sprint.",
+    correct: "Please assign these defects to the next sprint.",
+    reason: "Use 'assign to' and say 'the next sprint'."
+  },
+  {
+    wrong: "I did not seen any exception.",
+    correct: "I did not see any exception.",
+    reason: "After 'did not', use the base verb: see."
+  },
+  {
+    wrong: "I will be login late today.",
+    correct: "I will log in late today.",
+    reason: "Use 'log in' as the verb."
+  },
+  {
+    wrong: "Kindly help me to keep this defect in sprint.",
+    correct: "Could you please include this defect in the sprint?",
+    reason: "This sounds more natural and professional."
+  },
+  {
+    wrong: "I have one doubt.",
+    correct: "I have one question.",
+    reason: "In workplace English, 'question' sounds more natural than 'doubt'."
+  }
+];
+
+const conversations = [
+  "A: How is your work going today? B: It is going well. I am currently working on API validation.",
+  "A: Did you complete the testing? B: Yes, I completed the testing and shared the results.",
+  "A: Can you explain the issue? B: The attachment is not getting added after submitting the request.",
+  "A: Do you need any help? B: Yes, could you please help me clarify the expected behavior?",
+  "A: What are your plans for today? B: I will complete my assigned tasks and practice English for ten minutes."
+];
+
+const vocabSets = [
+  [["Collaborate","Work together"],["Deadline","Due date"],["Priority","Most important task"],["Feedback","Suggestions for improvement"],["Resolve","Fix or complete something"]],
+  [["Clarify","Make something clear"],["Validate","Check if something is correct"],["Defect","A problem or bug"],["Requirement","What needs to be done"],["Progress","Movement toward completion"]],
+  [["Confidence","Belief in yourself"],["Fluency","Speaking smoothly"],["Improve","Make better"],["Practice","Repeat to get better"],["Achievement","Something successfully completed"]],
+  [["Concern","A worry or issue"],["Available","Free or ready to use"],["Expected","What should happen"],["Actual","What really happened"],["Scenario","A situation or test case"]]
+];
+
+const rules = [
+  "Use 'on' with tasks: I am working on the defect.",
+  "Use simple past for finished actions: I completed testing yesterday.",
+  "Use present perfect for recent updates: I have completed the validation.",
+  "Use polite workplace English: Could you please review this?",
+  "Use 'question' instead of 'doubt' in professional English.",
+  "Use 'log in' for entering a system: I will log in at 9 AM.",
+  "Use 'attach to' for documents: I attached the results to the story."
+];
+
+const templates = {
+  late: "Hi Team, I will join the meeting a few minutes late due to another task. I will catch up as soon as I join.",
+  defect: "Hi Team, I found a regression defect during QA validation. The issue is reproducible, and I have added the steps, expected result, actual result, and screenshots in the ticket.",
+  ooo: "Hi Team, I will be out of office today due to personal work. I will check my messages later and respond if anything is urgent.",
+  clarify: "Hi Team, could you please clarify the expected behavior for this scenario? I want to confirm before completing the validation.",
+  status: "Hi Team, today I completed QA validation for the assigned story. I am currently working on API testing, and I will share updates if I find any issues."
+};
+
+let currentGrammar = grammarItems[0];
+
+function randomItem(arr) {
+  return arr[Math.floor(Math.random() * arr.length)];
+}
+function newPrompt() {
+  document.getElementById("prompt").innerText = randomItem(prompts);
+}
+function newWorkplace() {
+  document.getElementById("workplace").innerText = randomItem(workplaceSentences);
+}
+function newGrammar() {
+  currentGrammar = randomItem(grammarItems);
+  document.getElementById("wrongSentence").innerText = currentGrammar.wrong;
+  document.getElementById("grammarAnswer").style.display = "none";
+  document.getElementById("grammarAnswer").innerHTML = "";
+}
+function showCorrection() {
+  const box = document.getElementById("grammarAnswer");
+  box.style.display = "block";
+  box.innerHTML = "<b>Correct:</b> " + currentGrammar.correct + "<br><br><b>Reason:</b> " + currentGrammar.reason;
+}
+function newConversation() {
+  document.getElementById("conversation").innerText = randomItem(conversations);
+}
+function newVocab() {
+  const set = randomItem(vocabSets);
+  document.getElementById("vocab").innerHTML = set.map(item => `<p><span class="word">${item[0]}</span> - ${item[1]}</p>`).join("");
+}
+function newRule() {
+  document.getElementById("rule").innerText = randomItem(rules);
+}
+function showTemplate() {
+  const key = document.getElementById("templateSelect").value;
+  document.getElementById("templateBox").innerText = templates[key];
+}
+function speakTextById(id) {
+  const text = document.getElementById(id).innerText || document.getElementById(id).value;
+  const speech = new SpeechSynthesisUtterance(text);
+  speech.lang = "en-US";
+  speech.rate = 0.9;
+  window.speechSynthesis.speak(speech);
+}
+function saveNotes() {
+  localStorage.setItem("englishNotesFull", document.getElementById("notes").value);
+  document.getElementById("saveMessage").innerText = "Notes saved successfully.";
+}
+function saveSentence() {
+  localStorage.setItem("myEnglishSentence", document.getElementById("mySentence").value);
+  document.getElementById("sentenceSaved").innerText = "Your sentence was saved.";
+}
+function saveRating() {
+  const rating = document.getElementById("rating").value;
+  localStorage.setItem("englishRatingFull", rating);
+  document.getElementById("lastRating").innerText = rating + "/5";
+}
+window.onload = function() {
+  newPrompt();
+  newWorkplace();
+  newGrammar();
+  newConversation();
+  newVocab();
+  newRule();
+  showTemplate();
+  document.getElementById("notes").value = localStorage.getItem("englishNotesFull") || "";
+  document.getElementById("mySentence").value = localStorage.getItem("myEnglishSentence") || "";
+  const savedRating = localStorage.getItem("englishRatingFull");
+  if (savedRating) document.getElementById("lastRating").innerText = savedRating + "/5";
+};
+</script>
+</body>
+</html>
